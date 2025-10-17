@@ -363,6 +363,23 @@ export default function Home() {
             </div>
             <span>オンラインスクール</span>
           </div>
+          <div className="flex justify-center gap-4 mb-4">
+            <Link href="/mypage" className="text-sm hover:text-primary transition-colors">
+              マイページ
+            </Link>
+            <Link href="/admin" className="text-sm hover:text-primary transition-colors">
+              管理画面
+            </Link>
+            <Link href="/test-supabase" className="text-sm hover:text-primary transition-colors">
+              Supabaseテスト
+            </Link>
+            <Link href="/test-cloudflare" className="text-sm hover:text-primary transition-colors">
+              R2テスト
+            </Link>
+            <Link href="/debug-env" className="text-sm hover:text-primary transition-colors">
+              環境変数確認
+            </Link>
+          </div>
           <p className="text-sm">
             © 2025 オンラインスクール. All rights reserved.
           </p>
