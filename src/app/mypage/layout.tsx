@@ -1,7 +1,11 @@
+'use client';
+
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { AuthGuard } from '@/components/AuthGuard';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   LayoutDashboard,
   User,
@@ -47,6 +51,21 @@ const navigation = [
 
 export default function UserLayout({ children }: UserLayoutProps) {
   return (
+    <AuthGuard>
+      <UserLayoutContent>{children}</UserLayoutContent>
+    </AuthGuard>
+  );
+}
+
+function UserLayoutContent({ children }: UserLayoutProps) {
+  const pathname = usePathname();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
+  return (
     <div className="min-h-screen bg-gray-50">
       {/* ヘッダー */}
       <header className="bg-white shadow-sm border-b">
@@ -69,9 +88,9 @@ export default function UserLayout({ children }: UserLayoutProps) {
                 </Button>
               </Link>
               <div className="text-sm text-gray-500">
-                田中 太郎さん
+                {user?.user_metadata?.name || user?.email || 'ユーザー'}さん
               </div>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 ログアウト
               </Button>

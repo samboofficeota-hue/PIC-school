@@ -1,7 +1,11 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   BookOpen,
   Clock,
@@ -16,174 +20,199 @@ import {
   Star,
   Users,
   BarChart3,
-  Settings
+  Settings,
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 
+interface UserStats {
+  enrolledPrograms: number;
+  completedPrograms: number;
+  totalLearningTime: number;
+  totalPoints: number;
+}
+
+interface UserProgram {
+  id: number;
+  programs: {
+    id: number;
+    title: string;
+    description: string;
+    thumbnail_url: string;
+    instructor_name: string;
+    duration_hours: number;
+    difficulty_level: string;
+    category: string;
+  };
+  progress_percentage: number;
+  enrolled_at: string;
+  completed_at: string | null;
+}
+
+interface UserAchievement {
+  id: number;
+  earned_at: string;
+  points_earned: number;
+  achievements: {
+    id: number;
+    name: string;
+    description: string;
+    icon_url: string;
+    points: number;
+    category: string;
+    rarity: string;
+  };
+}
+
 export default function UserDashboard() {
-  // サンプルデータ（実際のアプリではAPIから取得）
-  const userStats = [
+  const { user, loading: authLoading } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [userStats, setUserStats] = useState<UserStats>({
+    enrolledPrograms: 0,
+    completedPrograms: 0,
+    totalLearningTime: 0,
+    totalPoints: 0
+  });
+  const [userPrograms, setUserPrograms] = useState<UserProgram[]>([]);
+  const [userAchievements, setUserAchievements] = useState<UserAchievement[]>([]);
+
+  useEffect(() => {
+    console.log('Auth state:', { user, authLoading });
+    if (user && !authLoading) {
+      fetchUserData();
+    } else if (!user && !authLoading) {
+      setLoading(false);
+    }
+  }, [user, authLoading]);
+
+  const fetchUserData = async () => {
+    try {
+      setLoading(true);
+      
+      // 並行してデータを取得
+      const [programsRes, achievementsRes, pointsRes] = await Promise.all([
+        fetch('/api/user/programs'),
+        fetch('/api/user/achievements'),
+        fetch('/api/user/points')
+      ]);
+
+      const [programsData, achievementsData, pointsData] = await Promise.all([
+        programsRes.json(),
+        achievementsRes.json(),
+        pointsRes.json()
+      ]);
+
+      if (programsData.data) {
+        setUserPrograms(programsData.data);
+        setUserStats(prev => ({
+          ...prev,
+          enrolledPrograms: programsData.data.length,
+          completedPrograms: programsData.data.filter((p: UserProgram) => p.completed_at).length
+        }));
+      }
+
+      if (achievementsData.data) {
+        setUserAchievements(achievementsData.data);
+      }
+
+      if (pointsData.data) {
+        setUserStats(prev => ({
+          ...prev,
+          totalPoints: pointsData.data.total_points || 0
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="p-8 text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">
+            {authLoading ? '認証中...' : 'データを読み込み中...'}
+          </p>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="p-8 text-center">
+          <p className="text-gray-600 mb-4">ログインが必要です</p>
+          <Link href="/auth/login">
+            <Button>ログインページへ</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
+  // 統計データの準備
+  const statsData = [
     {
       name: '受講中プログラム',
-      value: '3',
-      change: '+1',
+      value: userStats.enrolledPrograms.toString(),
+      change: '+0',
       changeType: 'positive',
       icon: BookOpen,
       color: 'text-blue-600'
     },
     {
       name: '完了プログラム',
-      value: '2',
-      change: '+1',
+      value: userStats.completedPrograms.toString(),
+      change: '+0',
       changeType: 'positive',
       icon: CheckCircle,
       color: 'text-green-600'
     },
     {
       name: '総学習時間',
-      value: '24時間',
-      change: '+5時間',
+      value: `${userStats.totalLearningTime}時間`,
+      change: '+0時間',
       changeType: 'positive',
       icon: Clock,
       color: 'text-purple-600'
     },
     {
       name: '獲得ポイント',
-      value: '1,250',
-      change: '+150',
+      value: userStats.totalPoints.toLocaleString(),
+      change: '+0',
       changeType: 'positive',
       icon: Trophy,
       color: 'text-yellow-600'
     }
   ];
 
-  const currentPrograms = [
-    {
-      id: 1,
-      title: 'ビジネススキル基礎コース',
-      progress: 75,
-      totalChapters: 25,
-      completedChapters: 19,
-      nextChapter: '第20章: データ分析の基礎',
-      estimatedTime: '2時間30分',
-      lastStudied: '2024-01-20',
-      thumbnail: '/api/placeholder/300/200'
-    },
-    {
-      id: 2,
-      title: 'マーケティング戦略',
-      progress: 45,
-      totalChapters: 15,
-      completedChapters: 7,
-      nextChapter: '第8章: デジタルマーケティング',
-      estimatedTime: '3時間15分',
-      lastStudied: '2024-01-19',
-      thumbnail: '/api/placeholder/300/200'
-    },
-    {
-      id: 3,
-      title: 'リーダーシップ開発',
-      progress: 20,
-      totalChapters: 18,
-      completedChapters: 4,
-      nextChapter: '第5章: チームビルディング',
-      estimatedTime: '4時間20分',
-      lastStudied: '2024-01-18',
-      thumbnail: '/api/placeholder/300/200'
-    }
-  ];
+  // 現在のプログラムデータ（実際のデータから生成）
+  const currentPrograms = userPrograms.map(program => ({
+    id: program.id,
+    title: program.programs.title,
+    nextChapter: `第${Math.floor(program.progress_percentage / 20) + 1}章`,
+    completedChapters: Math.floor(program.progress_percentage / 20),
+    totalChapters: 5, // 仮の値
+    progress: program.progress_percentage,
+    estimatedTime: `${program.programs.duration_hours * 60}分`,
+    lastStudied: program.completed_at ? '完了' : '継続中',
+    difficulty: program.programs.difficulty_level,
+    thumbnail: program.programs.thumbnail_url || '/api/placeholder/300/200'
+  }));
 
-  const recentActivities = [
-    {
-      id: 1,
-      type: 'completion',
-      title: '第19章を完了',
-      program: 'ビジネススキル基礎コース',
-      time: '2時間前',
-      points: 50
-    },
-    {
-      id: 2,
-      type: 'achievement',
-      title: '継続学習バッジを獲得',
-      program: 'マーケティング戦略',
-      time: '1日前',
-      points: 100
-    },
-    {
-      id: 3,
-      type: 'test',
-      title: '第7章のテストに合格',
-      program: 'マーケティング戦略',
-      time: '2日前',
-      points: 75
-    },
-    {
-      id: 4,
-      type: 'start',
-      title: '新しいプログラムを開始',
-      program: 'リーダーシップ開発',
-      time: '3日前',
-      points: 25
-    }
-  ];
-
-  const achievements = [
-    {
-      id: 1,
-      title: '初回完了',
-      description: '最初のチャプターを完了しました',
-      icon: CheckCircle,
-      earnedAt: '2024-01-15',
-      points: 50
-    },
-    {
-      id: 2,
-      title: '継続学習',
-      description: '7日連続で学習しました',
-      icon: Calendar,
-      earnedAt: '2024-01-20',
-      points: 100
-    },
-    {
-      id: 3,
-      title: '高得点',
-      description: 'テストで90点以上を獲得しました',
-      icon: Star,
-      earnedAt: '2024-01-18',
-      points: 75
-    }
-  ];
-
-  const getActivityIcon = (type: string) => {
-    switch (type) {
-      case 'completion':
-        return <CheckCircle className="w-5 h-5 text-green-600" />;
-      case 'achievement':
-        return <Trophy className="w-5 h-5 text-yellow-600" />;
-      case 'test':
-        return <Target className="w-5 h-5 text-blue-600" />;
-      case 'start':
-        return <Play className="w-5 h-5 text-purple-600" />;
-      default:
-        return <BookOpen className="w-5 h-5 text-gray-600" />;
-    }
-  };
-
-  const getActivityColor = (type: string) => {
-    switch (type) {
-      case 'completion':
-        return 'bg-green-100';
-      case 'achievement':
-        return 'bg-yellow-100';
-      case 'test':
-        return 'bg-blue-100';
-      case 'start':
-        return 'bg-purple-100';
-      default:
-        return 'bg-gray-100';
-    }
-  };
+  // 最近の活動データ（実績から生成）
+  const recentActivities = userAchievements.slice(0, 5).map(achievement => ({
+    id: achievement.id,
+    type: 'achievement',
+    title: achievement.achievements.name,
+    program: achievement.achievements.category,
+    time: new Date(achievement.earned_at).toLocaleDateString('ja-JP'),
+    points: achievement.points_earned
+  }));
 
   return (
     <div className="space-y-8">
@@ -195,22 +224,20 @@ export default function UserDashboard() {
 
       {/* 統計カード */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {userStats.map((stat) => {
+        {statsData.map((stat) => {
           const Icon = stat.icon;
           return (
             <Card key={stat.name} className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">{stat.name}</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-                  <div className="flex items-center mt-2">
-                    <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-                    <span className="text-sm font-medium text-green-600">{stat.change}</span>
-                    <span className="text-sm text-gray-500 ml-1">今週</span>
-                  </div>
+                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className={`text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
+                    {stat.change}
+                  </p>
                 </div>
-                <div className={`p-3 rounded-lg bg-gray-50 ${stat.color}`}>
-                  <Icon className="w-6 h-6" />
+                <div className={`p-3 rounded-full ${stat.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
+                  <Icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
               </div>
             </Card>
@@ -218,23 +245,23 @@ export default function UserDashboard() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* 受講中プログラム */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold">受講中プログラム</h2>
-            <Link href="/mypage/learning">
-              <Button variant="outline" size="sm">
-                すべて表示
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="space-y-4">
-            {currentPrograms.map((program) => (
-              <div key={program.id} className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex items-start justify-between mb-3">
+      {/* 現在のプログラム */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-gray-900">現在のプログラム</h2>
+          <Link href="/mypage/learning">
+            <Button variant="outline" size="sm">
+              すべて表示
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentPrograms.length > 0 ? (
+            currentPrograms.map((program) => (
+              <Card key={program.id} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 mb-1">{program.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">{program.nextChapter}</p>
@@ -258,59 +285,34 @@ export default function UserDashboard() {
                   </div>
                   <Progress value={program.progress} className="h-2" />
                 </div>
-                
-                <div className="mt-3">
-                  <Link href={`/program/${program.id}`}>
+
+                <div className="mt-4 flex gap-2">
+                  <Link href={`/program/${program.programs.id}`} className="flex-1">
                     <Button size="sm" className="w-full">
                       <Play className="w-4 h-4 mr-2" />
-                      学習を続ける
+                      続きを学習
                     </Button>
                   </Link>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* 最近の活動 */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold">最近の活動</h2>
-            <Link href="/mypage/learning">
-              <Button variant="outline" size="sm">
-                詳細を見る
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="space-y-4">
-            {recentActivities.map((activity) => (
-              <div key={activity.id} className="flex items-start space-x-3">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getActivityColor(activity.type)}`}>
-                  {getActivityIcon(activity.type)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">{activity.title}</p>
-                  <p className="text-sm text-gray-500">{activity.program}</p>
-                  <div className="flex items-center justify-between mt-1">
-                    <p className="text-xs text-gray-400">{activity.time}</p>
-                    <div className="flex items-center text-xs text-yellow-600">
-                      <Trophy className="w-3 h-3 mr-1" />
-                      +{activity.points}pt
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
+              </Card>
+            ))
+          ) : (
+            <Card className="p-8 text-center col-span-full">
+              <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">プログラムがありません</h3>
+              <p className="text-gray-600 mb-4">新しいプログラムに登録して学習を始めましょう</p>
+              <Link href="/">
+                <Button>プログラムを探す</Button>
+              </Link>
+            </Card>
+          )}
+        </div>
       </div>
 
-      {/* 実績・バッジ */}
-      <Card className="p-6">
+      {/* 最近の活動 */}
+      <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold">最近獲得した実績</h2>
+          <h2 className="text-xl font-semibold text-gray-900">最近の活動</h2>
           <Link href="/mypage/achievements">
             <Button variant="outline" size="sm">
               すべて表示
@@ -318,42 +320,62 @@ export default function UserDashboard() {
             </Button>
           </Link>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {achievements.map((achievement) => {
-            const Icon = achievement.icon;
-            return (
-              <div key={achievement.id} className="p-4 bg-gray-50 rounded-lg text-center">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Icon className="w-6 h-6 text-white" />
+
+        <Card className="p-6">
+          {recentActivities.length > 0 ? (
+            <div className="space-y-4">
+              {recentActivities.map((activity) => (
+                <div key={activity.id} className="flex items-center justify-between py-3 border-b last:border-b-0">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 rounded-full">
+                      {activity.type === 'completion' ? (
+                        <CheckCircle className="w-5 h-5 text-blue-600" />
+                      ) : (
+                        <Award className="w-5 h-5 text-yellow-600" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">{activity.title}</p>
+                      <p className="text-sm text-gray-600">{activity.program}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-500">{activity.time}</p>
+                    <p className="text-sm font-medium text-green-600">+{activity.points}pt</p>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">{achievement.title}</h3>
-                <p className="text-sm text-gray-600 mb-2">{achievement.description}</p>
-                <div className="flex items-center justify-center text-xs text-yellow-600">
-                  <Trophy className="w-3 h-3 mr-1" />
-                  +{achievement.points}pt
-                </div>
-                <p className="text-xs text-gray-400 mt-2">{achievement.earnedAt}</p>
-              </div>
-            );
-          })}
-        </div>
-      </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <Trophy className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">活動がありません</h3>
+              <p className="text-gray-600">学習を開始すると、ここに活動が表示されます</p>
+            </div>
+          )}
+        </Card>
+      </div>
 
       {/* クイックアクション */}
-      <Card className="p-6">
-        <h2 className="text-xl font-semibold mb-6">クイックアクション</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/program">
-            <Button className="h-20 flex flex-col items-center justify-center space-y-2 w-full">
-              <BookOpen className="w-6 h-6" />
-              <span>新しいプログラムを探す</span>
-            </Button>
-          </Link>
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-6">クイックアクション</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link href="/mypage/learning">
             <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2 w-full">
-              <BarChart3 className="w-6 h-6" />
-              <span>学習履歴を見る</span>
+              <BookOpen className="w-6 h-6" />
+              <span>学習履歴</span>
+            </Button>
+          </Link>
+          <Link href="/mypage/achievements">
+            <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2 w-full">
+              <Trophy className="w-6 h-6" />
+              <span>実績・証明書</span>
+            </Button>
+          </Link>
+          <Link href="/mypage/profile">
+            <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2 w-full">
+              <Users className="w-6 h-6" />
+              <span>プロフィール</span>
             </Button>
           </Link>
           <Link href="/mypage/settings">
@@ -363,7 +385,7 @@ export default function UserDashboard() {
             </Button>
           </Link>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,11 @@
+'use client';
+
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { AdminGuard } from '@/components/AuthGuard';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   LayoutDashboard,
   Users,
@@ -45,6 +49,20 @@ const navigation = [
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
+    <AdminGuard>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </AdminGuard>
+  );
+}
+
+function AdminLayoutContent({ children }: AdminLayoutProps) {
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
+  return (
     <div className="min-h-screen bg-gray-50">
       {/* ヘッダー */}
       <header className="bg-white shadow-sm border-b">
@@ -61,9 +79,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-500">
-                管理者
+                管理者: {user?.user_metadata?.name || user?.email || 'Admin'}
               </div>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 ログアウト
               </Button>

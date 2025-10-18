@@ -1,6 +1,9 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   BookOpen,
   Award,
@@ -13,11 +16,27 @@ import {
   MessageSquare,
   BarChart3,
   ArrowRight,
-  Play
+  Play,
+  LogIn,
+  LogOut
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
+  const { user, signOut, loading } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
+  // ハイドレーションエラーを防ぐため、ローディング中は何も表示しない
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
   const features = [
     {
       icon: BookOpen,
@@ -92,6 +111,53 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ヘッダー */}
+      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold">PIC School</span>
+            </Link>
+            
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <>
+                  <div className="text-sm text-gray-600">
+                    {user.user_metadata?.name || user.email}さん
+                  </div>
+                  <Link href="/mypage">
+                    <Button variant="outline" size="sm">
+                      マイページ
+                    </Button>
+                  </Link>
+                  <Button variant="outline" size="sm" onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    ログアウト
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <Button variant="outline" size="sm">
+                      <LogIn className="w-4 h-4 mr-2" />
+                      ログイン
+                    </Button>
+                  </Link>
+                  <Link href="/auth/signup">
+                    <Button size="sm">
+                      新規登録
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* ヒーローセクション */}
       <section 
         className="relative overflow-hidden"
