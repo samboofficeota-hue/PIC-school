@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, userData?: { name?: string }) => {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -74,7 +74,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         emailRedirectTo: `${window.location.origin}/auth/login`
       }
     });
-    return { error };
+    
+    console.log('Sign up result:', { data, error });
+    return { data, error };
   };
 
   const signOut = async () => {

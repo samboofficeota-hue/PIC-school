@@ -20,6 +20,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   
   const { signUp } = useAuth();
   const router = useRouter();
@@ -49,18 +50,32 @@ export default function SignupPage() {
       return;
     }
 
-    const { error } = await signUp(formData.email, formData.password, {
+    const { data, error } = await signUp(formData.email, formData.password, {
       name: formData.name
     });
     
     if (error) {
-      setError(error.message);
+      // エラーメッセージを日本語に変換
+      let errorMessage = error.message;
+      if (error.message.includes('email_address_invalid')) {
+        errorMessage = '有効なメールアドレスを入力してください。';
+      } else if (error.message.includes('password_too_short')) {
+        errorMessage = 'パスワードは6文字以上で入力してください。';
+      } else if (error.message.includes('email_address_already_registered')) {
+        errorMessage = 'このメールアドレスは既に登録されています。';
+      }
+      setError(errorMessage);
     } else {
-      setSuccess(true);
-      // 3秒後にマイページにリダイレクト
-      setTimeout(() => {
+      // 確認メールが送信されたかチェック
+      if (data?.user && !data.user.email_confirmed_at) {
+        setEmailSent(true);
+        setSuccess(true);
+      } else if (data?.user && data.user.email_confirmed_at) {
+        // 既に確認済みの場合は直接マイページへ
         router.push('/mypage');
-      }, 3000);
+      } else {
+        setSuccess(true);
+      }
     }
     
     setLoading(false);
@@ -73,14 +88,31 @@ export default function SignupPage() {
           <Card className="p-8 text-center">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              登録完了！
+              {emailSent ? '確認メールを送信しました！' : '登録完了！'}
             </h2>
             <p className="text-gray-600 mb-6">
-              アカウントが正常に作成されました。確認メールを送信しましたので、メールボックスをご確認ください。
+              {emailSent 
+                ? `確認メールを ${formData.email} に送信しました。メールボックスを確認して、リンクをクリックしてアカウントを有効化してください。`
+                : 'アカウントが正常に作成されました。'
+              }
             </p>
-            <p className="text-sm text-gray-500">
-              3秒後にマイページにリダイレクトします...
-            </p>
+            {emailSent && (
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                <p className="text-sm text-blue-800">
+                  📧 確認メールが届かない場合は、迷惑メールフォルダも確認してください。
+                </p>
+              </div>
+            )}
+            <div className="space-y-3">
+              <Link href="/auth/login">
+                <Button className="w-full">
+                  ログインページへ
+                </Button>
+              </Link>
+              <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
+                ← ホームに戻る
+              </Link>
+            </div>
           </Card>
         </div>
       </div>
