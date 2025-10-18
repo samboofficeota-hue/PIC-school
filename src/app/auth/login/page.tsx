@@ -14,8 +14,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
+  const [resetPasswordMessage, setResetPasswordMessage] = useState('');
   
-  const { signIn } = useAuth();
+  const { signIn, resetPassword } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +47,31 @@ export default function LoginPage() {
     }
     
     setLoading(false);
+  };
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError('パスワードリセットにはメールアドレスが必要です。');
+      return;
+    }
+
+    setResetPasswordLoading(true);
+    setError('');
+    setResetPasswordMessage('');
+
+    try {
+      const { error } = await resetPassword(email);
+      
+      if (error) {
+        setError('パスワードリセットメールの送信に失敗しました。');
+      } else {
+        setResetPasswordMessage('パスワードリセットメールを送信しました。メールボックスを確認してください。');
+      }
+    } catch (err) {
+      setError('パスワードリセット中にエラーが発生しました。');
+    }
+    
+    setResetPasswordLoading(false);
   };
 
   return (
@@ -144,9 +171,14 @@ export default function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <Link href="/auth/forgot-password" className="text-primary hover:text-primary/80">
-                  パスワードを忘れた方
-                </Link>
+                <button
+                  type="button"
+                  onClick={handleResetPassword}
+                  disabled={resetPasswordLoading}
+                  className="text-primary hover:text-primary/80 disabled:opacity-50"
+                >
+                  {resetPasswordLoading ? '送信中...' : 'パスワードを忘れた方'}
+                </button>
               </div>
             </div>
 
@@ -184,6 +216,13 @@ export default function LoginPage() {
                 </Link>
               </p>
             </div>
+
+            {/* パスワードリセットメッセージ */}
+            {resetPasswordMessage && (
+              <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                <p className="text-sm text-green-800">{resetPasswordMessage}</p>
+              </div>
+            )}
           </div>
         </Card>
 
