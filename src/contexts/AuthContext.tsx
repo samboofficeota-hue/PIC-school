@@ -71,8 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password,
       options: {
         data: userData,
-        emailRedirectTo: `${window.location.origin}/auth/login`,
-        captchaToken: undefined // キャプチャを無効化
+        emailRedirectTo: `${window.location.origin}/auth/login`
       }
     });
     
