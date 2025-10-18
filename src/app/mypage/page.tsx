@@ -287,7 +287,7 @@ export default function UserDashboard() {
                 </div>
 
                 <div className="mt-4 flex gap-2">
-                  <Link href={`/program/${program.programs.id}`} className="flex-1">
+                  <Link href={`/program/${program.id}`} className="flex-1">
                     <Button size="sm" className="w-full">
                       <Play className="w-4 h-4 mr-2" />
                       続きを学習

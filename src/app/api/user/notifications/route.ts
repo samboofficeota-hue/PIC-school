@@ -12,8 +12,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // ユーザーのプログラム一覧取得
-    const { data, error } = await db.getUserPrograms(user.id);
+    // ユーザーの通知取得
+    const { data, error } = await db.getUserNotifications(user.id);
     
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
@@ -25,7 +25,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
     const supabase = createServerSupabaseClient();
     
@@ -36,14 +36,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { programId } = body;
+    const { notificationId } = body;
 
-    if (!programId) {
-      return NextResponse.json({ error: 'Program ID is required' }, { status: 400 });
+    if (!notificationId) {
+      return NextResponse.json({ 
+        error: 'Notification ID is required' 
+      }, { status: 400 });
     }
 
-    // プログラムに登録
-    const { data, error } = await db.enrollInProgram(user.id, programId);
+    // 通知を既読にする
+    const { data, error } = await db.markNotificationAsRead(notificationId);
     
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

@@ -89,12 +89,9 @@ export const db = {
         chapters (
           id,
           title,
-          description,
           content,
           video_url,
-          duration_minutes,
-          order_index,
-          is_free
+          order_index
         )
       `)
       .eq('id', id)
