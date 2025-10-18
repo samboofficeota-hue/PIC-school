@@ -67,14 +67,20 @@ export default function SignupPage() {
       setError(errorMessage);
     } else {
       // 確認メールが送信されたかチェック
-      if (data?.user && !data.user.email_confirmed_at) {
-        setEmailSent(true);
-        setSuccess(true);
-      } else if (data?.user && data.user.email_confirmed_at) {
-        // 既に確認済みの場合は直接マイページへ
-        router.push('/mypage');
+      if (data?.user) {
+        if (!data.user.email_confirmed_at) {
+          // 確認メールが必要
+          setEmailSent(true);
+          setSuccess(true);
+          console.log('Email confirmation required for:', data.user.email);
+        } else {
+          // 既に確認済みの場合は直接マイページへ
+          console.log('User already confirmed, redirecting to mypage');
+          router.push('/mypage');
+        }
       } else {
-        setSuccess(true);
+        // ユーザーが作成されなかった場合
+        setError('ユーザーの作成に失敗しました。');
       }
     }
     

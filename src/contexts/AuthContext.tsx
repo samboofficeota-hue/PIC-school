@@ -71,11 +71,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password,
       options: {
         data: userData,
-        emailRedirectTo: `${window.location.origin}/auth/login`
+        emailRedirectTo: `${window.location.origin}/auth/login`,
+        captchaToken: undefined // キャプチャを無効化
       }
     });
     
     console.log('Sign up result:', { data, error });
+    
+    // 確認メールの送信状況をログに出力
+    if (data?.user) {
+      console.log('User created:', {
+        id: data.user.id,
+        email: data.user.email,
+        email_confirmed_at: data.user.email_confirmed_at,
+        needs_confirmation: !data.user.email_confirmed_at
+      });
+    }
+    
     return { data, error };
   };
 
