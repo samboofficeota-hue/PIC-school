@@ -50,6 +50,23 @@ export default function SignupPage() {
       return;
     }
 
+    // メールアドレスのバリデーション
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('有効なメールアドレスを入力してください');
+      setLoading(false);
+      return;
+    }
+
+    // テスト用メールアドレスのブロック
+    const testDomains = ['example.com', 'test.com', 'localhost', 'invalid'];
+    const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+    if (testDomains.some(domain => emailDomain?.includes(domain))) {
+      setError('有効なメールアドレスを入力してください（テスト用ドメインは使用できません）');
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await signUp(formData.email, formData.password, {
       name: formData.name
     });

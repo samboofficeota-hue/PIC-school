@@ -55,6 +55,21 @@ export default function LoginPage() {
       return;
     }
 
+    // メールアドレスのバリデーション
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('有効なメールアドレスを入力してください');
+      return;
+    }
+
+    // テスト用メールアドレスのブロック
+    const testDomains = ['example.com', 'test.com', 'localhost', 'invalid'];
+    const emailDomain = email.split('@')[1]?.toLowerCase();
+    if (testDomains.some(domain => emailDomain?.includes(domain))) {
+      setError('有効なメールアドレスを入力してください（テスト用ドメインは使用できません）');
+      return;
+    }
+
     setResetPasswordLoading(true);
     setError('');
     setResetPasswordMessage('');
