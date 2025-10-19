@@ -6,6 +6,8 @@ export default function R2DirectTest() {
   const [envAnalysis, setEnvAnalysis] = useState<any>(null);
   const [r2Test, setR2Test] = useState<any>(null);
   const [bucketCheck, setBucketCheck] = useState<any>(null);
+  const [deepAnalysis, setDeepAnalysis] = useState<any>(null);
+  const [cleanTest, setCleanTest] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,6 +35,20 @@ export default function R2DirectTest() {
         const bucketData = await bucketResponse.json();
         setBucketCheck(bucketData);
         console.log('Bucket check:', bucketData);
+
+        // 4. 詳細な環境変数分析
+        console.log('Running deep environment analysis...');
+        const deepResponse = await fetch('/api/deep-analyze-env');
+        const deepData = await deepResponse.json();
+        setDeepAnalysis(deepData);
+        console.log('Deep analysis:', deepData);
+
+        // 5. クリーンアップされた認証情報でのテスト
+        console.log('Running clean credentials test...');
+        const cleanResponse = await fetch('/api/clean-env-test');
+        const cleanData = await cleanResponse.json();
+        setCleanTest(cleanData);
+        console.log('Clean test:', cleanData);
 
       } catch (error) {
         console.error('Test error:', error);
@@ -63,7 +79,7 @@ export default function R2DirectTest() {
       <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8">Cloudflare R2 直接テスト</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* 環境変数分析 */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4">環境変数分析</h2>
@@ -162,6 +178,67 @@ export default function R2DirectTest() {
               </div>
             ) : (
               <p className="text-red-500">バケット確認の結果を取得できませんでした</p>
+            )}
+          </div>
+
+          {/* 詳細な環境変数分析 */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">詳細な環境変数分析</h2>
+            {deepAnalysis ? (
+              <div className="space-y-4">
+                <div className={`p-3 rounded ${deepAnalysis.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <p className="font-medium">
+                    {deepAnalysis.success ? '✅ 詳細分析完了' : '❌ 詳細分析失敗'}
+                  </p>
+                  {deepAnalysis.summary && (
+                    <div className="mt-2 text-sm">
+                      <p>問題発見: {deepAnalysis.summary.issuesFound}件</p>
+                      <p>問題あり: {deepAnalysis.summary.hasProblems ? '⚠️' : '✅'}</p>
+                    </div>
+                  )}
+                </div>
+                
+                {deepAnalysis.issues && deepAnalysis.issues.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-red-700">発見された問題:</h3>
+                    {deepAnalysis.issues.map((issue: string, index: number) => (
+                      <div key={index} className="text-sm text-red-600 bg-red-50 p-2 rounded">
+                        • {issue}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-red-500">詳細分析の結果を取得できませんでした</p>
+            )}
+          </div>
+
+          {/* クリーンアップされた認証情報でのテスト */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">クリーンアップ認証テスト</h2>
+            {cleanTest ? (
+              <div className="space-y-4">
+                <div className={`p-3 rounded ${cleanTest.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <p className="font-medium">
+                    {cleanTest.success ? '✅ クリーンアップ認証成功' : '❌ クリーンアップ認証失敗'}
+                  </p>
+                  {cleanTest.message && (
+                    <p className="text-sm mt-1">{cleanTest.message}</p>
+                  )}
+                </div>
+                
+                {cleanTest.data && (
+                  <div className="text-sm space-y-1">
+                    <p>バケット数: {cleanTest.data.bucketCount}</p>
+                    <p>アカウントID長: {cleanTest.data.credentialsCleaned?.accountIdLength}</p>
+                    <p>アクセスキー長: {cleanTest.data.credentialsCleaned?.accessKeyIdLength}</p>
+                    <p>シークレットキー長: {cleanTest.data.credentialsCleaned?.secretKeyLength}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-red-500">クリーンアップ認証テストの結果を取得できませんでした</p>
             )}
           </div>
         </div>
