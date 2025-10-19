@@ -45,7 +45,7 @@ export async function GET() {
     };
 
     // 問題のある文字を検出
-    const issues = [];
+    const issues: string[] = [];
     Object.values(results).forEach(analysis => {
       if (analysis) {
         if (analysis.hasNewlines) issues.push(`${analysis.name}: Contains newlines`);
