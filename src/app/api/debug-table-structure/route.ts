@@ -40,7 +40,7 @@ export async function GET() {
           test: 'Table Existence Check',
           success: true,
           message: `Found ${tables?.length || 0} tables`,
-          data: { tables: tables?.map(t => t.table_name) || [] }
+          data: { tables: tables?.map((t: any) => t.table_name) || [] }
         });
       }
     } catch (error) {
@@ -83,7 +83,7 @@ export async function GET() {
             error: columnsError
           });
         } else {
-          const columnNames = columns?.map(c => c.column_name) || [];
+            const columnNames = columns?.map((c: any) => c.column_name) || [];
           results.push({
             table: tableName,
             success: true,
