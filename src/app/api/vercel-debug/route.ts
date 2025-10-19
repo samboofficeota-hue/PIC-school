@@ -34,7 +34,7 @@ export async function GET() {
 
     // 2. Supabaseクライアントのテスト
     try {
-      const { createServerSupabaseClient } = await import('@/lib/supabase-server');
+      const { createServerSupabaseClient } = await import('../../../lib/supabase-server');
       const supabase = createServerSupabaseClient();
       
       results.push({
