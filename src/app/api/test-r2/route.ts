@@ -9,6 +9,13 @@ export async function GET() {
     const secretKey = process.env.CLOUDFLARE_SECRET_ACCESS_KEY;
     const endpoint = process.env.CLOUDFLARE_R2_ENDPOINT;
 
+    console.log('Environment variables check:', {
+      accountId: accountId ? `${accountId.substring(0, 8)}...` : 'undefined',
+      accessKeyId: accessKeyId ? `${accessKeyId.substring(0, 8)}...` : 'undefined',
+      secretKey: secretKey ? `${secretKey.substring(0, 8)}...` : 'undefined',
+      endpoint: endpoint ? endpoint : 'undefined'
+    });
+
     if (!accountId || !accessKeyId || !secretKey || !endpoint) {
       return NextResponse.json({
         success: false,
@@ -19,6 +26,20 @@ export async function GET() {
           secretKey: !!secretKey,
           endpoint: !!endpoint
         }
+      });
+    }
+
+    // 認証情報の文字チェック
+    const hasInvalidChars = (str: string) => {
+      return /[\r\n\t]/.test(str);
+    };
+
+    if (hasInvalidChars(accessKeyId) || hasInvalidChars(secretKey)) {
+      console.error('Invalid characters found in credentials');
+      return NextResponse.json({
+        success: false,
+        error: 'Invalid characters in credentials',
+        details: 'Credentials contain invalid characters (newlines, tabs, etc.)'
       });
     }
 
@@ -58,6 +79,7 @@ export async function GET() {
     });
   }
 }
+
 
 
 
