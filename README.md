@@ -171,6 +171,128 @@ CLOUDFLARE_R2_ENDPOINT=your_r2_endpoint
 - **R2接続**: `curl http://localhost:3000/api/test-r2`
 - **ファイルアップロード**: POST `/api/upload`
 
+## 🗄️ データベース管理
+
+### Node.jsスクリプトを使用したSupabase操作
+
+Cursorから直接Supabaseを操作する場合、Node.jsスクリプトを使用すると効率的です。
+
+#### メリット
+- ✅ **高速**: ブラウザでダッシュボードを開く必要なし
+- ✅ **自動化**: 複雑な操作を一度に実行
+- ✅ **検証**: 実行結果を即座に確認
+- ✅ **再現性**: スクリプトとして保存・共有可能
+
+#### 基本的な使い方
+
+1. **スクリプトの作成**
+```javascript
+// scripts/database-operation.mjs
+import { createClient } from '@supabase/supabase-js';
+import { readFileSync } from 'fs';
+
+// .env.localから環境変数を読み込む
+const envContent = readFileSync('.env.local', 'utf8');
+const envVars = {};
+envContent.split('\n').forEach(line => {
+  const match = line.match(/^([^=]+)=(.*)$/);
+  if (match) {
+    envVars[match[1].trim()] = match[2].trim();
+  }
+});
+
+const supabase = createClient(
+  envVars.NEXT_PUBLIC_SUPABASE_URL,
+  envVars.SUPABASE_SERVICE_ROLE_KEY, // 管理者権限
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+
+// データベース操作の例
+async function main() {
+  // データ取得
+  const { data, error } = await supabase
+    .from('programs')
+    .select('*');
+  
+  if (error) {
+    console.error('エラー:', error);
+    return;
+  }
+  
+  console.log('プログラム一覧:', data);
+}
+
+main();
+```
+
+2. **実行**
+```bash
+node scripts/database-operation.mjs
+```
+
+#### 提供されているスクリプト
+
+```bash
+# データベースの問題を自動修正
+node scripts/fix-database.mjs
+```
+
+このスクリプトは以下を実行します：
+- 重複データの削除
+- 不足データの追加
+- データベースの検証
+
+#### よくある操作例
+
+**データの一括挿入**
+```javascript
+const { error } = await supabase
+  .from('chapters')
+  .insert([
+    { program_id: 1, title: 'チャプター1', order_index: 1 },
+    { program_id: 1, title: 'チャプター2', order_index: 2 }
+  ]);
+```
+
+**データの更新**
+```javascript
+const { error } = await supabase
+  .from('programs')
+  .update({ status: 'published' })
+  .eq('id', 1);
+```
+
+**重複の削除**
+```javascript
+// 1. 重複を検出
+const { data } = await supabase
+  .from('achievements')
+  .select('*');
+
+// 2. 重複を削除
+const duplicateIds = [/* 重複ID */];
+const { error } = await supabase
+  .from('achievements')
+  .delete()
+  .in('id', duplicateIds);
+```
+
+#### 注意事項
+- `SUPABASE_SERVICE_ROLE_KEY` は管理者権限です（RLSをバイパス）
+- 本番環境での実行は慎重に
+- 重要な操作の前にはバックアップを推奨
+
+### Supabase Dashboard（Webブラウザ）
+手動でデータを確認・編集する場合：
+- Dashboard: https://supabase.com/dashboard
+- Table Editor: テーブルのデータを直接編集
+- SQL Editor: SQLクエリを実行
+
 ## 🚢 デプロイ
 
 Vercelを使用してデプロイします。

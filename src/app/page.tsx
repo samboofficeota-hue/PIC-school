@@ -189,7 +189,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/program/business-skills">
+              <Link href="/program/1">
                 <Button
                   size="lg"
                   className="h-14 px-8 bg-white hover:bg-white/90 shadow-xl text-lg group"
@@ -200,7 +200,7 @@ export default function Home() {
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link href="/program/business-skills">
+              <Link href="/program/1">
                 <Button
                   size="lg"
                   variant="outline"
@@ -286,7 +286,7 @@ export default function Home() {
 
           <div className="space-y-4">
             {chapters.map((chapter, index) => (
-              <Link key={index} href="/program/business-skills">
+              <Link key={index} href="/program/1">
                 <Card className="p-6 hover:shadow-lg transition-all cursor-pointer group">
                   <div className="flex items-start gap-6">
                     <div
@@ -403,7 +403,7 @@ export default function Home() {
           <p className="text-xl text-white/90">
             無料で全てのコンテンツにアクセスできます
           </p>
-          <Link href="/program/business-skills">
+          <Link href="/program/1">
             <Button
               size="lg"
               className="h-14 px-8 bg-white hover:bg-white/90 shadow-xl text-lg group"
@@ -435,15 +435,6 @@ export default function Home() {
             </Link>
             <Link href="/admin" className="text-sm hover:text-primary transition-colors">
               管理画面
-            </Link>
-            <Link href="/test-supabase" className="text-sm hover:text-primary transition-colors">
-              Supabaseテスト
-            </Link>
-            <Link href="/test-cloudflare" className="text-sm hover:text-primary transition-colors">
-              R2テスト
-            </Link>
-            <Link href="/debug-env" className="text-sm hover:text-primary transition-colors">
-              環境変数確認
             </Link>
           </div>
           <p className="text-sm">
