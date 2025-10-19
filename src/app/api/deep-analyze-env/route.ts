@@ -37,7 +37,7 @@ export async function GET() {
       return analysis;
     };
 
-    const results = {
+    const results: Record<string, any> = {
       accountId: accountId ? analyzeString(accountId, 'CLOUDFLARE_ACCOUNT_ID') : null,
       accessKeyId: accessKeyId ? analyzeString(accessKeyId, 'CLOUDFLARE_ACCESS_KEY_ID') : null,
       secretKey: secretKey ? analyzeString(secretKey, 'CLOUDFLARE_SECRET_ACCESS_KEY') : null,
@@ -46,7 +46,7 @@ export async function GET() {
 
     // 問題のある文字を検出
     const issues: string[] = [];
-    Object.values(results).forEach(analysis => {
+    Object.values(results).forEach((analysis: any) => {
       if (analysis) {
         if (analysis.hasNewlines) issues.push(`${analysis.name}: Contains newlines`);
         if (analysis.hasCarriageReturns) issues.push(`${analysis.name}: Contains carriage returns`);
