@@ -15,10 +15,14 @@ export default function TestCloudflare() {
         const response = await fetch('/api/test-r2');
         const data = await response.json();
         
+        console.log('API Response:', data);
+        console.log('Response Status:', response.status);
+        
         if (data.success) {
           setStatus(`✅ 接続成功！バケット: ${data.bucket}, オブジェクト数: ${data.objectCount}`);
         } else {
           setStatus(`❌ 接続失敗: ${data.error}`);
+          console.error('API Error Details:', data);
         }
         
       } catch (err) {
@@ -72,9 +76,12 @@ export default function TestCloudflare() {
           )}
           
           <div className="text-sm text-gray-600">
-            <p>Account ID: {process.env.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID || '未設定'}</p>
-            <p>Access Key ID: {process.env.NEXT_PUBLIC_CLOUDFLARE_ACCESS_KEY_ID ? '設定済み' : '未設定'}</p>
-            <p>Secret Key: {process.env.NEXT_PUBLIC_CLOUDFLARE_SECRET_ACCESS_KEY ? '設定済み' : '未設定'}</p>
+            <p>Account ID: サーバーサイドで設定済み</p>
+            <p>Access Key ID: サーバーサイドで設定済み</p>
+            <p>Secret Key: サーバーサイドで設定済み</p>
+            <p className="mt-2 text-xs text-gray-500">
+              ※ セキュリティのため、クライアントサイドでは表示されません
+            </p>
           </div>
         </div>
       </div>
