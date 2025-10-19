@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 export default function R2DirectTest() {
   const [envAnalysis, setEnvAnalysis] = useState<any>(null);
   const [r2Test, setR2Test] = useState<any>(null);
+  const [bucketCheck, setBucketCheck] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +26,13 @@ export default function R2DirectTest() {
         const r2Data = await r2Response.json();
         setR2Test(r2Data);
         console.log('R2 test:', r2Data);
+
+        // 3. バケット存在確認
+        console.log('Running bucket check...');
+        const bucketResponse = await fetch('/api/check-r2-bucket');
+        const bucketData = await bucketResponse.json();
+        setBucketCheck(bucketData);
+        console.log('Bucket check:', bucketData);
 
       } catch (error) {
         console.error('Test error:', error);
@@ -55,7 +63,7 @@ export default function R2DirectTest() {
       <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8">Cloudflare R2 直接テスト</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* 環境変数分析 */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4">環境変数分析</h2>
@@ -121,6 +129,39 @@ export default function R2DirectTest() {
               </div>
             ) : (
               <p className="text-red-500">R2接続テストの結果を取得できませんでした</p>
+            )}
+          </div>
+
+          {/* バケット存在確認 */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">バケット存在確認</h2>
+            {bucketCheck ? (
+              <div className="space-y-4">
+                <div className={`p-3 rounded ${bucketCheck.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <p className="font-medium">
+                    {bucketCheck.success ? '✅ バケット確認成功' : '❌ バケット確認失敗'}
+                  </p>
+                  {bucketCheck.message && (
+                    <p className="text-sm mt-1">{bucketCheck.message}</p>
+                  )}
+                </div>
+                
+                {bucketCheck.results && (
+                  <div className="space-y-2 text-sm">
+                    {bucketCheck.results.map((result: any, index: number) => (
+                      <div key={index} className={`border rounded p-2 ${result.success ? 'bg-green-50' : 'bg-red-50'}`}>
+                        <p className="font-medium">{result.test}: {result.success ? '✅' : '❌'}</p>
+                        <p className="text-xs">{result.message}</p>
+                        {result.suggestion && (
+                          <p className="text-xs text-blue-600 mt-1">💡 {result.suggestion}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-red-500">バケット確認の結果を取得できませんでした</p>
             )}
           </div>
         </div>
