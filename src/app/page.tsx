@@ -9,17 +9,13 @@ import {
   Award,
   Users,
   Target,
-  CheckCircle,
   Clock,
-  TrendingUp,
   Sparkles,
   MessageSquare,
-  BarChart3,
   ArrowRight,
   Play,
   LogIn,
   LogOut,
-  Comments,
   Newspaper,
   PencilAlt,
   Robot,
@@ -47,7 +43,7 @@ export default function Home() {
 
   const features = [
     {
-      icon: Comments,
+      icon: MessageSquare,
       title: '対話形式の学び',
       description: '原丈人氏と編集者の対話を通じて、複雑な概念をわかりやすく理解できます。',
       color: 'var(--color-primary)'
