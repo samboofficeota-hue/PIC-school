@@ -333,7 +333,7 @@ export default function LearningHistory() {
                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                       <span className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
-                        {item.instructor}
+                        公益資本主義アカデミー
                       </span>
                       <span className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
