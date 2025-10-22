@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   BookOpen,
+  Calendar,
   Clock,
   Layers,
   ArrowLeft,
@@ -20,10 +21,13 @@ import {
   PenTool,
   Bot,
   ClipboardList,
-  Check
+  Check,
+  Lightbulb
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import './lesson-styles.css';
+import './session-components.css';
 
 export default function LessonPage() {
   const { lessonId } = useParams();
@@ -116,69 +120,97 @@ export default function LessonPage() {
     switch (sessionId) {
       case 1:
         return (
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="space-y-6">
-                {/* メッセージ1 */}
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-15 h-15 rounded-full flex items-center justify-center font-bold text-lg shadow-md" style={{ background: 'linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%)', color: 'var(--color-white)' }}>
-                    編
-                  </div>
-                  <div className="flex-grow">
-                    <div className="font-bold text-base mb-1" style={{ color: 'var(--color-text-primary)' }}>
-                      編集者
-                      <span className="text-sm font-normal ml-2" style={{ color: 'var(--color-text-light)' }}>ファシリテーター</span>
-                    </div>
-                    <div className="p-4 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-secondary-pale) 0%, rgba(255,255,255,0.5) 100%)', color: 'var(--color-text-secondary)' }}>
-                      原さん、今日は「公益資本主義」について教えていただけますか？最近よく耳にする言葉ですが、具体的にどういう概念なのでしょうか？
-                    </div>
-                  </div>
+          <div className="chat-container">
+            {/* メッセージ1 */}
+            <div className="chat-message speaker-editor">
+              <div className="chat-avatar speaker-editor">編</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">
+                  編集者
+                  <span className="chat-speaker-role">ファシリテーター</span>
                 </div>
-
-                {/* メッセージ2 */}
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-15 h-15 rounded-full flex items-center justify-center font-bold text-lg shadow-md" style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)', color: 'var(--color-white)' }}>
-                    原
-                  </div>
-                  <div className="flex-grow">
-                    <div className="font-bold text-base mb-1" style={{ color: 'var(--color-text-primary)' }}>
-                      原丈人
-                      <span className="text-sm font-normal ml-2" style={{ color: 'var(--color-text-light)' }}>公益資本主義提唱者</span>
-                    </div>
-                    <div className="p-4 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, rgba(255,255,255,0.5) 100%)', color: 'var(--color-text-secondary)' }}>
-                      はい。公益資本主義とは、簡単に言うと「企業が社会全体の利益を考えながら事業を行う」という考え方です。従来の株主至上主義とは異なり、従業員、顧客、取引先、そして社会全体のステークホルダーの利益をバランスよく考える経営哲学なんです。
-                    </div>
-                  </div>
+                <div className="chat-bubble">
+                  原さん、今日は「公益資本主義」について教えていただけますか？最近よく耳にする言葉ですが、具体的にどういう概念なのでしょうか？
                 </div>
+              </div>
+            </div>
 
-                {/* メッセージ3 */}
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-15 h-15 rounded-full flex items-center justify-center font-bold text-lg shadow-md" style={{ background: 'linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%)', color: 'var(--color-white)' }}>
-                    編
-                  </div>
-                  <div className="flex-grow">
-                    <div className="font-bold text-base mb-1" style={{ color: 'var(--color-text-primary)' }}>
-                      編集者
-                    </div>
-                    <div className="p-4 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-secondary-pale) 0%, rgba(255,255,255,0.5) 100%)', color: 'var(--color-text-secondary)' }}>
-                      なるほど。でも、企業は利益を追求するのが当たり前ですよね？公益と利益は矛盾しないんでしょうか？
-                    </div>
-                  </div>
+            {/* メッセージ2 */}
+            <div className="chat-message speaker-hara">
+              <div className="chat-avatar speaker-hara">原</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">
+                  原丈人
+                  <span className="chat-speaker-role">公益資本主義提唱者</span>
                 </div>
+                <div className="chat-bubble">
+                  はい。公益資本主義とは、簡単に言うと「企業が社会全体の利益を考えながら事業を行う」という考え方です。従来の株主至上主義とは異なり、従業員、顧客、取引先、そして社会全体のステークホルダーの利益をバランスよく考える経営哲学なんです。
+                </div>
+              </div>
+            </div>
 
-                {/* メッセージ4 */}
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-15 h-15 rounded-full flex items-center justify-center font-bold text-lg shadow-md" style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)', color: 'var(--color-white)' }}>
-                    原
-                  </div>
-                  <div className="flex-grow">
-                    <div className="font-bold text-base mb-1" style={{ color: 'var(--color-text-primary)' }}>
-                      原丈人
-                    </div>
-                    <div className="p-4 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, rgba(255,255,255,0.5) 100%)', color: 'var(--color-text-secondary)' }}>
-                      いい質問ですね。実は、矛盾しないんです。むしろ、長期的に見れば公益を追求することが企業の持続的な成長につながります。従業員を大切にすれば生産性が上がり、顧客を大切にすれば信頼が得られ、社会を大切にすればブランド価値が高まる。これが好循環を生むんです。
-                    </div>
-                  </div>
+            {/* メッセージ3 */}
+            <div className="chat-message speaker-editor">
+              <div className="chat-avatar speaker-editor">編</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">編集者</div>
+                <div className="chat-bubble">
+                  なるほど。でも、企業は利益を追求するのが当たり前ですよね？公益と利益は矛盾しないんでしょうか？
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ4 */}
+            <div className="chat-message speaker-hara">
+              <div className="chat-avatar speaker-hara">原</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">原丈人</div>
+                <div className="chat-bubble">
+                  いい質問ですね。実は、矛盾しないんです。むしろ、長期的に見れば公益を追求することが企業の持続的な成長につながります。従業員を大切にすれば生産性が上がり、顧客を大切にすれば信頼が得られ、社会を大切にすればブランド価値が高まる。これが好循環を生むんです。
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ5 */}
+            <div className="chat-message speaker-editor">
+              <div className="chat-avatar speaker-editor">編</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">編集者</div>
+                <div className="chat-bubble">
+                  確かに、短期的な利益だけを追求すると、従業員のモチベーションが下がったり、顧客離れが起きたりしますね。
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ6 */}
+            <div className="chat-message speaker-hara">
+              <div className="chat-avatar speaker-hara">原</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">原丈人</div>
+                <div className="chat-bubble">
+                  その通りです。日本は高度経済成長期に、まさにこの公益資本主義的な経営をしていました。終身雇用、年功序列といった制度は、従業員を長期的に育てる仕組みでした。しかし1990年代以降、アメリカ型の株主至上主義が導入され、短期的な株価を重視する経営が主流になってしまった。その結果、賃金は上がらず、格差は拡大し、経済は停滞してしまったんです。
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ7 */}
+            <div className="chat-message speaker-editor">
+              <div className="chat-avatar speaker-editor">編</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">編集者</div>
+                <div className="chat-bubble">
+                  なるほど。つまり、公益資本主義は日本が本来持っていた経営哲学に立ち返るということでもあるんですね。
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ8 */}
+            <div className="chat-message speaker-hara">
+              <div className="chat-avatar speaker-hara">原</div>
+              <div className="chat-content">
+                <div className="chat-speaker-name">原丈人</div>
+                <div className="chat-bubble">
+                  まさにその通りです。ただし、昔に戻るのではなく、現代に合わせてアップデートする必要があります。グローバル化、デジタル化が進む中で、どうやって公益と利益を両立させるか。それが私たちに課された課題なんです。
                 </div>
               </div>
             </div>
@@ -187,44 +219,43 @@ export default function LessonPage() {
 
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4" style={{ borderLeftColor: 'var(--color-accent)' }}>
-              <div className="flex gap-4 mb-4 text-sm" style={{ color: 'var(--color-text-light)' }}>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>2024年12月15日</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Newspaper className="w-4 h-4" />
-                  <span>日本経済新聞</span>
-                </div>
+          <div className="news-article">
+            <div className="news-meta">
+              <div className="news-date">
+                <Calendar className="w-4 h-4" />
+                <span>2024年12月15日</span>
               </div>
-              
-              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
-                トヨタ、従業員への利益還元を大幅拡大　ベースアップ過去最高に
-              </h3>
-              
-              <div className="p-4 rounded-lg mb-6" style={{ backgroundColor: 'var(--color-background)' }}>
-                <p className="mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-                  トヨタ自動車は15日、2025年春闘において従業員へのベースアップを過去最高水準とする方針を発表した。好調な業績を背景に、労働分配率を引き上げ、従業員への還元を強化する。同社は「従業員の成長なくして企業の成長はない」とコメントしている。
-                </p>
-                <p style={{ color: 'var(--color-text-secondary)' }}>
-                  一方で、株主への配当も維持する方針で、従業員、株主、そして設備投資のバランスを取った経営を目指すとしている。この動きは、他の日本企業にも波及する可能性がある。
-                </p>
+              <div className="news-source">
+                <Newspaper className="w-4 h-4" />
+                <span>日本経済新聞</span>
               </div>
-              
-              <div className="p-6 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-accent-pale) 0%, rgba(255,255,255,0.5) 100%)' }}>
-                <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text-primary)' }}>
-                  💡 公益資本主義的な視点
-                </h4>
-                <div style={{ color: 'var(--color-text-secondary)' }}>
-                  <p className="mb-4">このトヨタのニュースは、まさに公益資本主義の実践例と言えます。注目すべきは以下の3点です：</p>
-                  <ul className="space-y-2 pl-6">
-                    <li><strong>従業員への還元強化：</strong>ベースアップの大幅な引き上げは、従業員の生活を向上させ、モチベーションを高めます。これは短期的にはコストですが、長期的には生産性向上につながります。</li>
-                    <li><strong>バランスの取れた分配：</strong>従業員への還元を強化しながらも、株主配当を維持し、設備投資も確保する。これは「適正な社中分配」の実践です。</li>
-                    <li><strong>社会への波及効果：</strong>トヨタのような大企業の動きは、他企業にも影響を与えます。賃上げが広がれば、日本経済全体の消費が活性化し、好循環が生まれます。</li>
-                  </ul>
-                </div>
+            </div>
+            
+            <h3 className="news-title">
+              トヨタ、従業員への利益還元を大幅拡大 ベースアップ過去最高に
+            </h3>
+            
+            <div className="news-summary">
+              トヨタ自動車は15日、2025年春闘において従業員へのベースアップを過去最高水準とする方針を発表した。好調な業績を背景に、労働分配率を引き上げ、従業員への還元を強化する。同社は「従業員の成長なくして企業の成長はない」とコメントしている。
+              <br /><br />
+              一方で、株主への配当も維持する方針で、従業員、株主、そして設備投資のバランスを取った経営を目指すとしている。この動きは、他の日本企業にも波及する可能性がある。
+            </div>
+            
+            <div className="news-perspective">
+              <h4 className="news-perspective-title">
+                <Lightbulb className="w-5 h-5" />
+                公益資本主義的な視点
+              </h4>
+              <div className="news-perspective-content">
+                このトヨタのニュースは、まさに公益資本主義の実践例と言えます。注目すべきは以下の3点です：
+                <br /><br />
+                <strong>従業員への還元強化：</strong>ベースアップの大幅な引き上げは、従業員の生活を向上させ、モチベーションを高めます。これは短期的にはコストですが、長期的には生産性向上につながります。
+                <br /><br />
+                <strong>バランスの取れた分配：</strong>従業員への還元を強化しながらも、株主配当を維持し、設備投資も確保する。これは「適正な社中分配」の実践です。
+                <br /><br />
+                <strong>社会への波及効果：</strong>トヨタのような大企業の動きは、他企業にも影響を与えます。賃上げが広がれば、日本経済全体の消費が活性化し、好循環が生まれます。
+                <br /><br />
+                株主至上主義では、利益の多くを株主還元に回し、従業員への分配は最小限に抑えられがちです。しかし、トヨタのアプローチは、すべてのステークホルダーを考慮した持続可能な経営モデルを示しています。
               </div>
             </div>
           </div>
@@ -233,9 +264,10 @@ export default function LessonPage() {
       case 3:
         return (
           <div className="space-y-6">
-            <div className="text-center p-6 rounded-lg" style={{ background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%)' }}>
-              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
-                📝 ワーク：公益資本主義を自分の言葉で説明してみよう
+            <div className="work-intro">
+              <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                <PenTool className="w-6 h-6 inline mr-2" />
+                ワーク：公益資本主義を自分の言葉で説明してみよう
               </h3>
               <p style={{ color: 'var(--color-text-secondary)' }}>
                 Session 1とSession 2で学んだことを踏まえて、あなた自身の言葉で公益資本主義を説明してみましょう。<br />
@@ -243,53 +275,40 @@ export default function LessonPage() {
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text-primary)' }}>
-                <PenTool className="w-5 h-5" />
-                あなたの理解を言葉にしてみよう
-              </h4>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>
-                    1. 公益資本主義とは何か、あなたの言葉で説明してください
-                  </label>
+            <div className="work-form">
+              <div className="form-section">
+                <h4 className="form-section-title">1. 公益資本主義とは何か、あなたの言葉で説明してください</h4>
+                <div className="form-group">
+                  <label className="form-label">あなたの考えを自由に書いてください</label>
                   <textarea 
-                    className="w-full p-4 border-2 rounded-lg resize-vertical min-h-32"
-                    style={{ borderColor: 'var(--color-border)' }}
+                    className="form-textarea"
+                    rows={6}
                     placeholder="例：公益資本主義とは、企業が利益を追求しながらも、従業員や社会全体の幸福も同時に考える経営の考え方だと思います..."
                   />
-                  <p className="text-sm mt-2" style={{ color: 'var(--color-text-light)' }}>
-                    💡 ヒント：誰かに説明するつもりで、できるだけわかりやすく書いてみましょう
-                  </p>
+                  <div className="form-hint">💡 ヒント：誰かに説明するつもりで、できるだけわかりやすく書いてみましょう</div>
                 </div>
+              </div>
 
-                <div>
-                  <label className="block font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>
-                    2. なぜ今の日本に公益資本主義が必要だと思いますか？
-                  </label>
+              <div className="form-section">
+                <h4 className="form-section-title">2. なぜ今の日本に公益資本主義が必要だと思いますか？</h4>
+                <div className="form-group">
+                  <label className="form-label">あなたの考えを自由に書いてください</label>
                   <textarea 
-                    className="w-full p-4 border-2 rounded-lg resize-vertical min-h-32"
-                    style={{ borderColor: 'var(--color-border)' }}
+                    className="form-textarea"
+                    rows={6}
                     placeholder="例：日本では賃金が上がらず、格差が広がっています。公益資本主義によって従業員への分配が増えれば..."
                   />
-                  <p className="text-sm mt-2" style={{ color: 'var(--color-text-light)' }}>
-                    💡 ヒント：Session 2のニュースも参考に、日本の課題と結びつけて考えてみましょう
-                  </p>
+                  <div className="form-hint">💡 ヒント：Session 2のニュースも参考に、日本の課題と結びつけて考えてみましょう</div>
                 </div>
-
-                <Button 
-                  className="w-full py-3 text-lg font-bold"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
-                    color: 'var(--color-white)',
-                    boxShadow: 'var(--shadow-sm)'
-                  }}
-                >
-                  <Check className="w-5 h-5 mr-2" />
-                  回答を保存
-                </Button>
               </div>
+
+              <button 
+                className="dialogue-submit"
+                style={{ marginTop: 'var(--spacing-xl)' }}
+              >
+                <Check className="w-5 h-5 mr-2" />
+                回答を保存
+              </button>
             </div>
           </div>
         );
@@ -508,60 +527,42 @@ export default function LessonPage() {
       </header>
 
       {/* レッスンヘッダー */}
-      <section 
-        className="relative overflow-hidden"
-        style={{ 
-          background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%)',
-          padding: 'var(--spacing-2xl) 0'
-        }}
-      >
-        <div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            background: 'radial-gradient(circle at 20% 50%, rgba(111, 218, 163, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(94, 196, 232, 0.15) 0%, transparent 50%)'
-          }}
-        />
-        
-        <div className="container relative z-10">
-          <div className="flex items-center gap-2 text-sm mb-6" style={{ color: 'var(--color-text-light)' }}>
-            <Link href="/" className="hover:text-primary transition-colors">
-              <Home className="w-4 h-4 inline mr-1" />
-              ホーム
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <Link href="/lessons" className="hover:text-primary transition-colors">カリキュラム</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span>第{lessonIdNum}回</span>
-          </div>
-          
-          <div className="flex gap-8 items-start">
-            <div
-              className="flex-shrink-0 w-25 h-25 rounded-lg flex flex-col items-center justify-center text-white font-bold shadow-lg"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)' }}
-            >
-              <div className="text-sm opacity-90">Lesson</div>
-              <div className="text-4xl leading-none">{String(lessonIdNum).padStart(2, '0')}</div>
+      <section className="lesson-header">
+        <div className="container">
+          <div className="lesson-header-content">
+            <div className="lesson-breadcrumb">
+              <Link href="/">
+                <Home className="w-4 h-4 inline mr-1" />
+                ホーム
+              </Link>
+              <ChevronRight className="w-4 h-4" />
+              <Link href="/lessons">カリキュラム</Link>
+              <ChevronRight className="w-4 h-4" />
+              <span>第{lessonIdNum}回</span>
             </div>
             
-            <div className="flex-grow">
-              <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
-                {lesson.title}
-              </h1>
-              <p className="text-xl mb-6" style={{ color: 'var(--color-text-secondary)' }}>
-                {lesson.subtitle}
-              </p>
-              <div className="flex gap-6 flex-wrap">
-                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                  <Clock className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-                  <span>{lesson.duration}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                  <Layers className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-                  <span>{lesson.sessions}つのSession</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                  <BookOpen className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-                  <span>第{lessonIdNum}回 / 全10回</span>
+            <div className="lesson-header-main">
+              <div className="lesson-header-number">
+                <div className="lesson-header-number-label">Lesson</div>
+                <div className="lesson-header-number-value">{String(lessonIdNum).padStart(2, '0')}</div>
+              </div>
+              
+              <div className="lesson-header-info">
+                <h1 className="lesson-header-title">{lesson.title}</h1>
+                <p className="lesson-header-subtitle">{lesson.subtitle}</p>
+                <div className="lesson-header-meta">
+                  <div className="lesson-header-meta-item">
+                    <Clock className="w-4 h-4" />
+                    <span>{lesson.duration}</span>
+                  </div>
+                  <div className="lesson-header-meta-item">
+                    <Layers className="w-4 h-4" />
+                    <span>{lesson.sessions}つのSession</span>
+                  </div>
+                  <div className="lesson-header-meta-item">
+                    <BookOpen className="w-4 h-4" />
+                    <span>第{lessonIdNum}回 / 全10回</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -574,103 +575,78 @@ export default function LessonPage() {
         <div className="container">
           
           {/* セッションナビゲーション */}
-          <div className="bg-white rounded-lg p-6 shadow-md mb-8 sticky top-20 z-40">
-            <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+          <div className="session-nav">
+            <h3 className="session-nav-title">
               <Layers className="w-5 h-5 inline mr-2" />
               Session一覧
             </h3>
-            <div className="flex gap-2 flex-wrap">
+            <div className="session-nav-list">
               {sessions.map((session) => (
-                <button
+                <div
                   key={session.id}
                   onClick={() => showSession(session.id)}
-                  className={`flex-1 min-w-36 p-4 rounded-lg text-center transition-all border-2 ${
-                    currentSession === session.id 
-                      ? 'border-primary shadow-sm' 
-                      : 'border-transparent hover:shadow-md hover:-translate-y-0.5'
-                  }`}
-                  style={{ 
-                    backgroundColor: session.color,
-                    color: '#333'
-                  }}
+                  className={`session-nav-item ${currentSession === session.id ? 'active' : ''}`}
+                  data-session={session.id}
                 >
-                  <div className="text-lg font-bold mb-1">Session {session.id}</div>
-                  <div className="text-sm">{session.title}</div>
-                </button>
+                  <div className="session-nav-item-number">Session {session.id}</div>
+                  <div className="session-nav-item-name">{session.title}</div>
+                </div>
               ))}
             </div>
           </div>
 
           {/* セッションコンテンツ */}
-          <div className="bg-white rounded-lg p-8 shadow-md mb-8">
-            <div className="text-center mb-8">
-              <div 
-                className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-3xl shadow-lg"
-                style={{ backgroundColor: sessions[currentSession - 1]?.color }}
-              >
-                {currentSession}
+          <div className="session-content active">
+            <div className="session-header" data-session={currentSession}>
+              <div className="session-header-icon">
+                {currentSession === 1 && <MessageSquare className="w-8 h-8" />}
+                {currentSession === 2 && <Newspaper className="w-8 h-8" />}
+                {currentSession === 3 && <PenTool className="w-8 h-8" />}
+                {currentSession === 4 && <Bot className="w-8 h-8" />}
+                {currentSession === 5 && <ClipboardList className="w-8 h-8" />}
               </div>
-              <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
-                Session {currentSession}: {sessions[currentSession - 1]?.title}
-              </h2>
-              <p className="text-base" style={{ color: 'var(--color-text-secondary)' }}>
+              <h2 className="session-header-title">Session {currentSession}: {sessions[currentSession - 1]?.title}</h2>
+              <p className="session-header-description">
                 {sessions[currentSession - 1]?.description}
               </p>
             </div>
             
-            {renderSessionContent(currentSession)}
+            <div className="session-body">
+              {renderSessionContent(currentSession)}
+            </div>
           </div>
 
           {/* セッションフッター */}
-          <div className="flex justify-between items-center gap-4 p-6 bg-white rounded-lg shadow-md">
-            <Button
+          <div className="session-footer">
+            <button
               onClick={prevSession}
               disabled={currentSession === 1}
-              className="flex items-center gap-2"
-              style={{ 
-                backgroundColor: currentSession === 1 ? 'var(--color-border)' : 'var(--color-border)',
-                color: 'var(--color-text-primary)'
-              }}
+              className="session-nav-button prev"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>前のSession</span>
-            </Button>
+            </button>
             
-            <div className="text-center">
-              <div className="text-sm mb-2" style={{ color: 'var(--color-text-light)' }}>
-                Session {currentSession} / 5
-              </div>
-              <div className="flex gap-2 justify-center">
+            <div className="session-progress-indicator">
+              <div className="session-progress-text">Session {currentSession} / 5</div>
+              <div className="session-progress-dots">
                 {[1, 2, 3, 4, 5].map((dot) => (
                   <div
                     key={dot}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      currentSession === dot 
-                        ? 'scale-130' 
-                        : ''
-                    }`}
-                    style={{ 
-                      backgroundColor: currentSession === dot 
-                        ? 'var(--color-primary)' 
-                        : 'var(--color-border)'
-                    }}
+                    className={`session-progress-dot ${currentSession === dot ? 'active' : ''}`}
+                    data-dot={dot}
                   />
                 ))}
               </div>
             </div>
             
-            <Button
+            <button
               onClick={currentSession === 5 ? () => window.location.href = '/lessons' : nextSession}
-              className="flex items-center gap-2"
-              style={{
-                background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
-                color: 'var(--color-white)',
-                boxShadow: 'var(--shadow-sm)'
-              }}
+              className={`session-nav-button ${currentSession === 5 ? 'complete' : 'next'}`}
             >
               <span>{currentSession === 5 ? '講座を完了' : '次のSession'}</span>
               {currentSession === 5 ? <Check className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </Button>
+            </button>
           </div>
 
         </div>
