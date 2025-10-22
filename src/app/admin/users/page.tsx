@@ -31,8 +31,8 @@ interface User {
   joinDate: string;
   lastLogin: string;
   totalSpent: number;
-  programsCompleted: number;
-  currentProgram?: string;
+  lessonsCompleted: number;
+  currentLesson?: string;
 }
 
 export default function UserManagement() {
@@ -48,12 +48,12 @@ export default function UserManagement() {
       email: 'tanaka@example.com',
       phone: '090-1234-5678',
       status: 'active',
-      plan: 'premium',
+      plan: 'free',
       joinDate: '2024-01-15',
       lastLogin: '2024-01-20',
-      totalSpent: 150000,
-      programsCompleted: 3,
-      currentProgram: 'ビジネススキル基礎コース'
+      totalSpent: 0,
+      lessonsCompleted: 3,
+      currentLesson: '第4回：社会課題とビジネス'
     },
     {
       id: '2',
@@ -65,8 +65,8 @@ export default function UserManagement() {
       joinDate: '2024-01-10',
       lastLogin: '2024-01-19',
       totalSpent: 0,
-      programsCompleted: 1,
-      currentProgram: 'マーケティング戦略'
+      lessonsCompleted: 1,
+      currentLesson: '第2回：企業の社会的責任'
     },
     {
       id: '3',
@@ -74,12 +74,12 @@ export default function UserManagement() {
       email: 'suzuki@example.com',
       phone: '090-3456-7890',
       status: 'inactive',
-      plan: 'premium',
+      plan: 'free',
       joinDate: '2023-12-20',
       lastLogin: '2024-01-05',
-      totalSpent: 200000,
-      programsCompleted: 5,
-      currentProgram: undefined
+      totalSpent: 0,
+      lessonsCompleted: 5,
+      currentLesson: undefined
     },
     {
       id: '4',
@@ -87,12 +87,12 @@ export default function UserManagement() {
       email: 'takahashi@example.com',
       phone: '090-4567-8901',
       status: 'suspended',
-      plan: 'enterprise',
+      plan: 'free',
       joinDate: '2023-11-15',
       lastLogin: '2024-01-18',
-      totalSpent: 500000,
-      programsCompleted: 8,
-      currentProgram: 'データ分析コース'
+      totalSpent: 0,
+      lessonsCompleted: 8,
+      currentLesson: '第9回：サステナビリティ経営'
     }
   ];
 
@@ -119,7 +119,7 @@ export default function UserManagement() {
   const getPlanBadge = (plan: string) => {
     switch (plan) {
       case 'free':
-        return <Badge variant="outline">無料</Badge>;
+        return <Badge className="bg-green-100 text-green-800">無料（全講座利用可能）</Badge>;
       case 'premium':
         return <Badge className="bg-blue-100 text-blue-800">プレミアム</Badge>;
       case 'enterprise':
@@ -288,11 +288,11 @@ export default function UserManagement() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm text-gray-900">
-                      {user.programsCompleted} コース完了
+                      {user.lessonsCompleted} 講座完了
                     </div>
-                    {user.currentProgram && (
+                    {user.currentLesson && (
                       <div className="text-sm text-gray-500">
-                        受講中: {user.currentProgram}
+                        受講中: {user.currentLesson}
                       </div>
                     )}
                   </td>
@@ -302,7 +302,7 @@ export default function UserManagement() {
                     </div>
                     <div className="text-sm text-gray-500 flex items-center">
                       <CreditCard className="w-3 h-3 mr-1" />
-                      {user.plan === 'free' ? '未払い' : '支払い済み'}
+                      無料プラン
                     </div>
                   </td>
                   <td className="px-6 py-4">

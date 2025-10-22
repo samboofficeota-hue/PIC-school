@@ -30,10 +30,10 @@ interface LearningProgress {
   id: string;
   userId: string;
   userName: string;
-  programId: string;
-  programName: string;
-  chapterId: string;
-  chapterName: string;
+  lessonId: number;
+  lessonName: string;
+  sessionNumber: number;
+  sessionName: string;
   progress: number;
   status: 'in_progress' | 'completed' | 'not_started';
   startedAt: string;
@@ -45,8 +45,8 @@ interface LearningProgress {
 interface UserAnalytics {
   userId: string;
   userName: string;
-  totalPrograms: number;
-  completedPrograms: number;
+  totalLessons: number;
+  completedLessons: number;
   totalTimeSpent: number;
   averageScore: number;
   lastActivity: string;
@@ -65,53 +65,53 @@ export default function LearningAnalytics() {
       id: '1',
       userId: 'user1',
       userName: '田中 太郎',
-      programId: 'prog1',
-      programName: 'ビジネススキル基礎コース',
-      chapterId: 'ch1',
-      chapterName: 'ビジネスの基本原則',
+      lessonId: 1,
+      lessonName: '第1回：公益資本主義とは',
+      sessionNumber: 5,
+      sessionName: 'Session 5: サマリー',
       progress: 100,
       status: 'completed',
       startedAt: '2024-01-15',
       completedAt: '2024-01-16',
-      timeSpent: 45,
+      timeSpent: 28,
       score: 85
     },
     {
       id: '2',
       userId: 'user1',
       userName: '田中 太郎',
-      programId: 'prog1',
-      programName: 'ビジネススキル基礎コース',
-      chapterId: 'ch2',
-      chapterName: '市場分析と顧客理解',
+      lessonId: 2,
+      lessonName: '第2回：企業の社会的責任',
+      sessionNumber: 3,
+      sessionName: 'Session 3: ワーク',
       progress: 75,
       status: 'in_progress',
       startedAt: '2024-01-17',
-      timeSpent: 30,
+      timeSpent: 15,
       score: 78
     },
     {
       id: '3',
       userId: 'user2',
       userName: '佐藤 花子',
-      programId: 'prog2',
-      programName: 'マーケティング戦略',
-      chapterId: 'ch3',
-      chapterName: '戦略立案と計画',
+      lessonId: 1,
+      lessonName: '第1回：公益資本主義とは',
+      sessionNumber: 3,
+      sessionName: 'Session 3: ワーク',
       progress: 50,
       status: 'in_progress',
       startedAt: '2024-01-18',
-      timeSpent: 20,
+      timeSpent: 12,
       score: 72
     },
     {
       id: '4',
       userId: 'user3',
       userName: '鈴木 一郎',
-      programId: 'prog1',
-      programName: 'ビジネススキル基礎コース',
-      chapterId: 'ch1',
-      chapterName: 'ビジネスの基本原則',
+      lessonId: 1,
+      lessonName: '第1回：公益資本主義とは',
+      sessionNumber: 1,
+      sessionName: 'Session 1: イントロ',
       progress: 0,
       status: 'not_started',
       startedAt: '2024-01-20',
@@ -123,8 +123,8 @@ export default function LearningAnalytics() {
     {
       userId: 'user1',
       userName: '田中 太郎',
-      totalPrograms: 3,
-      completedPrograms: 1,
+      totalLessons: 3,
+      completedLessons: 1,
       totalTimeSpent: 180,
       averageScore: 82,
       lastActivity: '2024-01-20',
@@ -134,8 +134,8 @@ export default function LearningAnalytics() {
     {
       userId: 'user2',
       userName: '佐藤 花子',
-      totalPrograms: 2,
-      completedPrograms: 0,
+      totalLessons: 2,
+      completedLessons: 0,
       totalTimeSpent: 120,
       averageScore: 75,
       lastActivity: '2024-01-19',
@@ -145,8 +145,8 @@ export default function LearningAnalytics() {
     {
       userId: 'user3',
       userName: '鈴木 一郎',
-      totalPrograms: 1,
-      completedPrograms: 0,
+      totalLessons: 1,
+      completedLessons: 0,
       totalTimeSpent: 0,
       averageScore: 0,
       lastActivity: '2024-01-20',
@@ -205,8 +205,8 @@ export default function LearningAnalytics() {
 
   const filteredProgress = learningProgress.filter(progress => 
     progress.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    progress.programName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    progress.chapterName.toLowerCase().includes(searchTerm.toLowerCase())
+    progress.lessonName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    progress.sessionName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -310,24 +310,24 @@ export default function LearningAnalytics() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* 完了率の推移 */}
             <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4">完了率の推移</h3>
+              <h3 className="text-lg font-semibold mb-4">講座完了率の推移</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">ビジネススキル基礎コース</span>
+                  <span className="text-sm text-gray-600">第1回：公益資本主義とは</span>
                   <div className="flex items-center space-x-2">
                     <Progress value={78} className="w-24" />
                     <span className="text-sm font-medium">78%</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">マーケティング戦略</span>
+                  <span className="text-sm text-gray-600">第2回：企業の社会的責任</span>
                   <div className="flex items-center space-x-2">
                     <Progress value={65} className="w-24" />
                     <span className="text-sm font-medium">65%</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">データ分析コース</span>
+                  <span className="text-sm text-gray-600">第3回：ステークホルダー経営</span>
                   <div className="flex items-center space-x-2">
                     <Progress value={45} className="w-24" />
                     <span className="text-sm font-medium">45%</span>
@@ -393,7 +393,7 @@ export default function LearningAnalytics() {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <input
                     type="text"
-                    placeholder="ユーザー名、プログラム名、チャプター名で検索..."
+                    placeholder="ユーザー名、講座名、Session名で検索..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -417,10 +417,10 @@ export default function LearningAnalytics() {
                       ユーザー
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      プログラム
+                      講座
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      チャプター
+                      Session
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       進捗
@@ -453,10 +453,10 @@ export default function LearningAnalytics() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">{progress.programName}</div>
+                        <div className="text-sm text-gray-900">{progress.lessonName}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">{progress.chapterName}</div>
+                        <div className="text-sm text-gray-900">{progress.sessionName}</div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center space-x-2">
@@ -510,8 +510,8 @@ export default function LearningAnalytics() {
                 
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">受講プログラム</span>
-                    <span className="text-sm font-medium">{user.completedPrograms}/{user.totalPrograms}</span>
+                    <span className="text-sm text-gray-600">受講講座</span>
+                    <span className="text-sm font-medium">{user.completedLessons}/{user.totalLessons}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-sm text-gray-600">総学習時間</span>

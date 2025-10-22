@@ -170,7 +170,7 @@ export default function Home() {
               <Link href="/" className="nav-link active">
                 ホーム
               </Link>
-              <Link href="/program/1" className="nav-link">
+              <Link href="/lessons" className="nav-link">
                 カリキュラム
               </Link>
               <Link href="#about" className="nav-link">
@@ -268,7 +268,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/program/1">
+              <Link href="/lessons">
                 <Button
                   size="lg"
                   className="h-14 px-8 text-lg group"
@@ -474,7 +474,7 @@ export default function Home() {
             公益資本主義を学ぶことは、あなた自身の未来を考えることです。<br />
             今すぐカリキュラムをチェックして、学びの旅を始めましょう。
           </p>
-          <Link href="/program/1">
+          <Link href="/lessons">
             <Button
               size="lg"
               className="h-14 px-8 text-lg group"
@@ -513,7 +513,7 @@ export default function Home() {
               <h3 className="text-white mb-4">リンク</h3>
               <div className="space-y-2">
                 <p><Link href="/" className="text-sm text-white/80 hover:text-white transition-colors">ホーム</Link></p>
-                <p><Link href="/program/1" className="text-sm text-white/80 hover:text-white transition-colors">カリキュラム</Link></p>
+                <p><Link href="/lessons" className="text-sm text-white/80 hover:text-white transition-colors">カリキュラム</Link></p>
                 <p><Link href="#about" className="text-sm text-white/80 hover:text-white transition-colors">概要</Link></p>
               </div>
             </div>

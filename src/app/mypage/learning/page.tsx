@@ -5,6 +5,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { useLessonStats } from '@/lib/hooks/useLessons';
+import { LESSONS, getLessonById, type LessonId } from '@/types';
 import {
   BookOpen,
   Clock,
@@ -28,9 +30,45 @@ export default function LearningHistory() {
   const [activeTab, setActiveTab] = useState<'all' | 'completed' | 'in_progress' | 'not_started'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'recent' | 'progress' | 'name'>('recent');
+  
+  // 新しいLesson統計を使用
+  const { stats, loading } = useLessonStats();
 
-  // サンプルデータ（実際のアプリではAPIから取得）
-  const learningHistory = [
+  // 講座履歴データを生成
+  const learningHistory = LESSONS.map(lesson => {
+    const lessonStat = stats?.by_lesson?.find((s: any) => s.lesson_id === lesson.id);
+    const completedSessions = lessonStat?.completed_sessions || 0;
+    const progress = lessonStat?.progress_percentage || 0;
+    
+    let status: 'completed' | 'in_progress' | 'not_started' = 'not_started';
+    if (completedSessions === 5) {
+      status = 'completed';
+    } else if (completedSessions > 0) {
+      status = 'in_progress';
+    }
+    
+    return {
+      id: lesson.id,
+      lessonId: lesson.id,
+      title: lesson.title,
+      description: lesson.description,
+      status,
+      progress,
+      totalSessions: 5,
+      completedSessions,
+      totalTime: '約30分',
+      timeSpent: lessonStat ? `${Math.floor(lessonStat.total_time_spent_seconds / 60)}分` : '0分',
+      lastStudied: null,
+      startedAt: null,
+      completedAt: null,
+      rating: 4.8,
+      theme: lesson.theme,
+      category: lesson.theme,
+    };
+  });
+
+  // サンプルデータ（旧コード - コメントアウト）
+  /*const learningHistory = [
     {
       id: 1,
       programId: 1,
@@ -107,12 +145,13 @@ export default function LearningHistory() {
       instructor: '高橋 美咲',
       category: 'リーダーシップ'
     }
-  ];
+  ];*/
 
   const filteredHistory = learningHistory.filter(item => {
     const matchesTab = activeTab === 'all' || item.status === activeTab;
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.theme.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesTab && matchesSearch;
   });
 
@@ -322,8 +361,8 @@ export default function LearningHistory() {
                 {/* 進捗詳細 */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
-                    <div className="text-gray-600">完了チャプター</div>
-                    <div className="font-semibold">{item.completedChapters}/{item.totalChapters}</div>
+                    <div className="text-gray-600">完了Session</div>
+                    <div className="font-semibold">{item.completedSessions}/{item.totalSessions}</div>
                   </div>
                   <div>
                     <div className="text-gray-600">学習時間</div>
@@ -346,7 +385,7 @@ export default function LearningHistory() {
                 {/* アクションボタン */}
                 <div className="flex flex-wrap gap-2">
                   {item.status === 'not_started' ? (
-                    <Link href={`/program/${item.programId}`}>
+                    <Link href={`/lessons/${item.lessonId}`}>
                       <Button>
                         <Play className="w-4 h-4 mr-2" />
                         学習を開始
@@ -354,7 +393,7 @@ export default function LearningHistory() {
                     </Link>
                   ) : item.status === 'completed' ? (
                     <>
-                      <Link href={`/program/${item.programId}`}>
+                      <Link href={`/lessons/${item.lessonId}`}>
                         <Button variant="outline">
                           <Eye className="w-4 h-4 mr-2" />
                           内容を確認
@@ -366,7 +405,7 @@ export default function LearningHistory() {
                       </Button>
                     </>
                   ) : (
-                    <Link href={`/program/${item.programId}`}>
+                    <Link href={`/lessons/${item.lessonId}`}>
                       <Button>
                         <Play className="w-4 h-4 mr-2" />
                         学習を続ける
@@ -392,14 +431,14 @@ export default function LearningHistory() {
           <h3 className="text-lg font-semibold text-gray-900 mb-2">学習履歴がありません</h3>
           <p className="text-gray-600 mb-6">
             {activeTab === 'all' 
-              ? 'まだプログラムを受講していません。'
-              : `該当する${tabs.find(tab => tab.id === activeTab)?.name}のプログラムがありません。`
+              ? 'まだ講座を受講していません。'
+              : `該当する${tabs.find(tab => tab.id === activeTab)?.name}の講座がありません。`
             }
           </p>
-          <Link href="/program">
+          <Link href="/lessons">
             <Button>
               <BookOpen className="w-4 h-4 mr-2" />
-              プログラムを探す
+              カリキュラムを見る
             </Button>
           </Link>
         </Card>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { LESSONS, SESSION_NAMES, type LessonId, type SessionNumber } from '@/types';
 import {
   Search,
   Filter,
@@ -15,154 +16,123 @@ import {
   BookOpen,
   Clock,
   Users,
-  DollarSign,
   CheckCircle,
   XCircle,
   AlertCircle,
-  Play,
-  Pause,
-  Settings
+  Settings,
+  MessageSquare,
+  Newspaper,
+  PenTool,
+  Bot,
+  ListChecks
 } from 'lucide-react';
 
-interface Program {
-  id: string;
+interface LessonData {
+  id: LessonId;
   title: string;
   description: string;
-  status: 'published' | 'draft' | 'archived';
-  price: number;
-  isFree: boolean;
-  chapters: number;
-  duration: string;
+  theme: string;
+  order: number;
+  sessions: number;
   students: number;
-  rating: number;
-  createdAt: string;
-  updatedAt: string;
-  thumbnail?: string;
+  completionRate: number;
+  averageTime: string;
 }
 
-interface Chapter {
+interface SessionData {
   id: string;
-  programId: string;
+  lessonId: LessonId;
+  sessionNumber: SessionNumber;
   title: string;
   description: string;
-  order: number;
+  type: 'introduction' | 'content' | 'work' | 'dialogue' | 'summary';
   duration: string;
   status: 'published' | 'draft';
-  type: 'content' | 'video' | 'test';
-  isLocked: boolean;
+  order: number;
 }
 
 export default function ContentManagement() {
-  const [activeTab, setActiveTab] = useState<'programs' | 'chapters'>('programs');
+  const [activeTab, setActiveTab] = useState<'lessons' | 'sessions'>('lessons');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
-  // サンプルデータ（実際のアプリではAPIから取得）
-  const programs: Program[] = [
+  // 講座データ（LESSNから生成）
+  const lessonsData: LessonData[] = LESSONS.map(lesson => ({
+    id: lesson.id,
+    title: lesson.title,
+    description: lesson.description,
+    theme: lesson.theme,
+    order: lesson.order,
+    sessions: 5,
+    students: Math.floor(Math.random() * 500),
+    completionRate: Math.floor(Math.random() * 40 + 60),
+    averageTime: '約30分',
+  }));
+
+  // セッションデータ（サンプル）
+  const sessionsData: SessionData[] = [
     {
-      id: '1',
-      title: 'ビジネススキル基礎コース',
-      description: 'ビジネスの基本原則から実践的なスキルまで、体系的に学べる総合コースです。',
+      id: '1-1',
+      lessonId: 1,
+      sessionNumber: 1,
+      title: SESSION_NAMES[1],
+      description: '対話形式でテーマの核心に迫ります',
+      type: 'introduction',
+      duration: '5分',
       status: 'published',
-      price: 0,
-      isFree: true,
-      chapters: 25,
-      duration: '5時間30分',
-      students: 1250,
-      rating: 4.8,
-      createdAt: '2024-01-01',
-      updatedAt: '2024-01-20',
-      thumbnail: '/api/placeholder/300/200'
+      order: 1
     },
     {
-      id: '2',
-      title: 'マーケティング戦略',
-      description: '効果的なマーケティング戦略の立案と実行方法を学びます。',
+      id: '1-2',
+      lessonId: 1,
+      sessionNumber: 2,
+      title: SESSION_NAMES[2],
+      description: 'ニュース事例から学びます',
+      type: 'content',
+      duration: '7分',
       status: 'published',
-      price: 29800,
-      isFree: false,
-      chapters: 15,
-      duration: '3時間20分',
-      students: 456,
-      rating: 4.6,
-      createdAt: '2024-01-05',
-      updatedAt: '2024-01-18',
-      thumbnail: '/api/placeholder/300/200'
+      order: 2
     },
     {
-      id: '3',
-      title: 'データ分析コース',
-      description: 'データに基づいた意思決定を行うための分析手法を学びます。',
+      id: '1-3',
+      lessonId: 1,
+      sessionNumber: 3,
+      title: SESSION_NAMES[3],
+      description: '実際に手を動かして学びます',
+      type: 'work',
+      duration: '10分',
+      status: 'published',
+      order: 3
+    },
+    {
+      id: '1-4',
+      lessonId: 1,
+      sessionNumber: 4,
+      title: SESSION_NAMES[4],
+      description: 'AI対話で考えを深めます',
+      type: 'dialogue',
+      duration: '5分',
       status: 'draft',
-      price: 39800,
-      isFree: false,
-      chapters: 20,
-      duration: '4時間15分',
-      students: 0,
-      rating: 0,
-      createdAt: '2024-01-10',
-      updatedAt: '2024-01-19',
-      thumbnail: '/api/placeholder/300/200'
+      order: 4
     },
     {
-      id: '4',
-      title: 'リーダーシップ開発',
-      description: '効果的なリーダーシップスキルを身につけるためのコースです。',
-      status: 'archived',
-      price: 49800,
-      isFree: false,
-      chapters: 18,
-      duration: '3時間45分',
-      students: 234,
-      rating: 4.4,
-      createdAt: '2023-12-15',
-      updatedAt: '2024-01-15',
-      thumbnail: '/api/placeholder/300/200'
-    }
+      id: '1-5',
+      lessonId: 1,
+      sessionNumber: 5,
+      title: SESSION_NAMES[5],
+      description: '要点を整理します',
+      type: 'summary',
+      duration: '3分',
+      status: 'published',
+      order: 5
+    },
   ];
 
-  const chapters: Chapter[] = [
-    {
-      id: '1',
-      programId: '1',
-      title: 'ビジネスの基本原則',
-      description: 'ビジネスの基本概念と原則について学びます。',
-      order: 1,
-      duration: '45分',
-      status: 'published',
-      type: 'content',
-      isLocked: false
-    },
-    {
-      id: '2',
-      programId: '1',
-      title: '市場分析と顧客理解',
-      description: '市場の動向を分析し、顧客のニーズを理解する方法を学びます。',
-      order: 2,
-      duration: '60分',
-      status: 'published',
-      type: 'content',
-      isLocked: true
-    },
-    {
-      id: '3',
-      programId: '1',
-      title: '第1章のまとめとテスト',
-      description: '第1章で学んだ内容をまとめ、理解度をテストします。',
-      order: 5,
-      duration: '30分',
-      status: 'draft',
-      type: 'test',
-      isLocked: true
-    }
-  ];
-
-  const filteredPrograms = programs.filter(program => {
-    const matchesSearch = program.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         program.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || program.status === filterStatus;
-    return matchesSearch && matchesStatus;
+  const filteredLessons = lessonsData.filter(lesson => {
+    const matchesSearch = lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         lesson.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         lesson.theme.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
   });
 
   const getStatusBadge = (status: string) => {
@@ -178,17 +148,46 @@ export default function ContentManagement() {
     }
   };
 
-  const getTypeBadge = (type: string) => {
+  const getSessionIcon = (type: string) => {
     switch (type) {
+      case 'introduction':
+        return <MessageSquare className="w-4 h-4" />;
       case 'content':
-        return <Badge variant="outline">コンテンツ</Badge>;
-      case 'video':
-        return <Badge className="bg-blue-100 text-blue-800">動画</Badge>;
-      case 'test':
-        return <Badge className="bg-purple-100 text-purple-800">テスト</Badge>;
+        return <Newspaper className="w-4 h-4" />;
+      case 'work':
+        return <PenTool className="w-4 h-4" />;
+      case 'dialogue':
+        return <Bot className="w-4 h-4" />;
+      case 'summary':
+        return <ListChecks className="w-4 h-4" />;
       default:
-        return null;
+        return <BookOpen className="w-4 h-4" />;
     }
+  };
+
+  const getSessionTypeBadge = (type: string) => {
+    const colors: Record<string, string> = {
+      introduction: 'bg-blue-100 text-blue-800',
+      content: 'bg-green-100 text-green-800',
+      work: 'bg-orange-100 text-orange-800',
+      dialogue: 'bg-purple-100 text-purple-800',
+      summary: 'bg-pink-100 text-pink-800',
+    };
+    
+    const labels: Record<string, string> = {
+      introduction: 'イントロ',
+      content: 'コンテンツ',
+      work: 'ワーク',
+      dialogue: '対話',
+      summary: 'サマリー',
+    };
+
+    return (
+      <Badge className={colors[type] || 'bg-gray-100 text-gray-800'}>
+        {getSessionIcon(type)}
+        <span className="ml-1">{labels[type] || type}</span>
+      </Badge>
+    );
   };
 
   return (
@@ -197,7 +196,7 @@ export default function ContentManagement() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">コンテンツ管理</h1>
-          <p className="text-gray-600 mt-2">プログラムとチャプターの追加、変更、削除を行えます</p>
+          <p className="text-gray-600 mt-2">講座とSessionの管理を行えます（公益資本主義アカデミー - 全10講座固定）</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
@@ -205,34 +204,58 @@ export default function ContentManagement() {
             設定
           </Button>
           <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            新しいコンテンツ
+            <Edit className="w-4 h-4 mr-2" />
+            コンテンツを編集
           </Button>
         </div>
+      </div>
+
+      {/* 統計サマリー */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card className="p-4">
+          <div className="text-sm text-gray-600">総講座数</div>
+          <div className="text-2xl font-bold">10講座</div>
+          <div className="text-xs text-gray-500 mt-1">固定（公益資本主義アカデミー）</div>
+        </Card>
+        <Card className="p-4">
+          <div className="text-sm text-gray-600">総Session数</div>
+          <div className="text-2xl font-bold">50</div>
+          <div className="text-xs text-gray-500 mt-1">各講座5Session</div>
+        </Card>
+        <Card className="p-4">
+          <div className="text-sm text-gray-600">公開中</div>
+          <div className="text-2xl font-bold text-green-600">10講座</div>
+          <div className="text-xs text-gray-500 mt-1">すべて公開済み</div>
+        </Card>
+        <Card className="p-4">
+          <div className="text-sm text-gray-600">総受講者</div>
+          <div className="text-2xl font-bold">1,234名</div>
+          <div className="text-xs text-gray-500 mt-1">全講座合計</div>
+        </Card>
       </div>
 
       {/* タブ */}
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           <button
-            onClick={() => setActiveTab('programs')}
+            onClick={() => setActiveTab('lessons')}
             className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'programs'
+              activeTab === 'lessons'
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
           >
-            プログラム ({programs.length})
+            講座 ({lessonsData.length})
           </button>
           <button
-            onClick={() => setActiveTab('chapters')}
+            onClick={() => setActiveTab('sessions')}
             className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === 'chapters'
+              activeTab === 'sessions'
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
           >
-            チャプター ({chapters.length})
+            Session ({sessionsData.length}件表示)
           </button>
         </nav>
       </div>
@@ -245,7 +268,7 @@ export default function ContentManagement() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder={activeTab === 'programs' ? 'プログラム名で検索...' : 'チャプター名で検索...'}
+                placeholder={activeTab === 'lessons' ? '講座名またはテーマで検索...' : 'Session名で検索...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -253,16 +276,6 @@ export default function ContentManagement() {
             </div>
           </div>
           <div className="flex gap-2">
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              <option value="all">すべてのステータス</option>
-              <option value="published">公開中</option>
-              <option value="draft">下書き</option>
-              <option value="archived">アーカイブ</option>
-            </select>
             <Button variant="outline">
               <Filter className="w-4 h-4 mr-2" />
               フィルター
@@ -271,57 +284,42 @@ export default function ContentManagement() {
         </div>
       </Card>
 
-      {/* プログラム一覧 */}
-      {activeTab === 'programs' && (
+      {/* 講座一覧 */}
+      {activeTab === 'lessons' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPrograms.map((program) => (
-            <Card key={program.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="relative">
-                {program.thumbnail && (
-                  <div className="h-48 bg-gray-200 flex items-center justify-center">
-                    <BookOpen className="w-12 h-12 text-gray-400" />
-                  </div>
-                )}
-                <div className="absolute top-4 right-4">
-                  {getStatusBadge(program.status)}
+          {filteredLessons.map((lesson) => (
+            <Card key={lesson.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-primary to-secondary p-6 text-white">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-3xl font-bold">{lesson.id}</div>
+                  <Badge className="bg-white/20 text-white border-white/30">
+                    公開中
+                  </Badge>
                 </div>
+                <h3 className="text-lg font-semibold">{lesson.title}</h3>
               </div>
               
               <div className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
-                    {program.title}
-                  </h3>
-                  <Button size="sm" variant="outline">
-                    <MoreVertical className="w-4 h-4" />
-                  </Button>
-                </div>
-                
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  {program.description}
+                  {lesson.description}
                 </p>
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">価格</span>
-                    <span className="font-semibold">
-                      {program.isFree ? '無料' : `¥${program.price.toLocaleString()}`}
-                    </span>
+                    <span className="text-gray-500">テーマ</span>
+                    <Badge variant="outline">{lesson.theme}</Badge>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">チャプター数</span>
-                    <span>{program.chapters}章</span>
+                    <span className="text-gray-500">Session数</span>
+                    <span>{lesson.sessions}個</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-500">受講者数</span>
-                    <span>{program.students.toLocaleString()}人</span>
+                    <span>{lesson.students.toLocaleString()}人</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">評価</span>
-                    <div className="flex items-center">
-                      <span className="mr-1">★</span>
-                      <span>{program.rating}</span>
-                    </div>
+                    <span className="text-gray-500">完了率</span>
+                    <span className="font-semibold text-green-600">{lesson.completionRate}%</span>
                   </div>
                 </div>
                 
@@ -333,9 +331,6 @@ export default function ContentManagement() {
                   <Button size="sm" variant="outline">
                     <Eye className="w-4 h-4" />
                   </Button>
-                  <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
                 </div>
               </div>
             </Card>
@@ -343,24 +338,18 @@ export default function ContentManagement() {
         </div>
       )}
 
-      {/* チャプター一覧 */}
-      {activeTab === 'chapters' && (
+      {/* Session一覧 */}
+      {activeTab === 'sessions' && (
         <Card className="overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left">
-                    <input
-                      type="checkbox"
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
-                    />
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Session
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    チャプター
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    プログラム
+                    講座
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     タイプ
@@ -380,38 +369,32 @@ export default function ContentManagement() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {chapters.map((chapter) => (
-                  <tr key={chapter.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        className="rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                    </td>
+                {sessionsData.map((session) => (
+                  <tr key={session.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">{chapter.title}</div>
-                        <div className="text-sm text-gray-500">{chapter.description}</div>
+                        <div className="text-sm font-medium text-gray-900">{session.title}</div>
+                        <div className="text-sm text-gray-500">{session.description}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-900">
-                        {programs.find(p => p.id === chapter.programId)?.title || 'Unknown'}
+                        第{session.lessonId}回
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      {getTypeBadge(chapter.type)}
+                      {getSessionTypeBadge(session.type)}
                     </td>
                     <td className="px-6 py-4">
-                      {getStatusBadge(chapter.status)}
+                      {getStatusBadge(session.status)}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">{chapter.order}</div>
+                      <div className="text-sm text-gray-900">{session.order}</div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-900 flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
-                        {chapter.duration}
+                        {session.duration}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -422,9 +405,6 @@ export default function ContentManagement() {
                         <Button size="sm" variant="outline">
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
                       </div>
                     </td>
                   </tr>
@@ -434,6 +414,16 @@ export default function ContentManagement() {
           </div>
         </Card>
       )}
+
+      {/* ヘルプカード */}
+      <Card className="p-6 bg-blue-50">
+        <h3 className="text-lg font-semibold mb-2">📌 コンテンツ管理について</h3>
+        <ul className="text-sm text-gray-700 space-y-1">
+          <li>• 公益資本主義アカデミーは全10講座の固定カリキュラムです</li>
+          <li>• 各講座は5つのSession（イントロ、コンテンツ、ワーク、対話、サマリー）で構成されています</li>
+          <li>• 講座の追加・削除はできませんが、各Sessionのコンテンツを編集できます</li>
+        </ul>
+      </Card>
     </div>
   );
 }

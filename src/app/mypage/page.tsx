@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLessonStats } from '@/lib/hooks/useLessons';
+import { LESSONS, getLessonById, type LessonId } from '@/types';
 import {
   BookOpen,
   Clock,
@@ -25,30 +27,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-interface UserStats {
-  enrolledPrograms: number;
-  completedPrograms: number;
-  totalLearningTime: number;
-  totalPoints: number;
-}
-
-interface UserProgram {
-  id: number;
-  programs: {
-    id: number;
-    title: string;
-    description: string;
-    thumbnail_url: string;
-    instructor_name: string;
-    duration_hours: number;
-    difficulty_level: string;
-    category: string;
-  };
-  progress_percentage: number;
-  enrolled_at: string;
-  completed_at: string | null;
-}
-
 interface UserAchievement {
   id: number;
   earned_at: string;
@@ -67,14 +45,11 @@ interface UserAchievement {
 export default function UserDashboard() {
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [userStats, setUserStats] = useState<UserStats>({
-    enrolledPrograms: 0,
-    completedPrograms: 0,
-    totalLearningTime: 0,
-    totalPoints: 0
-  });
-  const [userPrograms, setUserPrograms] = useState<UserProgram[]>([]);
   const [userAchievements, setUserAchievements] = useState<UserAchievement[]>([]);
+  const [totalPoints, setTotalPoints] = useState(0);
+  
+  // 新しいLesson統計を使用
+  const { stats, loading: statsLoading } = useLessonStats();
 
   useEffect(() => {
     console.log('Auth state:', { user, authLoading });
@@ -90,36 +65,22 @@ export default function UserDashboard() {
       setLoading(true);
       
       // 並行してデータを取得
-      const [programsRes, achievementsRes, pointsRes] = await Promise.all([
-        fetch('/api/user/programs'),
+      const [achievementsRes, pointsRes] = await Promise.all([
         fetch('/api/user/achievements'),
         fetch('/api/user/points')
       ]);
 
-      const [programsData, achievementsData, pointsData] = await Promise.all([
-        programsRes.json(),
+      const [achievementsData, pointsData] = await Promise.all([
         achievementsRes.json(),
         pointsRes.json()
       ]);
-
-      if (programsData.data) {
-        setUserPrograms(programsData.data);
-        setUserStats(prev => ({
-          ...prev,
-          enrolledPrograms: programsData.data.length,
-          completedPrograms: programsData.data.filter((p: UserProgram) => p.completed_at).length
-        }));
-      }
 
       if (achievementsData.data) {
         setUserAchievements(achievementsData.data);
       }
 
       if (pointsData.data) {
-        setUserStats(prev => ({
-          ...prev,
-          totalPoints: pointsData.data.total_points || 0
-        }));
+        setTotalPoints(pointsData.data.total_points || 0);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -128,7 +89,7 @@ export default function UserDashboard() {
     }
   };
 
-  if (authLoading || loading) {
+  if (authLoading || loading || statsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center">
@@ -154,27 +115,35 @@ export default function UserDashboard() {
     );
   }
 
+  // 全体統計データ
+  const overallStats = stats?.overall || {
+    completed_lessons: 0,
+    in_progress_lessons: 0,
+    total_sessions_completed: 0,
+    total_time_spent_seconds: 0,
+  };
+
   // 統計データの準備
   const statsData = [
     {
-      name: '受講中プログラム',
-      value: userStats.enrolledPrograms.toString(),
-      change: '+0',
-      changeType: 'positive',
-      icon: BookOpen,
-      color: 'text-blue-600'
-    },
-    {
-      name: '完了プログラム',
-      value: userStats.completedPrograms.toString(),
+      name: '完了講座',
+      value: overallStats.completed_lessons.toString() + '/10',
       change: '+0',
       changeType: 'positive',
       icon: CheckCircle,
       color: 'text-green-600'
     },
     {
+      name: '学習中',
+      value: overallStats.in_progress_lessons.toString() + '講座',
+      change: '+0',
+      changeType: 'positive',
+      icon: BookOpen,
+      color: 'text-blue-600'
+    },
+    {
       name: '総学習時間',
-      value: `${userStats.totalLearningTime}時間`,
+      value: `${Math.floor(overallStats.total_time_spent_seconds / 3600)}時間`,
       change: '+0時間',
       changeType: 'positive',
       icon: Clock,
@@ -182,7 +151,7 @@ export default function UserDashboard() {
     },
     {
       name: '獲得ポイント',
-      value: userStats.totalPoints.toLocaleString(),
+      value: totalPoints.toLocaleString(),
       change: '+0',
       changeType: 'positive',
       icon: Trophy,
@@ -190,19 +159,23 @@ export default function UserDashboard() {
     }
   ];
 
-  // 現在のプログラムデータ（実際のデータから生成）
-  const currentPrograms = userPrograms.map(program => ({
-    id: program.id,
-    title: program.programs.title,
-    nextChapter: `第${Math.floor(program.progress_percentage / 20) + 1}章`,
-    completedChapters: Math.floor(program.progress_percentage / 20),
-    totalChapters: 5, // 仮の値
-    progress: program.progress_percentage,
-    estimatedTime: `${program.programs.duration_hours * 60}分`,
-    lastStudied: program.completed_at ? '完了' : '継続中',
-    difficulty: program.programs.difficulty_level,
-    thumbnail: program.programs.thumbnail_url || '/api/placeholder/300/200'
-  }));
+  // 現在の講座データ（新構造）
+  const currentLessons = stats?.by_lesson?.filter((lessonStat: any) => 
+    lessonStat.completed_sessions > 0 && lessonStat.completed_sessions < 5
+  ).slice(0, 3).map((lessonStat: any) => {
+    const lesson = getLessonById(lessonStat.lesson_id as LessonId);
+    return {
+      id: lessonStat.lesson_id,
+      title: lesson?.title || `第${lessonStat.lesson_id}回`,
+      nextSession: `Session ${lessonStat.completed_sessions + 1}`,
+      completedSessions: lessonStat.completed_sessions,
+      totalSessions: 5,
+      progress: lessonStat.progress_percentage,
+      estimatedTime: '約30分',
+      lastStudied: '継続中',
+      theme: lesson?.theme || '',
+    };
+  }) || [];
 
   // 最近の活動データ（実績から生成）
   const recentActivities = userAchievements.slice(0, 5).map(achievement => ({
@@ -245,11 +218,11 @@ export default function UserDashboard() {
         })}
       </div>
 
-      {/* 現在のプログラム */}
+      {/* 現在の講座 */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">現在のプログラム</h2>
-          <Link href="/mypage/learning">
+          <h2 className="text-xl font-semibold text-gray-900">学習中の講座</h2>
+          <Link href="/lessons">
             <Button variant="outline" size="sm">
               すべて表示
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -258,36 +231,36 @@ export default function UserDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentPrograms.length > 0 ? (
-            currentPrograms.map((program) => (
-              <Card key={program.id} className="p-6 hover:shadow-lg transition-shadow">
+          {currentLessons.length > 0 ? (
+            currentLessons.map((lesson) => (
+              <Card key={lesson.id} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">{program.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{program.nextChapter}</p>
+                    <h3 className="font-semibold text-gray-900 mb-1">{lesson.title}</h3>
+                    <p className="text-sm text-gray-600 mb-2">{lesson.nextSession}</p>
                     <div className="flex items-center gap-4 text-xs text-gray-500">
                       <span className="flex items-center">
                         <Clock className="w-3 h-3 mr-1" />
-                        {program.estimatedTime}
+                        {lesson.estimatedTime}
                       </span>
-                      <span>最終学習: {program.lastStudied}</span>
+                      <span>テーマ: {lesson.theme}</span>
                     </div>
                   </div>
                   <Badge variant="outline">
-                    {program.completedChapters}/{program.totalChapters}章
+                    {lesson.completedSessions}/{lesson.totalSessions}
                   </Badge>
                 </div>
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>進捗</span>
-                    <span>{program.progress}%</span>
+                    <span>{lesson.progress}%</span>
                   </div>
-                  <Progress value={program.progress} className="h-2" />
+                  <Progress value={lesson.progress} className="h-2" />
                 </div>
 
                 <div className="mt-4 flex gap-2">
-                  <Link href={`/program/${program.id}`} className="flex-1">
+                  <Link href={`/lessons/${lesson.id}`} className="flex-1">
                     <Button size="sm" className="w-full">
                       <Play className="w-4 h-4 mr-2" />
                       続きを学習
@@ -299,10 +272,10 @@ export default function UserDashboard() {
           ) : (
             <Card className="p-8 text-center col-span-full">
               <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">プログラムがありません</h3>
-              <p className="text-gray-600 mb-4">新しいプログラムに登録して学習を始めましょう</p>
-              <Link href="/">
-                <Button>プログラムを探す</Button>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">学習中の講座がありません</h3>
+              <p className="text-gray-600 mb-4">カリキュラムから講座を選んで学習を始めましょう</p>
+              <Link href="/lessons">
+                <Button>カリキュラムを見る</Button>
               </Link>
             </Card>
           )}

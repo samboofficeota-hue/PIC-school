@@ -242,3 +242,129 @@ export interface UpdateUserProgressParams {
   p_time_spent_minutes?: number;
 }
 
+// ============================================
+// 公益資本主義アカデミー専用テーブル型
+// ============================================
+
+// 講座進捗（lesson_progress）
+export interface LessonProgress {
+  id: number;
+  user_id: string; // UUID
+  lesson_id: number; // 講座番号（1-10）
+  session_number: number; // Session番号（1-5）
+  status: 'not_started' | 'in_progress' | 'completed';
+  started_at: string | null;
+  completed_at: string | null;
+  time_spent_seconds: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// ワーク回答（work_answers）
+export interface WorkAnswer {
+  id: number;
+  user_id: string; // UUID
+  lesson_id: number; // 講座番号（1-10）
+  answers: Record<string, any>; // JSONB - 各質問の回答
+  submitted_at: string;
+  updated_at: string;
+}
+
+// 対話履歴（dialogue_history）
+export interface DialogueHistory {
+  id: number;
+  user_id: string; // UUID
+  lesson_id: number; // 講座番号（1-10）
+  user_input: string;
+  ai_response: string;
+  prompt_theme: string | null;
+  submitted_at: string;
+  created_at: string;
+}
+
+// コミュニティ投稿（community_posts）
+export interface CommunityPost {
+  id: number;
+  user_id: string; // UUID
+  lesson_id: number; // 講座番号（1-10）
+  content: string;
+  likes_count: number;
+  is_public: boolean;
+  posted_at: string;
+  updated_at: string;
+  created_at: string;
+}
+
+// いいね（likes）
+export interface Like {
+  id: number;
+  user_id: string; // UUID
+  post_id: number;
+  liked_at: string;
+}
+
+// ============================================
+// 拡張されたユーザープロフィール型
+// ============================================
+
+export interface UserProfileExtended extends UserProfile {
+  display_name?: string | null;
+  user_type?: 'high_school' | 'university' | 'working' | 'other' | null;
+  joined_at?: string;
+  last_active_at?: string;
+}
+
+// ============================================
+// リレーション型（JOIN結果用）- 公益資本主義アカデミー
+// ============================================
+
+// コミュニティ投稿とユーザー情報
+export interface CommunityPostWithUser extends CommunityPost {
+  user_profiles: {
+    display_name: string | null;
+    user_type: string | null;
+  };
+}
+
+// 講座進捗の統計
+export interface LessonProgressStats {
+  lesson_id: number;
+  total_sessions: number;
+  completed_sessions: number;
+  progress_percentage: number;
+  total_time_spent_seconds: number;
+}
+
+// ============================================
+// フォーム/入力型 - 公益資本主義アカデミー
+// ============================================
+
+export interface LessonProgressInput {
+  lesson_id: number;
+  session_number: number;
+  status: 'not_started' | 'in_progress' | 'completed';
+  time_spent_seconds?: number;
+}
+
+export interface WorkAnswerInput {
+  lesson_id: number;
+  answers: Record<string, any>;
+}
+
+export interface DialogueHistoryInput {
+  lesson_id: number;
+  user_input: string;
+  ai_response: string;
+  prompt_theme?: string;
+}
+
+export interface CommunityPostInput {
+  lesson_id: number;
+  content: string;
+  is_public?: boolean;
+}
+
+export interface LikeInput {
+  post_id: number;
+}
+

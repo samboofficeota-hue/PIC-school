@@ -33,9 +33,9 @@ export default function AdminDashboard() {
       color: 'text-green-600'
     },
     {
-      name: '総プログラム数',
-      value: '12',
-      change: '+2',
+      name: '総講座数',
+      value: '10',
+      change: '固定',
       changeType: 'positive',
       icon: BookOpen,
       color: 'text-purple-600'
@@ -54,16 +54,16 @@ export default function AdminDashboard() {
     {
       id: 1,
       user: '田中 太郎',
-      action: '新しいプログラムを購入',
-      program: 'ビジネススキル基礎コース',
+      action: '第1回講座を開始',
+      program: '公益資本主義とは',
       time: '2時間前',
-      type: 'purchase'
+      type: 'start'
     },
     {
       id: 2,
       user: '佐藤 花子',
-      action: 'チャプターを完了',
-      program: 'マーケティング戦略',
+      action: 'Session 3を完了',
+      program: '第2回：企業の社会的責任',
       time: '4時間前',
       type: 'completion'
     },
@@ -85,24 +85,24 @@ export default function AdminDashboard() {
     }
   ];
 
-  const topPrograms = [
+  const topLessons = [
     {
-      name: 'ビジネススキル基礎コース',
+      name: '第1回：公益資本主義とは',
       students: 456,
-      revenue: '¥1,200,000',
-      completion: 78
+      completionRate: 78,
+      averageTime: '28分'
     },
     {
-      name: 'マーケティング戦略',
+      name: '第2回：企業の社会的責任',
       students: 234,
-      revenue: '¥680,000',
-      completion: 82
+      completionRate: 82,
+      averageTime: '32分'
     },
     {
-      name: 'データ分析コース',
+      name: '第3回：ステークホルダー経営',
       students: 189,
-      revenue: '¥520,000',
-      completion: 75
+      completionRate: 75,
+      averageTime: '30分'
     }
   ];
 
@@ -184,10 +184,10 @@ export default function AdminDashboard() {
           </div>
         </Card>
 
-        {/* 人気プログラム */}
+        {/* 人気講座 */}
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold">人気プログラム</h2>
+            <h2 className="text-xl font-semibold">人気講座</h2>
             <Button variant="outline" size="sm">
               詳細を見る
               <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -195,19 +195,19 @@ export default function AdminDashboard() {
           </div>
           
           <div className="space-y-4">
-            {topPrograms.map((program, index) => (
+            {topLessons.map((lesson, index) => (
               <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">{program.name}</h3>
+                  <h3 className="font-medium text-gray-900">{lesson.name}</h3>
                   <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500">
-                    <span>{program.students} 名の受講者</span>
-                    <span>完了率: {program.completion}%</span>
+                    <span>{lesson.students} 名の受講者</span>
+                    <span>完了率: {lesson.completionRate}%</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-gray-900">{program.revenue}</p>
+                  <p className="font-semibold text-gray-900">{lesson.averageTime}</p>
                   <Badge variant="secondary" className="mt-1">
-                    収益
+                    平均学習時間
                   </Badge>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
           </Button>
           <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2">
             <BookOpen className="w-6 h-6" />
-            <span>プログラムを作成</span>
+            <span>コンテンツを管理</span>
           </Button>
           <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2">
             <BarChart3 className="w-6 h-6" />
