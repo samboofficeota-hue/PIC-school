@@ -29,3 +29,6 @@ export function createClient() {
     }
   );
 }
+
+// 後方互換性のため、createServerSupabaseClientもエクスポート
+export const createServerSupabaseClient = createClient;
