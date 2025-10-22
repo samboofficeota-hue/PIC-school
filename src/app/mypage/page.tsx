@@ -42,6 +42,18 @@ interface UserAchievement {
   };
 }
 
+interface CurrentLesson {
+  id: number;
+  title: string;
+  nextSession: string;
+  completedSessions: number;
+  totalSessions: number;
+  progress: number;
+  estimatedTime: string;
+  lastStudied: string;
+  theme: string;
+}
+
 export default function UserDashboard() {
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -160,7 +172,7 @@ export default function UserDashboard() {
   ];
 
   // 現在の講座データ（新構造）
-  const currentLessons = stats?.by_lesson?.filter((lessonStat: any) => 
+  const currentLessons: CurrentLesson[] = stats?.by_lesson?.filter((lessonStat: any) => 
     lessonStat.completed_sessions > 0 && lessonStat.completed_sessions < 5
   ).slice(0, 3).map((lessonStat: any) => {
     const lesson = getLessonById(lessonStat.lesson_id as LessonId);
