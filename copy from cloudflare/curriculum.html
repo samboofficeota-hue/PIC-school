@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="公益資本主義アカデミー - 全10回のカリキュラム。3ヶ月で公益資本主義を体系的に学ぶ">
+  <title>カリキュラム | 公益資本主義アカデミー</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* ===== カリキュラムページ専用スタイル ===== */
+    
+    /* ページヘッダー */
+    .page-header {
+      background: linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%);
+      padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(111, 218, 163, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(94, 196, 232, 0.1) 0%, transparent 50%);
+    }
+    
+    .page-header-content {
+      position: relative;
+      z-index: var(--z-base);
+    }
+    
+    .page-title {
+      font-size: var(--font-size-4xl);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+    }
+    
+    .page-description {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    /* 進捗バー（将来の拡張用） */
+    .overall-progress {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      margin-bottom: var(--spacing-2xl);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .overall-progress h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+    }
+    
+    .progress-stats {
+      display: flex;
+      gap: var(--spacing-xl);
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: var(--spacing-lg);
+    }
+    
+    .progress-stat {
+      text-align: center;
+    }
+    
+    .progress-stat-number {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      display: block;
+    }
+    
+    .progress-stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      margin-top: var(--spacing-xs);
+    }
+    
+    /* レッスンリスト */
+    .lessons-list {
+      display: grid;
+      gap: var(--spacing-xl);
+    }
+    
+    .lesson-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-base);
+      display: flex;
+      gap: var(--spacing-xl);
+      align-items: flex-start;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      transform: scaleY(0);
+      transition: transform var(--transition-base);
+    }
+    
+    .lesson-card:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .lesson-card:hover::before {
+      transform: scaleY(1);
+    }
+    
+    /* レッスンナンバー */
+    .lesson-number {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-bold);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    
+    .lesson-number-label {
+      font-size: var(--font-size-xs);
+      opacity: 0.8;
+    }
+    
+    .lesson-number-value {
+      font-size: var(--font-size-3xl);
+      line-height: 1;
+    }
+    
+    /* レッスンごとの色分け */
+    .lesson-card:nth-child(1) .lesson-number { background: linear-gradient(135deg, #D0F5E5 0%, #9FE8C3 100%); color: #2D5F4D; }
+    .lesson-card:nth-child(2) .lesson-number { background: linear-gradient(135deg, #D5F0F9 0%, #8ED9F0 100%); color: #2D5568; }
+    .lesson-card:nth-child(3) .lesson-number { background: linear-gradient(135deg, #FCE5D3 0%, #F9C08A 100%); color: #5F3E2D; }
+    .lesson-card:nth-child(4) .lesson-number { background: linear-gradient(135deg, #EDE5F3 0%, #D9BBE3 100%); color: #4A2D5F; }
+    .lesson-card:nth-child(5) .lesson-number { background: linear-gradient(135deg, #D0F5E5 0%, #9FE8C3 100%); color: #2D5F4D; }
+    .lesson-card:nth-child(6) .lesson-number { background: linear-gradient(135deg, #D5F0F9 0%, #8ED9F0 100%); color: #2D5568; }
+    .lesson-card:nth-child(7) .lesson-number { background: linear-gradient(135deg, #FCE5D3 0%, #F9C08A 100%); color: #5F3E2D; }
+    .lesson-card:nth-child(8) .lesson-number { background: linear-gradient(135deg, #EDE5F3 0%, #D9BBE3 100%); color: #4A2D5F; }
+    .lesson-card:nth-child(9) .lesson-number { background: linear-gradient(135deg, #D0F5E5 0%, #9FE8C3 100%); color: #2D5F4D; }
+    .lesson-card:nth-child(10) .lesson-number { background: linear-gradient(135deg, #D5F0F9 0%, #8ED9F0 100%); color: #2D5568; }
+    
+    /* レッスンコンテンツ */
+    .lesson-content {
+      flex-grow: 1;
+    }
+    
+    .lesson-title {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+    }
+    
+    .lesson-subtitle {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-md);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    .lesson-description {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    /* レッスンメタ情報 */
+    .lesson-meta {
+      display: flex;
+      gap: var(--spacing-lg);
+      flex-wrap: wrap;
+    }
+    
+    .lesson-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+    }
+    
+    .lesson-meta-item i {
+      color: var(--color-primary);
+    }
+    
+    /* レッスンアクション */
+    .lesson-action {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      align-items: flex-end;
+    }
+    
+    .lesson-status {
+      font-size: var(--font-size-sm);
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--radius-full);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    .lesson-status.not-started {
+      background-color: var(--color-border);
+      color: var(--color-text-light);
+    }
+    
+    .lesson-status.in-progress {
+      background-color: var(--color-accent-pale);
+      color: var(--color-accent-dark);
+    }
+    
+    .lesson-status.completed {
+      background-color: var(--color-primary-pale);
+      color: var(--color-primary-dark);
+    }
+    
+    .lesson-button {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+    
+    .lesson-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    /* セッション情報 */
+    .lesson-sessions {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+    
+    .session-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+    }
+    
+    .session-icon.session-1 { background-color: #FFB6C1; color: #333; }
+    .session-icon.session-2 { background-color: #FFD4A3; color: #333; }
+    .session-icon.session-3 { background-color: #A8E6A3; color: #333; }
+    .session-icon.session-4 { background-color: #A8D5F5; color: #333; }
+    .session-icon.session-5 { background-color: #D4B5F2; color: #333; }
+    
+    /* カリキュラム統計 */
+    .curriculum-stats {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-2xl);
+      margin-top: var(--spacing-3xl);
+      color: var(--color-white);
+      text-align: center;
+    }
+    
+    .curriculum-stats h3 {
+      color: var(--color-white);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .curriculum-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-xl);
+    }
+    
+    .curriculum-stat-item {
+      text-align: center;
+    }
+    
+    .curriculum-stat-number {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      display: block;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .curriculum-stat-label {
+      font-size: var(--font-size-base);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-ja">公益資本主義アカデミー</div>
+          <div class="logo-en">Public Interest Capitalism Academy</div>
+        </div>
+        <nav class="nav">
+          <a href="index.html" class="nav-link">ホーム</a>
+          <a href="curriculum.html" class="nav-link active">カリキュラム</a>
+          <a href="#about" class="nav-link">概要</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ページヘッダー -->
+  <section class="page-header">
+    <div class="container">
+      <div class="page-header-content">
+        <h1 class="page-title">カリキュラム</h1>
+        <p class="page-description">
+          3ヶ月・全10回の講座で、公益資本主義を体系的に学びます。<br>
+          各回約30分、5つのSessionで構成された効果的な学習プログラムです。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <main class="section">
+    <div class="container">
+      
+      <!-- 進捗状況（将来の実装用） -->
+      <!-- <div class="overall-progress">
+        <h3><i class="fas fa-chart-line"></i> あなたの進捗</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 30%;"></div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-stat">
+            <span class="progress-stat-number">3/10</span>
+            <span class="progress-stat-label">完了した講座</span>
+          </div>
+          <div class="progress-stat">
+            <span class="progress-stat-number">30%</span>
+            <span class="progress-stat-label">進捗率</span>
+          </div>
+          <div class="progress-stat">
+            <span class="progress-stat-number">2.5</span>
+            <span class="progress-stat-label">学習時間</span>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- レッスンリスト -->
+      <div class="lessons-list">
+        
+        <!-- 第1回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-01.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">01</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">公益資本主義とは何か</h2>
+            <p class="lesson-subtitle">基本の理解</p>
+            <p class="lesson-description">
+              公益資本主義の基本概念を理解します。なぜ今、公益資本主義が必要なのか？従来の資本主義との違いは何か？原丈人氏の対話を通じて、その本質に迫ります。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1" title="イントロ">1</div>
+              <div class="session-icon session-2" title="ニュース">2</div>
+              <div class="session-icon session-3" title="ワーク">3</div>
+              <div class="session-icon session-4" title="対話">4</div>
+              <div class="session-icon session-5" title="サマリー">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第2回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-02.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">02</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">日本の立ち位置</h2>
+            <p class="lesson-subtitle">データから読み解く日本の課題</p>
+            <p class="lesson-description">
+              各種統計データから、日本経済の現状を客観的に分析します。GDP、賃金、格差、生産性など、様々な指標から日本が抱える課題を明確にします。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第3回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-03.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">03</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">資本主義とは何か</h2>
+            <p class="lesson-subtitle">投資と経営と労働の関係から考える</p>
+            <p class="lesson-description">
+              資本主義の基本的な仕組みを、投資家・経営者・労働者の三者の関係から理解します。それぞれの役割と、現代における課題を考察します。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第4回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-04.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">04</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">経済とは何か</h2>
+            <p class="lesson-subtitle">マクロ経済、GDPの三面等価</p>
+            <p class="lesson-description">
+              マクロ経済学の基礎を学びます。GDPの三面等価（生産・分配・支出）の考え方を理解し、経済全体の動きを把握します。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第5回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-05.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">05</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">公益資本主義的な経営とは何か</h2>
+            <p class="lesson-subtitle">経営事例</p>
+            <p class="lesson-description">
+              実際の企業事例を通じて、公益資本主義的な経営を学びます。従業員、顧客、社会、株主のバランスを取りながら成長する企業の戦略を分析します。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第6回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-06.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">06</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">株主資本主義の弊害</h2>
+            <p class="lesson-subtitle">短期株主と中長期株主、株主と債権者の違い</p>
+            <p class="lesson-description">
+              株主至上主義がもたらす問題点を深く理解します。短期的な株価重視が企業経営に与える悪影響と、本来あるべき株主の役割を考えます。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第7回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-07.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">07</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">実践原則①「適正な社中分配」</h2>
+            <p class="lesson-subtitle">成長と分配の好循環は分配から</p>
+            <p class="lesson-description">
+              公益資本主義の第一原則「適正な社中分配」を学びます。労働分配率、株主還元率を実際に計算し、バランスの取れた分配の重要性を体感します。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第8回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-08.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">08</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">実践原則②「中長期視点」</h2>
+            <p class="lesson-subtitle">短期だけではなく中長期視点を持った複眼思考</p>
+            <p class="lesson-description">
+              短期的な利益追求だけでなく、中長期的な視点で経営を考える重要性を学びます。複眼思考で物事を捉える力を養います。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第9回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-09.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">09</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">実践原則③「企業家精神の発揮」</h2>
+            <p class="lesson-subtitle">起業家ではなく企業家</p>
+            <p class="lesson-description">
+              「起業家（アントレプレナー）」と「企業家（イントラプレナー）」の違いを理解します。組織の中で新しい価値を創造する企業家精神の重要性を学びます。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 第10回 -->
+        <div class="lesson-card" onclick="window.location.href='lesson/lesson-10.html'">
+          <div class="lesson-number">
+            <div class="lesson-number-label">Lesson</div>
+            <div class="lesson-number-value">10</div>
+          </div>
+          
+          <div class="lesson-content">
+            <h2 class="lesson-title">公益資本主義で世界が憧れる日本をつくる</h2>
+            <p class="lesson-subtitle">あなたは何をする？</p>
+            <p class="lesson-description">
+              これまでの学びを統合し、あなた自身が何をすべきかを考えます。公益資本主義の実践者として、日本の未来をどうアップデートしていくか。最終的な問いに向き合います。
+            </p>
+            <div class="lesson-meta">
+              <div class="lesson-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+            </div>
+            <div class="lesson-sessions">
+              <div class="session-icon session-1">1</div>
+              <div class="session-icon session-2">2</div>
+              <div class="session-icon session-3">3</div>
+              <div class="session-icon session-4">4</div>
+              <div class="session-icon session-5">5</div>
+            </div>
+          </div>
+          
+          <div class="lesson-action">
+            <span class="lesson-status not-started">未受講</span>
+            <button class="lesson-button">
+              <span>学習を開始</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- カリキュラム統計 -->
+      <div class="curriculum-stats">
+        <h3>🎓 カリキュラム全体</h3>
+        <div class="curriculum-stats-grid">
+          <div class="curriculum-stat-item">
+            <span class="curriculum-stat-number">10</span>
+            <span class="curriculum-stat-label">講座</span>
+          </div>
+          <div class="curriculum-stat-item">
+            <span class="curriculum-stat-number">3</span>
+            <span class="curriculum-stat-label">ヶ月</span>
+          </div>
+          <div class="curriculum-stat-item">
+            <span class="curriculum-stat-number">50</span>
+            <span class="curriculum-stat-label">Session</span>
+          </div>
+          <div class="curriculum-stat-item">
+            <span class="curriculum-stat-number">5</span>
+            <span class="curriculum-stat-label">時間</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>公益資本主義アカデミー</h3>
+          <p>公益資本主義の概念を学び、日本の未来をアップデートする学習プラットフォーム</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <p><a href="index.html">ホーム</a></p>
+          <p><a href="curriculum.html">カリキュラム</a></p>
+          <p><a href="#about">概要</a></p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>お問い合わせ</h3>
+          <p>このサイトはモックアップです</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Public Interest Capitalism Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

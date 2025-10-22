@@ -18,7 +18,14 @@ import {
   ArrowRight,
   Play,
   LogIn,
-  LogOut
+  LogOut,
+  Comments,
+  Newspaper,
+  PencilAlt,
+  Robot,
+  GraduationCap,
+  InfoCircle,
+  Rocket
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -32,100 +39,153 @@ export default function Home() {
   // ハイドレーションエラーを防ぐため、ローディング中は何も表示しない
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--color-background)' }}>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: 'var(--color-primary)' }}></div>
       </div>
     );
   }
+
   const features = [
     {
-      icon: BookOpen,
-      title: '体系的なカリキュラム',
-      description: '5章25チャプターの充実した学習コンテンツで、基礎から実践まで段階的に学べます。',
-      color: 'var(--brand-primary)'
+      icon: Comments,
+      title: '対話形式の学び',
+      description: '原丈人氏と編集者の対話を通じて、複雑な概念をわかりやすく理解できます。',
+      color: 'var(--color-primary)'
     },
     {
-      icon: MessageSquare,
-      title: 'AI学習アシスタント',
-      description: '各チャプターでAIと対話しながら、理解を深め、疑問を解消できます。',
-      color: 'var(--brand-secondary)'
+      icon: Newspaper,
+      title: 'リアルなニュース',
+      description: '直近のニュースを題材に、公益資本主義的な視点で社会を読み解きます。',
+      color: 'var(--color-secondary)'
     },
     {
-      icon: Target,
-      title: 'ミニテストで確認',
-      description: '各章の最後にテストがあり、学習の定着度を確認できます。',
-      color: 'var(--brand-accent)'
+      icon: PencilAlt,
+      title: '実践的ワーク',
+      description: '自分の手を動かして計算・分析することで、理論を体感的に学べます。',
+      color: 'var(--color-accent)'
     },
     {
-      icon: BarChart3,
-      title: '進捗トラッキング',
-      description: '学習の進捗を可視化し、モチベーションを維持しながら学習を続けられます。',
-      color: 'var(--brand-success)'
+      icon: Robot,
+      title: 'AI対話で思考深化',
+      description: 'AIキャラクターとの対話を通じて、自分の考えをさらに深めていけます。',
+      color: 'var(--color-accent-secondary)'
+    },
+    {
+      icon: Users,
+      title: 'みんなの広場',
+      description: '他の受講者の意見や考えを共有し、多様な視点に触れることができます。',
+      color: 'var(--color-success)'
     }
   ];
 
   const stats = [
-    { number: '25', label: 'チャプター', icon: BookOpen },
-    { number: '5', label: '章構成', icon: Award },
-    { number: '100+', label: '学習項目', icon: Target },
-    { number: '∞', label: 'AI対話', icon: MessageSquare }
+    { number: '10', label: '回の講座', icon: BookOpen },
+    { number: '3', label: 'ヶ月間', icon: Award },
+    { number: '30', label: '分/各回', icon: Clock },
+    { number: '5', label: 'つのSession', icon: Target }
   ];
 
-  const chapters = [
+  const sessions = [
     {
       number: 1,
-      title: '基礎知識の理解',
-      description: 'ビジネスの基本原則、市場分析、顧客理解など、基礎となる知識を習得します。',
-      duration: '約60分',
-      topics: 5
+      title: 'イントロ - 対話で理解する',
+      description: '原丈人氏と編集者の対話形式で、各回のテーマの核心に迫ります。チャット形式の読みやすいデザインで、複雑な概念もすっと頭に入ります。',
+      duration: '約5分',
+      color: 'var(--color-session-intro)'
     },
     {
       number: 2,
-      title: '戦略立案と計画',
-      description: 'ビジネス戦略フレームワーク、目標設定、リソース配分など、戦略立案の手法を学びます。',
-      duration: '約75分',
-      topics: 5
+      title: 'ニュース - 現実と繋げる',
+      description: '直近3ヶ月のニュースから、テーマに関連する事例をピックアップ。公益資本主義的な論点と観点をコラム形式で解説します。',
+      duration: '約7分',
+      color: 'var(--color-session-news)'
     },
     {
       number: 3,
-      title: '実行とオペレーション',
-      description: 'プロジェクト管理、チームビルディング、プロセス改善など、実行力を身につけます。',
-      duration: '約80分',
-      topics: 5
+      title: 'ワーク - 手を動かす',
+      description: 'インタラクティブなテンプレートを使って、実際のデータを入力・計算。例えば労働分配率や株主還元率を自分で計算することで、理論を実感できます。',
+      duration: '約10分',
+      color: 'var(--color-session-work)'
     },
     {
       number: 4,
-      title: 'データ分析と意思決定',
-      description: 'データに基づいた意思決定、分析手法、予測などを習得します。',
-      duration: '約70分',
-      topics: 5
+      title: '対話 - 考えを深める',
+      description: '公益資本主義GPTをベースにしたAIキャラクターと対話。あなたの考えに質問を返しながら、思考を深めていきます。他の受講者の意見も見れる広場機能付き。',
+      duration: '約5分',
+      color: 'var(--color-session-dialogue)'
     },
     {
       number: 5,
-      title: 'イノベーションと成長',
-      description: 'イノベーション戦略、成長戦略、持続可能性など、未来志向の学びを得ます。',
-      duration: '約65分',
-      topics: 5
+      title: 'サマリー - 要点を整理',
+      description: 'その回の論点と学びをコンパクトにまとめて表示。復習にも最適です。',
+      duration: '約3分',
+      color: 'var(--color-session-summary)'
+    }
+  ];
+
+  const audience = [
+    {
+      icon: '🎓',
+      title: '高校生',
+      description: 'これから社会に出る前に、経済と社会の仕組みを深く理解したい方'
+    },
+    {
+      icon: '📚',
+      title: '大学生',
+      description: '就職活動や将来のキャリアを考える上で、新しい視点を得たい方'
+    },
+    {
+      icon: '💼',
+      title: '20代社会人',
+      description: '働き始めた今だからこそ、経済の本質を学び直したい方'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* ヘッダー */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <header 
+        className="sticky top-0 z-50"
+        style={{ 
+          background: 'linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%)',
+          boxShadow: 'var(--shadow-sm)'
+        }}
+      >
+        <div className="container">
+          <div className="flex justify-between items-center py-4">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
+              <div 
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                style={{ background: 'var(--gradient-primary)' }}
+              >
+                <BookOpen className="w-5 h-5" />
               </div>
-              <span className="text-xl font-bold">PIC School</span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>
+                  公益資本主義アカデミー
+                </span>
+                <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                  Public Interest Capitalism Academy
+                </span>
+              </div>
             </Link>
+            
+            <nav className="flex items-center space-x-4">
+              <Link href="/" className="nav-link active">
+                ホーム
+              </Link>
+              <Link href="/program/1" className="nav-link">
+                カリキュラム
+              </Link>
+              <Link href="#about" className="nav-link">
+                概要
+              </Link>
+            </nav>
             
             <div className="flex items-center space-x-4">
               {user ? (
                 <>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                     {user.user_metadata?.name || user.email}さん
                   </div>
                   <Link href="/mypage">
@@ -161,11 +221,20 @@ export default function Home() {
       {/* ヒーローセクション */}
       <section 
         className="relative overflow-hidden"
-        style={{ background: 'var(--gradient-primary)' }}
+        style={{ 
+          background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 50%, var(--color-accent-pale) 100%)',
+          padding: 'var(--spacing-4xl) 0'
+        }}
       >
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNiIgc3Ryb2tlPSIjRkZGIiBzdHJva2Utb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-20" />
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
+            animation: 'float 20s ease-in-out infinite'
+          }}
+        />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div className="container relative z-10">
           <div className="text-center space-y-8">
             <Badge 
               variant="secondary" 
@@ -176,15 +245,29 @@ export default function Home() {
             </Badge>
             
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-6xl text-white max-w-4xl mx-auto">
-                ビジネススキルを
-                <br />
-                体系的に学ぶ
+              <h1 
+                className="text-4xl md:text-6xl max-w-4xl mx-auto"
+                style={{ 
+                  color: 'var(--color-text-primary)',
+                  textShadow: '2px 2px 4px rgba(255,255,255,0.8)'
+                }}
+              >
+                公益資本主義で<br />
+                世界が憧れる日本をつくる
               </h1>
-              <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                AIアシスタントと共に、自分のペースで学習を進められる
-                <br className="hidden md:block" />
-                オンラインスクール
+              <p 
+                className="text-xl max-w-2xl mx-auto"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
+                Public Interest Capitalism Academy
+              </p>
+              <p 
+                className="text-lg max-w-3xl mx-auto leading-relaxed"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
+                公益資本主義の概念を学び、経済の仕組みを理解し、<br />
+                日本の未来をアップデートする方法を一緒に考えましょう。<br />
+                3ヶ月間・全10回の学習プログラムで、あなたの視点が変わります。
               </p>
             </div>
 
@@ -192,22 +275,31 @@ export default function Home() {
               <Link href="/program/1">
                 <Button
                   size="lg"
-                  className="h-14 px-8 bg-white hover:bg-white/90 shadow-xl text-lg group"
-                  style={{ color: 'var(--brand-primary)' }}
+                  className="h-14 px-8 text-lg group"
+                  style={{ 
+                    background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)',
+                    color: 'var(--color-text-primary)',
+                    boxShadow: 'var(--shadow-lg)'
+                  }}
                 >
-                  <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  学習を始める
+                  <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  カリキュラムを見る
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link href="/program/1">
+              <Link href="#about">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-14 px-8 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-sm text-lg"
+                  className="h-14 px-8 text-lg"
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: '2px solid var(--color-primary)',
+                    color: 'var(--color-text-primary)'
+                  }}
                 >
-                  <BookOpen className="w-5 h-5 mr-2" />
-                  詳しく見る
+                  <InfoCircle className="w-5 h-5 mr-2" />
+                  詳しく知る
                 </Button>
               </Link>
             </div>
@@ -233,215 +325,244 @@ export default function Home() {
       </section>
 
       {/* 特徴セクション */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <Badge variant="outline" style={{ borderColor: 'var(--brand-primary)', color: 'var(--brand-primary)' }}>
-            特徴
-          </Badge>
-          <h2>学習を加速させる機能</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            効率的な学習をサポートする、充実した機能を搭載しています
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <Card
-                key={index}
-                className="p-6 hover:shadow-lg transition-shadow cursor-pointer group"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-                  style={{ background: `${feature.color}15` }}
+      <section className="py-20" style={{ backgroundColor: 'var(--color-white)' }}>
+        <div className="container">
+          <h2 className="section-title">アカデミーの特徴</h2>
+          <p className="section-subtitle">5つのSessionで深く、楽しく学ぶ</p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={index}
+                  className="p-6 text-center hover:shadow-lg transition-all cursor-pointer group"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--color-white) 0%, var(--color-background) 100%)',
+                    border: '2px solid transparent'
+                  }}
                 >
-                  <Icon className="w-6 h-6" style={{ color: feature.color }} />
-                </div>
-                <h3 className="mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </Card>
-            );
-          })}
+                  <div
+                    className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform"
+                    style={{ background: `linear-gradient(135deg, ${feature.color} 0%, ${feature.color}dd 100%)` }}
+                  >
+                    <Icon className="w-10 h-10" />
+                  </div>
+                  <h3 className="text-xl mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                    {feature.description}
+                  </p>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* カリキュラムセクション */}
+      {/* 対象者セクション */}
       <section 
-        className="py-20 px-4 sm:px-6 lg:px-8"
-        style={{ background: 'var(--bg-primary-light)' }}
+        className="py-20"
+        style={{ background: 'linear-gradient(135deg, var(--color-background) 0%, var(--color-white) 100%)' }}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center space-y-4 mb-16">
-            <Badge variant="outline" style={{ borderColor: 'var(--brand-secondary)', color: 'var(--brand-secondary)' }}>
-              カリキュラム
-            </Badge>
-            <h2>5章で学ぶビジネスの全体像</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              基礎から応用まで、体系的に学べる構成になっています
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {chapters.map((chapter, index) => (
-              <Link key={index} href="/program/1">
-                <Card className="p-6 hover:shadow-lg transition-all cursor-pointer group">
-                  <div className="flex items-start gap-6">
-                    <div
-                      className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center text-white shadow-lg"
-                      style={{ background: 'var(--gradient-secondary)' }}
-                    >
-                      <span className="text-2xl">第{chapter.number}章</span>
-                    </div>
-                    
-                    <div className="flex-1 space-y-3">
-                      <div>
-                        <h3 className="group-hover:text-primary transition-colors">
-                          {chapter.title}
-                        </h3>
-                        <p className="text-muted-foreground mt-1">
-                          {chapter.description}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          <span>{chapter.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <BookOpen className="w-4 h-4" />
-                          <span>{chapter.topics}チャプター</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Target className="w-4 h-4" />
-                          <span>テスト付き</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <ArrowRight 
-                      className="w-6 h-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0"
-                    />
-                  </div>
-                </Card>
-              </Link>
+        <div className="container">
+          <h2 className="section-title">こんな方におすすめ</h2>
+          <p className="section-subtitle">未来を担う世代へ</p>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {audience.map((item, index) => (
+              <Card
+                key={index}
+                className="p-8 text-center relative overflow-hidden"
+                style={{ backgroundColor: 'var(--color-white)' }}
+              >
+                <div
+                  className="absolute top-0 left-0 w-full h-1"
+                  style={{ background: 'linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%)' }}
+                />
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-2xl mb-4" style={{ color: 'var(--color-text-primary)' }}>
+                  {item.title}
+                </h3>
+                <p style={{ color: 'var(--color-text-secondary)' }}>
+                  {item.description}
+                </p>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 学習の流れセクション */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <Badge variant="outline" style={{ borderColor: 'var(--brand-success)', color: 'var(--brand-success)' }}>
-            学習の流れ
-          </Badge>
-          <h2>シンプルな3ステップ</h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              step: '01',
-              title: 'コンテンツを読む',
-              description: '各チャプターのコンテンツを自分のペースで読み進めます。重要なポイントをハイライトすることもできます。',
-              icon: BookOpen,
-              color: 'var(--brand-primary)'
-            },
-            {
-              step: '02',
-              title: 'AIと対話する',
-              description: '理解を深めるために、AIアシスタントと対話しながら学習を進めます。疑問点があればいつでも質問できます。',
-              icon: MessageSquare,
-              color: 'var(--brand-secondary)'
-            },
-            {
-              step: '03',
-              title: 'テストで確認',
-              description: '各章の最後にミニテストで理解度を確認。全章クリアで次のステップへ進めます。',
-              icon: CheckCircle,
-              color: 'var(--brand-success)'
-            }
-          ].map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <Card key={index} className="p-8 text-center">
+      {/* プログラム概要 */}
+      <section className="py-20" style={{ backgroundColor: 'var(--color-white)' }}>
+        <div className="container">
+          <h2 className="section-title">プログラム概要</h2>
+          <p className="section-subtitle">3ヶ月で体系的に学ぶ</p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
                 <div
-                  className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center text-white shadow-lg"
-                  style={{ background: item.color }}
+                  key={index}
+                  className="text-center p-6 rounded-lg shadow-sm"
+                  style={{ 
+                    background: 'linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%)'
+                  }}
                 >
-                  <Icon className="w-10 h-10" />
+                  <div className="text-5xl font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                    {stat.number}
+                  </div>
+                  <div className="text-lg font-medium" style={{ color: 'var(--color-text-secondary)' }}>
+                    {stat.label}
+                  </div>
                 </div>
-                <div 
-                  className="text-sm mb-3"
-                  style={{ color: item.color }}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Session紹介 */}
+      <section 
+        className="py-20"
+        style={{ background: 'linear-gradient(180deg, var(--color-background) 0%, var(--color-white) 100%)' }}
+      >
+        <div className="container">
+          <h2 className="section-title">各回の学習体験（約30分）</h2>
+          <p className="section-subtitle">5つのSessionで構成された効果的な学び</p>
+          
+          <div className="space-y-4">
+            {sessions.map((session, index) => (
+              <Card
+                key={index}
+                className="p-6 flex items-center gap-6 hover:shadow-lg transition-all cursor-pointer group"
+                style={{ backgroundColor: 'var(--color-white)' }}
+              >
+                <div
+                  className="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-lg"
+                  style={{ backgroundColor: session.color }}
                 >
-                  STEP {item.step}
+                  {session.number}
                 </div>
-                <h3 className="mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+                
+                <div className="flex-1">
+                  <h3 className="text-xl mb-2 group-hover:text-primary transition-colors" style={{ color: 'var(--color-text-primary)' }}>
+                    {session.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                    {session.description}
+                  </p>
+                </div>
+
+                <div className="flex-shrink-0 text-sm font-medium" style={{ color: 'var(--color-text-light)' }}>
+                  {session.duration}
+                </div>
               </Card>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTAセクション */}
       <section 
-        className="py-20 px-4 sm:px-6 lg:px-8"
+        className="py-20 text-center"
         style={{ background: 'var(--gradient-primary)' }}
       >
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-3xl md:text-4xl text-white">
-            今すぐ学習を始めましょう
+        <div className="container max-w-4xl">
+          <h2 className="text-3xl md:text-4xl text-white mb-6">
+            さあ、一緒に日本の未来を考えよう
           </h2>
-          <p className="text-xl text-white/90">
-            無料で全てのコンテンツにアクセスできます
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            公益資本主義を学ぶことは、あなた自身の未来を考えることです。<br />
+            今すぐカリキュラムをチェックして、学びの旅を始めましょう。
           </p>
           <Link href="/program/1">
             <Button
               size="lg"
-              className="h-14 px-8 bg-white hover:bg-white/90 shadow-xl text-lg group"
-              style={{ color: 'var(--brand-primary)' }}
+              className="h-14 px-8 text-lg group"
+              style={{
+                backgroundColor: 'var(--color-white)',
+                color: 'var(--color-text-primary)',
+                boxShadow: 'var(--shadow-lg)'
+              }}
             >
-              <Play className="w-5 h-5 mr-2" />
-              学習を始める
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <GraduationCap className="w-5 h-5 mr-2" />
+              カリキュラムを見る
             </Button>
           </Link>
         </div>
       </section>
 
       {/* フッター */}
-      <footer className="border-t py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center text-muted-foreground">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div 
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
-              style={{ background: 'var(--gradient-primary)' }}
-            >
-              <BookOpen className="w-5 h-5" />
+      <footer 
+        className="py-12"
+        style={{ 
+          backgroundColor: 'var(--color-text-primary)',
+          color: 'var(--color-white)',
+          marginTop: 'var(--spacing-4xl)'
+        }}
+      >
+        <div className="container">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-white mb-4">公益資本主義アカデミー</h3>
+              <p className="text-sm text-white/80">
+                公益資本主義の概念を学び、日本の未来をアップデートする学習プラットフォーム
+              </p>
             </div>
-            <span>オンラインスクール</span>
+            
+            <div>
+              <h3 className="text-white mb-4">リンク</h3>
+              <div className="space-y-2">
+                <p><Link href="/" className="text-sm text-white/80 hover:text-white transition-colors">ホーム</Link></p>
+                <p><Link href="/program/1" className="text-sm text-white/80 hover:text-white transition-colors">カリキュラム</Link></p>
+                <p><Link href="#about" className="text-sm text-white/80 hover:text-white transition-colors">概要</Link></p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-white mb-4">お問い合わせ</h3>
+              <p className="text-sm text-white/80">このサイトはモックアップです</p>
+            </div>
           </div>
-          <div className="flex justify-center gap-4 mb-4">
-            <Link href="/mypage" className="text-sm hover:text-primary transition-colors">
-              マイページ
-            </Link>
-            <Link href="/admin" className="text-sm hover:text-primary transition-colors">
-              管理画面
-            </Link>
+          
+          <div 
+            className="text-center pt-6 border-t border-white/20 text-sm text-white/60"
+          >
+            © 2025 Public Interest Capitalism Academy. All rights reserved.
           </div>
-          <p className="text-sm">
-            © 2025 オンラインスクール. All rights reserved.
-          </p>
         </div>
       </footer>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(30px, -30px) rotate(120deg); }
+          66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .nav-link {
+          font-size: var(--font-size-base);
+          font-weight: var(--font-weight-medium);
+          color: var(--color-text-primary);
+          padding: var(--spacing-sm) var(--spacing-md);
+          border-radius: var(--radius-full);
+          transition: all var(--transition-base);
+        }
+        
+        .nav-link:hover {
+          background-color: var(--color-white);
+          color: var(--color-primary-dark);
+          box-shadow: var(--shadow-sm);
+        }
+        
+        .nav-link.active {
+          background-color: var(--color-white);
+          color: var(--color-primary-dark);
+        }
+      `}</style>
     </div>
   );
 }

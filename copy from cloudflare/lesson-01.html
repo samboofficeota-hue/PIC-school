@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="第1回：公益資本主義とは何か - 基本の理解">
+  <title>第1回：公益資本主義とは何か | 公益資本主義アカデミー</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/lesson.css">
+  <link rel="stylesheet" href="../css/session-components.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-ja">公益資本主義アカデミー</div>
+          <div class="logo-en">Public Interest Capitalism Academy</div>
+        </div>
+        <nav class="nav">
+          <a href="../index.html" class="nav-link">ホーム</a>
+          <a href="../curriculum.html" class="nav-link">カリキュラム</a>
+          <a href="#about" class="nav-link">概要</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- レッスンヘッダー -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-header-content">
+        <div class="lesson-breadcrumb">
+          <a href="../index.html"><i class="fas fa-home"></i> ホーム</a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="../curriculum.html">カリキュラム</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>第1回</span>
+        </div>
+        
+        <div class="lesson-header-main">
+          <div class="lesson-header-number">
+            <div class="lesson-header-number-label">Lesson</div>
+            <div class="lesson-header-number-value">01</div>
+          </div>
+          
+          <div class="lesson-header-info">
+            <h1 class="lesson-header-title">公益資本主義とは何か</h1>
+            <p class="lesson-header-subtitle">基本の理解</p>
+            <div class="lesson-header-meta">
+              <div class="lesson-header-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>約30分</span>
+              </div>
+              <div class="lesson-header-meta-item">
+                <i class="fas fa-layer-group"></i>
+                <span>5つのSession</span>
+              </div>
+              <div class="lesson-header-meta-item">
+                <i class="fas fa-book-open"></i>
+                <span>第1回 / 全10回</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <main class="section">
+    <div class="container">
+      
+      <!-- セッションナビゲーション -->
+      <div class="session-nav">
+        <h3 class="session-nav-title"><i class="fas fa-list"></i> Session一覧</h3>
+        <div class="session-nav-list">
+          <div class="session-nav-item active" data-session="1" onclick="showSession(1)">
+            <div class="session-nav-item-number">Session 1</div>
+            <div class="session-nav-item-name">イントロ</div>
+          </div>
+          <div class="session-nav-item" data-session="2" onclick="showSession(2)">
+            <div class="session-nav-item-number">Session 2</div>
+            <div class="session-nav-item-name">ニュース</div>
+          </div>
+          <div class="session-nav-item" data-session="3" onclick="showSession(3)">
+            <div class="session-nav-item-number">Session 3</div>
+            <div class="session-nav-item-name">ワーク</div>
+          </div>
+          <div class="session-nav-item" data-session="4" onclick="showSession(4)">
+            <div class="session-nav-item-number">Session 4</div>
+            <div class="session-nav-item-name">対話</div>
+          </div>
+          <div class="session-nav-item" data-session="5" onclick="showSession(5)">
+            <div class="session-nav-item-number">Session 5</div>
+            <div class="session-nav-item-name">サマリー</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session 1: イントロ -->
+      <div id="session-1" class="session-content active">
+        <div class="session-header" data-session="1">
+          <div class="session-header-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h2 class="session-header-title">Session 1: イントロ</h2>
+          <p class="session-header-description">
+            原丈人氏と編集者の対話形式で、公益資本主義の基本概念を理解します。
+          </p>
+        </div>
+        
+        <div class="session-body">
+          <div class="chat-container">
+            
+            <!-- メッセージ1 -->
+            <div class="chat-message speaker-editor">
+              <div class="chat-avatar speaker-editor">編</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">
+                  編集者
+                  <span class="chat-speaker-role">ファシリテーター</span>
+                </div>
+                <div class="chat-bubble">
+                  原さん、今日は「公益資本主義」について教えていただけますか？最近よく耳にする言葉ですが、具体的にどういう概念なのでしょうか？
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ2 -->
+            <div class="chat-message speaker-hara">
+              <div class="chat-avatar speaker-hara">原</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">
+                  原丈人
+                  <span class="chat-speaker-role">公益資本主義提唱者</span>
+                </div>
+                <div class="chat-bubble">
+                  はい。公益資本主義とは、簡単に言うと「企業が社会全体の利益を考えながら事業を行う」という考え方です。従来の株主至上主義とは異なり、従業員、顧客、取引先、そして社会全体のステークホルダーの利益をバランスよく考える経営哲学なんです。
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ3 -->
+            <div class="chat-message speaker-editor">
+              <div class="chat-avatar speaker-editor">編</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">編集者</div>
+                <div class="chat-bubble">
+                  なるほど。でも、企業は利益を追求するのが当たり前ですよね？公益と利益は矛盾しないんでしょうか？
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ4 -->
+            <div class="chat-message speaker-hara">
+              <div class="chat-avatar speaker-hara">原</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">原丈人</div>
+                <div class="chat-bubble">
+                  いい質問ですね。実は、矛盾しないんです。むしろ、長期的に見れば公益を追求することが企業の持続的な成長につながります。従業員を大切にすれば生産性が上がり、顧客を大切にすれば信頼が得られ、社会を大切にすればブランド価値が高まる。これが好循環を生むんです。
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ5 -->
+            <div class="chat-message speaker-editor">
+              <div class="chat-avatar speaker-editor">編</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">編集者</div>
+                <div class="chat-bubble">
+                  確かに、短期的な利益だけを追求すると、従業員のモチベーションが下がったり、顧客離れが起きたりしますね。
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ6 -->
+            <div class="chat-message speaker-hara">
+              <div class="chat-avatar speaker-hara">原</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">原丈人</div>
+                <div class="chat-bubble">
+                  その通りです。日本は高度経済成長期に、まさにこの公益資本主義的な経営をしていました。終身雇用、年功序列といった制度は、従業員を長期的に育てる仕組みでした。しかし1990年代以降、アメリカ型の株主至上主義が導入され、短期的な株価を重視する経営が主流になってしまった。その結果、賃金は上がらず、格差は拡大し、経済は停滞してしまったんです。
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ7 -->
+            <div class="chat-message speaker-editor">
+              <div class="chat-avatar speaker-editor">編</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">編集者</div>
+                <div class="chat-bubble">
+                  なるほど。つまり、公益資本主義は日本が本来持っていた経営哲学に立ち返るということでもあるんですね。
+                </div>
+              </div>
+            </div>
+
+            <!-- メッセージ8 -->
+            <div class="chat-message speaker-hara">
+              <div class="chat-avatar speaker-hara">原</div>
+              <div class="chat-content">
+                <div class="chat-speaker-name">原丈人</div>
+                <div class="chat-bubble">
+                  まさにその通りです。ただし、昔に戻るのではなく、現代に合わせてアップデートする必要があります。グローバル化、デジタル化が進む中で、どうやって公益と利益を両立させるか。それが私たちに課された課題なんです。
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Session 2: ニュース -->
+      <div id="session-2" class="session-content">
+        <div class="session-header" data-session="2">
+          <div class="session-header-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <h2 class="session-header-title">Session 2: ニュース</h2>
+          <p class="session-header-description">
+            直近のニュースから、公益資本主義的な視点で社会を読み解きます。
+          </p>
+        </div>
+        
+        <div class="session-body">
+          
+          <div class="news-article">
+            <div class="news-meta">
+              <div class="news-date">
+                <i class="fas fa-calendar"></i>
+                <span>2024年12月15日</span>
+              </div>
+              <div class="news-source">
+                <i class="fas fa-newspaper"></i>
+                <span>日本経済新聞</span>
+              </div>
+            </div>
+            
+            <h3 class="news-title">
+              トヨタ、従業員への利益還元を大幅拡大　ベースアップ過去最高に
+            </h3>
+            
+            <div class="news-summary">
+              <p>
+                トヨタ自動車は15日、2025年春闘において従業員へのベースアップを過去最高水準とする方針を発表した。好調な業績を背景に、労働分配率を引き上げ、従業員への還元を強化する。同社は「従業員の成長なくして企業の成長はない」とコメントしている。
+              </p>
+              <p style="margin-top: var(--spacing-md);">
+                一方で、株主への配当も維持する方針で、従業員、株主、そして設備投資のバランスを取った経営を目指すとしている。この動きは、他の日本企業にも波及する可能性がある。
+              </p>
+            </div>
+            
+            <div class="news-perspective">
+              <h4 class="news-perspective-title">
+                <i class="fas fa-lightbulb"></i>
+                公益資本主義的な視点
+              </h4>
+              <div class="news-perspective-content">
+                <p>
+                  このトヨタのニュースは、まさに公益資本主義の実践例と言えます。注目すべきは以下の3点です：
+                </p>
+                <ul style="margin-top: var(--spacing-md); padding-left: var(--spacing-xl);">
+                  <li style="margin-bottom: var(--spacing-sm);">
+                    <strong>従業員への還元強化：</strong>ベースアップの大幅な引き上げは、従業員の生活を向上させ、モチベーションを高めます。これは短期的にはコストですが、長期的には生産性向上につながります。
+                  </li>
+                  <li style="margin-bottom: var(--spacing-sm);">
+                    <strong>バランスの取れた分配：</strong>従業員への還元を強化しながらも、株主配当を維持し、設備投資も確保する。これは「適正な社中分配」の実践です。
+                  </li>
+                  <li style="margin-bottom: var(--spacing-sm);">
+                    <strong>社会への波及効果：</strong>トヨタのような大企業の動きは、他企業にも影響を与えます。賃上げが広がれば、日本経済全体の消費が活性化し、好循環が生まれます。
+                  </li>
+                </ul>
+                <p style="margin-top: var(--spacing-lg);">
+                  株主至上主義では、利益の多くを株主還元に回し、従業員への分配は最小限に抑えられがちです。しかし、トヨタは従業員こそが企業価値の源泉であることを理解し、長期的な視点で投資しています。これこそが公益資本主義の考え方なのです。
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Session 3: ワーク -->
+      <div id="session-3" class="session-content">
+        <div class="session-header" data-session="3">
+          <div class="session-header-icon">
+            <i class="fas fa-pencil-alt"></i>
+          </div>
+          <h2 class="session-header-title">Session 3: ワーク</h2>
+          <p class="session-header-description">
+            実践的なワークで、理論を体感的に学びます。
+          </p>
+        </div>
+        
+        <div class="session-body">
+          
+          <div class="work-intro">
+            <h3 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-md);">
+              📝 ワーク：公益資本主義を自分の言葉で説明してみよう
+            </h3>
+            <p style="color: var(--color-text-secondary);">
+              Session 1とSession 2で学んだことを踏まえて、あなた自身の言葉で公益資本主義を説明してみましょう。<br>
+              また、なぜそれが今の日本に必要なのか、あなたの考えを書いてみてください。
+            </p>
+          </div>
+
+          <div class="work-form">
+            <div class="form-section">
+              <h4 class="form-section-title">
+                <i class="fas fa-pencil-alt"></i> あなたの理解を言葉にしてみよう
+              </h4>
+              
+              <div class="form-group">
+                <label class="form-label">
+                  1. 公益資本主義とは何か、あなたの言葉で説明してください
+                </label>
+                <textarea 
+                  class="form-textarea" 
+                  placeholder="例：公益資本主義とは、企業が利益を追求しながらも、従業員や社会全体の幸福も同時に考える経営の考え方だと思います..."
+                ></textarea>
+                <p class="form-hint">
+                  💡 ヒント：誰かに説明するつもりで、できるだけわかりやすく書いてみましょう
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  2. なぜ今の日本に公益資本主義が必要だと思いますか？
+                </label>
+                <textarea 
+                  class="form-textarea" 
+                  placeholder="例：日本では賃金が上がらず、格差が広がっています。公益資本主義によって従業員への分配が増えれば..."
+                ></textarea>
+                <p class="form-hint">
+                  💡 ヒント：Session 2のニュースも参考に、日本の課題と結びつけて考えてみましょう
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  3. あなたの身近な企業で、公益資本主義的だと思う企業はありますか？その理由も教えてください
+                </label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="企業名を入力してください"
+                  style="margin-bottom: var(--spacing-md);"
+                />
+                <textarea 
+                  class="form-textarea" 
+                  placeholder="その企業が公益資本主義的だと思う理由を書いてください"
+                ></textarea>
+                <p class="form-hint">
+                  💡 ヒント：従業員を大切にしている、地域貢献している、環境に配慮しているなど、具体的なエピソードがあればそれも書いてみましょう
+                </p>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h4 class="form-section-title">
+                <i class="fas fa-chart-bar"></i> 振り返り
+              </h4>
+              
+              <div class="form-group">
+                <label class="form-label">
+                  4. このSessionを通じて、一番印象に残ったことは何ですか？
+                </label>
+                <textarea 
+                  class="form-textarea" 
+                  placeholder="印象に残ったことを自由に書いてください"
+                  style="min-height: 100px;"
+                ></textarea>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-xl);">
+              <i class="fas fa-save"></i> 回答を保存
+            </button>
+          </div>
+
+          <div class="work-result">
+            <h4 class="work-result-title">
+              <i class="fas fa-star"></i> ポイント
+            </h4>
+            <p style="color: var(--color-text-secondary); line-height: 1.8;">
+              このワークで大切なのは、「正解」を書くことではありません。あなた自身がどう理解し、どう感じたかを言葉にすることが重要です。書くことで、学びが定着し、自分の考えが整理されます。後で見返したときに、あなたの成長を実感できるはずです。
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Session 4: 対話 -->
+      <div id="session-4" class="session-content">
+        <div class="session-header" data-session="4">
+          <div class="session-header-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h2 class="session-header-title">Session 4: 対話</h2>
+          <p class="session-header-description">
+            AIキャラクターとの対話を通じて、考えを深めます。
+          </p>
+        </div>
+        
+        <div class="session-body">
+          
+          <div class="dialogue-container">
+            
+            <div class="dialogue-prompt">
+              <h3 class="dialogue-prompt-title">
+                🤔 考えを深める問い
+              </h3>
+              <p style="color: var(--color-text-secondary); font-size: var(--font-size-lg); margin-top: var(--spacing-md);">
+                もしあなたが企業の経営者だったら、<br>
+                株主から「もっと配当を増やせ」と言われたとき、<br>
+                どう対応しますか？
+              </p>
+            </div>
+
+            <div class="dialogue-input-area">
+              <h4 style="margin-bottom: var(--spacing-md); color: var(--color-text-primary);">
+                <i class="fas fa-pen"></i> あなたの考えを書いてみましょう
+              </h4>
+              <textarea 
+                class="dialogue-textarea" 
+                placeholder="あなたならどう対応しますか？理由も含めて自由に書いてみてください..."
+              ></textarea>
+              <button class="dialogue-submit">
+                <i class="fas fa-paper-plane"></i> AIと対話する
+              </button>
+              <p style="text-align: center; font-size: var(--font-size-sm); color: var(--color-text-light); margin-top: var(--spacing-sm);">
+                ※ このモックアップではAI応答はダミーです
+              </p>
+            </div>
+
+            <div class="ai-response">
+              <div class="ai-response-header">
+                <div class="ai-avatar">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                  <div style="font-weight: var(--font-weight-bold); color: var(--color-text-primary);">
+                    公益資本主義AI
+                  </div>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-text-light);">
+                    あなたの考えに対する質問
+                  </div>
+                </div>
+              </div>
+              <div class="ai-response-content">
+                <p>
+                  なるほど、興味深い視点ですね。では、もう少し深く考えてみましょう：
+                </p>
+                <p style="margin-top: var(--spacing-md);">
+                  <strong>質問1:</strong> 短期的な株主の要求に応えることと、長期的な企業価値の向上、どちらが本当の意味で株主のためになると思いますか？
+                </p>
+                <p style="margin-top: var(--spacing-md);">
+                  <strong>質問2:</strong> 従業員への投資を減らして配当を増やした場合、5年後、10年後の企業はどうなっていると思いますか？
+                </p>
+                <p style="margin-top: var(--spacing-md);">
+                  <strong>質問3:</strong> あなたが株主だったら、目先の配当と企業の持続的成長、どちらを重視しますか？
+                </p>
+              </div>
+            </div>
+
+            <div class="community-section">
+              <h3 class="community-title">
+                <i class="fas fa-users"></i> みんなの意見広場
+              </h3>
+              
+              <div class="community-post">
+                <div class="community-post-header">
+                  <span class="community-post-author">
+                    <i class="fas fa-user-circle"></i> 大学生A
+                  </span>
+                  <span class="community-post-date">2日前</span>
+                </div>
+                <div class="community-post-content">
+                  僕なら、株主に対して「配当を増やすことはできますが、そのためには従業員への投資を削る必要があります。それは長期的に企業価値を下げることになります」と説明します。本当に企業を成長させたいなら、従業員を大切にすることが最優先だと思います。
+                </div>
+              </div>
+
+              <div class="community-post">
+                <div class="community-post-header">
+                  <span class="community-post-author">
+                    <i class="fas fa-user-circle"></i> 社会人B
+                  </span>
+                  <span class="community-post-date">3日前</span>
+                </div>
+                <div class="community-post-content">
+                  実際に働いている立場からすると、配当ばかり優先されると現場は疲弊します。短期的な利益のために人員削減されたり、教育予算が削られたりすると、モチベーションが下がってしまいます。経営者には、従業員の声にも耳を傾けてほしいです。
+                </div>
+              </div>
+
+              <div class="community-post">
+                <div class="community-post-header">
+                  <span class="community-post-author">
+                    <i class="fas fa-user-circle"></i> 高校生C
+                  </span>
+                  <span class="community-post-date">5日前</span>
+                </div>
+                <div class="community-post-content">
+                  株主も大切だけど、従業員も顧客も大切ですよね。みんなが幸せになれる方法を考えるのが経営者の仕事だと思います。バランスを取るのは難しそうだけど、それが公益資本主義の考え方なんだと理解しました。
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Session 5: サマリー -->
+      <div id="session-5" class="session-content">
+        <div class="session-header" data-session="5">
+          <div class="session-header-icon">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <h2 class="session-header-title">Session 5: サマリー</h2>
+          <p class="session-header-description">
+            この回の論点と学びをまとめます。
+          </p>
+        </div>
+        
+        <div class="session-body">
+          
+          <div class="summary-container">
+            
+            <div class="summary-section">
+              <h3 class="summary-section-title">
+                <div class="summary-section-icon">
+                  <i class="fas fa-key"></i>
+                </div>
+                <span>この講座の核心</span>
+              </h3>
+              <ul class="summary-list">
+                <li>公益資本主義とは、企業が利益を追求しながらも、従業員・顧客・社会全体の利益をバランスよく考える経営哲学である</li>
+                <li>株主至上主義とは異なり、すべてのステークホルダーの幸福を目指す</li>
+                <li>短期的な利益だけでなく、長期的な視点で企業価値を高めることを重視する</li>
+                <li>公益と利益は矛盾せず、むしろ長期的には好循環を生む関係にある</li>
+              </ul>
+            </div>
+
+            <div class="summary-section">
+              <h3 class="summary-section-title">
+                <div class="summary-section-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <span>なぜ今、日本に必要なのか</span>
+              </h3>
+              <ul class="summary-list">
+                <li>日本は1990年代以降、アメリカ型の株主至上主義を導入した結果、賃金停滞・格差拡大・経済停滞が続いている</li>
+                <li>高度経済成長期の日本は、実は公益資本主義的な経営を実践していた</li>
+                <li>従業員への投資を削り、株主配当を優先する経営では、企業も社会も持続的に成長できない</li>
+                <li>公益資本主義への転換が、日本経済再生の鍵となる</li>
+              </ul>
+            </div>
+
+            <div class="summary-section">
+              <h3 class="summary-section-title">
+                <div class="summary-section-icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <span>実践のヒント</span>
+              </h3>
+              <ul class="summary-list">
+                <li>トヨタのように、従業員への還元と株主配当のバランスを取る「適正な社中分配」が重要</li>
+                <li>四半期決算の数字だけでなく、中長期的な視点で経営判断を行う</li>
+                <li>従業員を「コスト」ではなく「投資対象」として捉える</li>
+                <li>企業の社会的責任を果たすことが、結果的に企業価値を高める</li>
+              </ul>
+            </div>
+
+            <div class="summary-highlight">
+              <h4 class="summary-highlight-title">
+                💡 今回の最重要ポイント
+              </h4>
+              <p style="color: var(--color-text-secondary); line-height: 1.8; font-size: var(--font-size-lg);">
+                <strong>「公益」と「利益」は対立概念ではありません。</strong><br><br>
+                従業員を大切にすれば生産性が上がり、顧客を大切にすれば信頼が得られ、社会を大切にすればブランド価値が高まる。これらは全て、長期的な企業価値の向上につながります。<br><br>
+                公益資本主義は、理想論ではなく、持続可能な企業成長のための実践的な経営哲学なのです。
+              </p>
+            </div>
+
+            <div class="summary-section">
+              <h3 class="summary-section-title">
+                <div class="summary-section-icon">
+                  <i class="fas fa-question-circle"></i>
+                </div>
+                <span>次回に向けて考えてみよう</span>
+              </h3>
+              <p style="color: var(--color-text-secondary); line-height: 1.8;">
+                次回は「日本の立ち位置」について、データを使って深掘りします。<br>
+                日本経済は本当に停滞しているのか？賃金はなぜ上がらないのか？<br>
+                具体的な数字から、日本の課題を明確にしていきましょう。
+              </p>
+            </div>
+
+            <div class="summary-cta">
+              <h3 class="summary-cta-title">
+                🎉 第1回完了！
+              </h3>
+              <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-xl);">
+                お疲れ様でした！公益資本主義の基本を理解できましたね。<br>
+                次の講座で、さらに理解を深めていきましょう。
+              </p>
+              <a href="../curriculum.html" class="summary-cta-button">
+                <i class="fas fa-list"></i> カリキュラムに戻る
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- セッションフッター（ナビゲーション） -->
+      <div class="session-footer">
+        <button class="session-nav-button prev" onclick="prevSession()" id="prev-button" disabled>
+          <i class="fas fa-arrow-left"></i>
+          <span>前のSession</span>
+        </button>
+        
+        <div class="session-progress-indicator">
+          <div class="session-progress-text">Session <span id="current-session">1</span> / 5</div>
+          <div class="session-progress-dots">
+            <div class="session-progress-dot active" data-dot="1"></div>
+            <div class="session-progress-dot" data-dot="2"></div>
+            <div class="session-progress-dot" data-dot="3"></div>
+            <div class="session-progress-dot" data-dot="4"></div>
+            <div class="session-progress-dot" data-dot="5"></div>
+          </div>
+        </div>
+        
+        <button class="session-nav-button next" onclick="nextSession()" id="next-button">
+          <span>次のSession</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>公益資本主義アカデミー</h3>
+          <p>公益資本主義の概念を学び、日本の未来をアップデートする学習プラットフォーム</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <p><a href="../index.html">ホーム</a></p>
+          <p><a href="../curriculum.html">カリキュラム</a></p>
+          <p><a href="#about">概要</a></p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>お問い合わせ</h3>
+          <p>このサイトはモックアップです</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Public Interest Capitalism Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    let currentSession = 1;
+
+    function showSession(sessionNumber) {
+      // 全てのSessionコンテンツを非表示
+      document.querySelectorAll('.session-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // 全てのナビアイテムの activeを削除
+      document.querySelectorAll('.session-nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // 指定されたSessionを表示
+      document.getElementById(`session-${sessionNumber}`).classList.add('active');
+      document.querySelector(`.session-nav-item[data-session="${sessionNumber}"]`).classList.add('active');
+      
+      // 現在のSessionを更新
+      currentSession = sessionNumber;
+      document.getElementById('current-session').textContent = sessionNumber;
+      
+      // 進捗ドットを更新
+      document.querySelectorAll('.session-progress-dot').forEach(dot => {
+        dot.classList.remove('active');
+      });
+      document.querySelector(`.session-progress-dot[data-dot="${sessionNumber}"]`).classList.add('active');
+      
+      // ボタンの状態を更新
+      updateButtons();
+      
+      // ページトップにスクロール
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextSession() {
+      if (currentSession < 5) {
+        showSession(currentSession + 1);
+      }
+    }
+
+    function prevSession() {
+      if (currentSession > 1) {
+        showSession(currentSession - 1);
+      }
+    }
+
+    function updateButtons() {
+      const prevButton = document.getElementById('prev-button');
+      const nextButton = document.getElementById('next-button');
+      
+      // 前へボタン
+      if (currentSession === 1) {
+        prevButton.disabled = true;
+      } else {
+        prevButton.disabled = false;
+      }
+      
+      // 次へボタン
+      if (currentSession === 5) {
+        nextButton.textContent = '';
+        nextButton.innerHTML = '<span>講座を完了</span><i class="fas fa-check"></i>';
+        nextButton.classList.add('complete');
+        nextButton.onclick = function() {
+          alert('この講座を完了しました！\n次の講座に進みましょう。');
+          window.location.href = '../curriculum.html';
+        };
+      } else {
+        nextButton.textContent = '';
+        nextButton.innerHTML = '<span>次のSession</span><i class="fas fa-arrow-right"></i>';
+        nextButton.classList.remove('complete');
+        nextButton.onclick = nextSession;
+      }
+    }
+
+    // 初期化
+    updateButtons();
+  </script>
+</body>
+</html>

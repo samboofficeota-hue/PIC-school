@@ -1,0 +1,423 @@
+/* ================================================
+   Lesson Page Styles - Public Interest Capitalism Academy
+   講座詳細ページ専用のスタイル
+   ================================================ */
+
+/* ===== レッスンヘッダー ===== */
+.lesson-header {
+  background: linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%);
+  padding: var(--spacing-2xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(111, 218, 163, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(94, 196, 232, 0.15) 0%, transparent 50%);
+}
+
+.lesson-header-content {
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.lesson-breadcrumb {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+.lesson-breadcrumb a {
+  color: var(--color-text-light);
+  transition: color var(--transition-fast);
+}
+
+.lesson-breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.lesson-header-main {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: flex-start;
+}
+
+.lesson-header-number {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-lg);
+}
+
+.lesson-header-number-label {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+.lesson-header-number-value {
+  font-size: var(--font-size-4xl);
+  line-height: 1;
+}
+
+.lesson-header-info {
+  flex-grow: 1;
+}
+
+.lesson-header-title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.lesson-header-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.lesson-header-meta {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.lesson-header-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.lesson-header-meta-item i {
+  color: var(--color-primary);
+}
+
+/* ===== セッションナビゲーション ===== */
+.session-nav {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-2xl) 0;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 100px;
+  z-index: var(--z-sticky);
+}
+
+.session-nav-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
+}
+
+.session-nav-list {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.session-nav-item {
+  flex: 1;
+  min-width: 150px;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.session-nav-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.session-nav-item.active {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.session-nav-item-number {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+}
+
+.session-nav-item-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* セッション別カラー */
+.session-nav-item[data-session="1"] {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FFD6E8 100%);
+  color: #333;
+}
+
+.session-nav-item[data-session="2"] {
+  background: linear-gradient(135deg, #FFD4A3 0%, #FFE8C9 100%);
+  color: #333;
+}
+
+.session-nav-item[data-session="3"] {
+  background: linear-gradient(135deg, #A8E6A3 0%, #C8F5C3 100%);
+  color: #333;
+}
+
+.session-nav-item[data-session="4"] {
+  background: linear-gradient(135deg, #A8D5F5 0%, #C8E5FF 100%);
+  color: #333;
+}
+
+.session-nav-item[data-session="5"] {
+  background: linear-gradient(135deg, #D4B5F2 0%, #E8D5FF 100%);
+  color: #333;
+}
+
+/* ===== セッションコンテンツ ===== */
+.session-content {
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.session-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.session-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+}
+
+.session-header-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  box-shadow: var(--shadow-lg);
+}
+
+.session-header-title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.session-header-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Session別ヘッダーカラー */
+.session-header[data-session="1"] {
+  background: linear-gradient(135deg, #FFD6E8 0%, #FFF0F5 100%);
+}
+
+.session-header[data-session="1"] .session-header-icon {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FF9EC9 100%);
+  color: #333;
+}
+
+.session-header[data-session="2"] {
+  background: linear-gradient(135deg, #FFE8C9 0%, #FFF5E8 100%);
+}
+
+.session-header[data-session="2"] .session-header-icon {
+  background: linear-gradient(135deg, #FFD4A3 0%, #FFB88C 100%);
+  color: #333;
+}
+
+.session-header[data-session="3"] {
+  background: linear-gradient(135deg, #C8F5C3 0%, #E8FFF5 100%);
+}
+
+.session-header[data-session="3"] .session-header-icon {
+  background: linear-gradient(135deg, #A8E6A3 0%, #88D6AF 100%);
+  color: #333;
+}
+
+.session-header[data-session="4"] {
+  background: linear-gradient(135deg, #C8E5FF 0%, #E8F5FF 100%);
+}
+
+.session-header[data-session="4"] .session-header-icon {
+  background: linear-gradient(135deg, #A8D5F5 0%, #88B8CC 100%);
+  color: #333;
+}
+
+.session-header[data-session="5"] {
+  background: linear-gradient(135deg, #E8D5FF 0%, #F5F0FF 100%);
+}
+
+.session-header[data-session="5"] .session-header-icon {
+  background: linear-gradient(135deg, #D4B5F2 0%, #C89FCC 100%);
+  color: #333;
+}
+
+/* ===== セッションボディ ===== */
+.session-body {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* ===== セッションフッター ===== */
+.session-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-xl);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.session-nav-button {
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-full);
+  border: none;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.session-nav-button.prev {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.session-nav-button.next,
+.session-nav-button.complete {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: var(--color-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.session-nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.session-nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.session-progress-indicator {
+  text-align: center;
+}
+
+.session-progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.session-progress-dots {
+  display: flex;
+  gap: var(--spacing-xs);
+  justify-content: center;
+}
+
+.session-progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  transition: all var(--transition-base);
+}
+
+.session-progress-dot.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  transform: scale(1.3);
+}
+
+/* ===== レスポンシブ調整 ===== */
+@media (max-width: 768px) {
+  .lesson-header-main {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .lesson-header-number {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .lesson-header-number-value {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .session-nav {
+    position: static;
+  }
+  
+  .session-nav-list {
+    flex-direction: column;
+  }
+  
+  .session-nav-item {
+    min-width: 100%;
+  }
+  
+  .session-footer {
+    flex-direction: column;
+  }
+  
+  .session-nav-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

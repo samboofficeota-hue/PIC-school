@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="公益資本主義アカデミー - 公益資本主義の概念を学び、日本の未来を考えるオンライン学習プラットフォーム">
+  <title>公益資本主義アカデミー | Public Interest Capitalism Academy</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* ===== トップページ専用スタイル ===== */
+    
+    /* ヒーローセクション */
+    .hero {
+      background: linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 50%, var(--color-accent-pale) 100%);
+      padding: var(--spacing-4xl) 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: var(--z-base);
+    }
+    
+    .hero-title {
+      font-size: var(--font-size-5xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+      text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+    }
+    
+    .hero-subtitle {
+      font-size: var(--font-size-xl);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-2xl);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    .hero-description {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 800px;
+      margin: 0 auto var(--spacing-2xl);
+      line-height: 1.8;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: var(--spacing-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .hero-cta .btn {
+      font-size: var(--font-size-lg);
+      padding: var(--spacing-lg) var(--spacing-2xl);
+      min-width: 200px;
+    }
+    
+    /* 特徴セクション */
+    .features {
+      padding: var(--spacing-4xl) 0;
+      background-color: var(--color-white);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-2xl);
+    }
+    
+    .feature-card {
+      background: linear-gradient(135deg, var(--color-white) 0%, var(--color-background) 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-base);
+      border: 2px solid transparent;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-primary);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-lg);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-3xl);
+      color: var(--color-white);
+    }
+    
+    .feature-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+    }
+    
+    .feature-description {
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    
+    /* 対象者セクション */
+    .target-audience {
+      padding: var(--spacing-4xl) 0;
+      background: linear-gradient(135deg, var(--color-background) 0%, var(--color-white) 100%);
+    }
+    
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-2xl);
+    }
+    
+    .audience-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-2xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .audience-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    }
+    
+    .audience-icon {
+      font-size: var(--font-size-4xl);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .audience-title {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+    }
+    
+    .audience-description {
+      color: var(--color-text-secondary);
+    }
+    
+    /* カリキュラム概要 */
+    .curriculum-overview {
+      padding: var(--spacing-4xl) 0;
+      background-color: var(--color-white);
+    }
+    
+    .curriculum-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-2xl);
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-secondary-pale) 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .stat-number {
+      font-size: var(--font-size-5xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .stat-label {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    /* Session紹介 */
+    .sessions-intro {
+      padding: var(--spacing-4xl) 0;
+      background: linear-gradient(180deg, var(--color-background) 0%, var(--color-white) 100%);
+    }
+    
+    .sessions-grid {
+      display: grid;
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-2xl);
+    }
+    
+    .session-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      gap: var(--spacing-xl);
+      align-items: center;
+      transition: all var(--transition-base);
+    }
+    
+    .session-card:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .session-number {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-white);
+    }
+    
+    .session-number.session-1 { background: linear-gradient(135deg, #FFD6E8 0%, #FF9EC9 100%); color: #333; }
+    .session-number.session-2 { background: linear-gradient(135deg, #FFDAB9 0%, #FFB88C 100%); color: #333; }
+    .session-number.session-3 { background: linear-gradient(135deg, #B5E7A0 0%, #88D6AF 100%); color: #333; }
+    .session-number.session-4 { background: linear-gradient(135deg, #B0C4DE 0%, #88A8CC 100%); color: #333; }
+    .session-number.session-5 { background: linear-gradient(135deg, #E0BBE4 0%, #C89FCC 100%); color: #333; }
+    
+    .session-content {
+      flex-grow: 1;
+    }
+    
+    .session-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-text-primary);
+    }
+    
+    .session-description {
+      color: var(--color-text-secondary);
+    }
+    
+    .session-time {
+      flex-shrink: 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-light);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    /* CTAセクション */
+    .cta-section {
+      padding: var(--spacing-4xl) 0;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .cta-section p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-2xl);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-section .btn {
+      background-color: var(--color-white);
+      color: var(--color-text-primary);
+      font-size: var(--font-size-xl);
+      padding: var(--spacing-lg) var(--spacing-3xl);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .cta-section .btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: var(--shadow-xl);
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-ja">公益資本主義アカデミー</div>
+          <div class="logo-en">Public Interest Capitalism Academy</div>
+        </div>
+        <nav class="nav">
+          <a href="index.html" class="nav-link active">ホーム</a>
+          <a href="curriculum.html" class="nav-link">カリキュラム</a>
+          <a href="#about" class="nav-link">概要</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">公益資本主義で<br>世界が憧れる日本をつくる</h1>
+        <p class="hero-subtitle">Public Interest Capitalism Academy</p>
+        <p class="hero-description">
+          公益資本主義の概念を学び、経済の仕組みを理解し、<br>
+          日本の未来をアップデートする方法を一緒に考えましょう。<br>
+          3ヶ月間・全10回の学習プログラムで、あなたの視点が変わります。
+        </p>
+        <div class="hero-cta">
+          <a href="curriculum.html" class="btn btn-primary">
+            <i class="fas fa-rocket"></i> カリキュラムを見る
+          </a>
+          <a href="#about" class="btn btn-outline">
+            <i class="fas fa-info-circle"></i> 詳しく知る
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 特徴セクション -->
+  <section class="features" id="about">
+    <div class="container">
+      <h2 class="section-title">アカデミーの特徴</h2>
+      <p class="section-subtitle">5つのSessionで深く、楽しく学ぶ</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3 class="feature-title">対話形式の学び</h3>
+          <p class="feature-description">
+            原丈人氏と編集者の対話を通じて、複雑な概念をわかりやすく理解できます。
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <h3 class="feature-title">リアルなニュース</h3>
+          <p class="feature-description">
+            直近のニュースを題材に、公益資本主義的な視点で社会を読み解きます。
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-pencil-alt"></i>
+          </div>
+          <h3 class="feature-title">実践的ワーク</h3>
+          <p class="feature-description">
+            自分の手を動かして計算・分析することで、理論を体感的に学べます。
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3 class="feature-title">AI対話で思考深化</h3>
+          <p class="feature-description">
+            AIキャラクターとの対話を通じて、自分の考えをさらに深めていけます。
+          </p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="feature-title">みんなの広場</h3>
+          <p class="feature-description">
+            他の受講者の意見や考えを共有し、多様な視点に触れることができます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 対象者セクション -->
+  <section class="target-audience">
+    <div class="container">
+      <h2 class="section-title">こんな方におすすめ</h2>
+      <p class="section-subtitle">未来を担う世代へ</p>
+      
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-icon">🎓</div>
+          <h3 class="audience-title">高校生</h3>
+          <p class="audience-description">
+            これから社会に出る前に、経済と社会の仕組みを深く理解したい方
+          </p>
+        </div>
+        
+        <div class="audience-card">
+          <div class="audience-icon">📚</div>
+          <h3 class="audience-title">大学生</h3>
+          <p class="audience-description">
+            就職活動や将来のキャリアを考える上で、新しい視点を得たい方
+          </p>
+        </div>
+        
+        <div class="audience-card">
+          <div class="audience-icon">💼</div>
+          <h3 class="audience-title">20代社会人</h3>
+          <p class="audience-description">
+            働き始めた今だからこそ、経済の本質を学び直したい方
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- カリキュラム概要 -->
+  <section class="curriculum-overview">
+    <div class="container">
+      <h2 class="section-title">プログラム概要</h2>
+      <p class="section-subtitle">3ヶ月で体系的に学ぶ</p>
+      
+      <div class="curriculum-stats">
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">回の講座</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">ヶ月間</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">30</div>
+          <div class="stat-label">分/各回</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">つのSession</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Session紹介 -->
+  <section class="sessions-intro">
+    <div class="container">
+      <h2 class="section-title">各回の学習体験（約30分）</h2>
+      <p class="section-subtitle">5つのSessionで構成された効果的な学び</p>
+      
+      <div class="sessions-grid">
+        <div class="session-card">
+          <div class="session-number session-1">1</div>
+          <div class="session-content">
+            <h3 class="session-title">イントロ - 対話で理解する</h3>
+            <p class="session-description">
+              原丈人氏と編集者の対話形式で、各回のテーマの核心に迫ります。チャット形式の読みやすいデザインで、複雑な概念もすっと頭に入ります。
+            </p>
+          </div>
+          <div class="session-time">約5分</div>
+        </div>
+        
+        <div class="session-card">
+          <div class="session-number session-2">2</div>
+          <div class="session-content">
+            <h3 class="session-title">ニュース - 現実と繋げる</h3>
+            <p class="session-description">
+              直近3ヶ月のニュースから、テーマに関連する事例をピックアップ。公益資本主義的な論点と観点をコラム形式で解説します。
+            </p>
+          </div>
+          <div class="session-time">約7分</div>
+        </div>
+        
+        <div class="session-card">
+          <div class="session-number session-3">3</div>
+          <div class="session-content">
+            <h3 class="session-title">ワーク - 手を動かす</h3>
+            <p class="session-description">
+              インタラクティブなテンプレートを使って、実際のデータを入力・計算。例えば労働分配率や株主還元率を自分で計算することで、理論を実感できます。
+            </p>
+          </div>
+          <div class="session-time">約10分</div>
+        </div>
+        
+        <div class="session-card">
+          <div class="session-number session-4">4</div>
+          <div class="session-content">
+            <h3 class="session-title">対話 - 考えを深める</h3>
+            <p class="session-description">
+              公益資本主義GPTをベースにしたAIキャラクターと対話。あなたの考えに質問を返しながら、思考を深めていきます。他の受講者の意見も見れる広場機能付き。
+            </p>
+          </div>
+          <div class="session-time">約5分</div>
+        </div>
+        
+        <div class="session-card">
+          <div class="session-number session-5">5</div>
+          <div class="session-content">
+            <h3 class="session-title">サマリー - 要点を整理</h3>
+            <p class="session-description">
+              その回の論点と学びをコンパクトにまとめて表示。復習にも最適です。
+            </p>
+          </div>
+          <div class="session-time">約3分</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAセクション -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>さあ、一緒に日本の未来を考えよう</h2>
+      <p>
+        公益資本主義を学ぶことは、あなた自身の未来を考えることです。<br>
+        今すぐカリキュラムをチェックして、学びの旅を始めましょう。
+      </p>
+      <a href="curriculum.html" class="btn">
+        <i class="fas fa-graduation-cap"></i> カリキュラムを見る
+      </a>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>公益資本主義アカデミー</h3>
+          <p>公益資本主義の概念を学び、日本の未来をアップデートする学習プラットフォーム</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <p><a href="index.html">ホーム</a></p>
+          <p><a href="curriculum.html">カリキュラム</a></p>
+          <p><a href="#about">概要</a></p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>お問い合わせ</h3>
+          <p>このサイトはモックアップです</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Public Interest Capitalism Academy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -25,38 +25,148 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     
-    /* ブランドカラー */
-    --brand-primary: #2563eb;
-    --brand-secondary: #7c3aed;
-    --brand-accent: #f59e0b;
-    --brand-success: #10b981;
-    --brand-warning: #f59e0b;
-    --brand-danger: #ef4444;
+    /* ===== カラーパレット - Fresh & Bright ===== */
     
-    /* グラデーション */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    /* ベースカラー（背景） */
+    --color-background: #FFF8F0;          /* クリーム系の温かみのある背景 */
+    --color-background-secondary: #FDFBF7; /* より淡いクリーム */
+    --color-white: #FFFFFF;
+    --color-border: #E8DED0;              /* 柔らかいベージュ系ボーダー */
     
-    /* 背景色 */
-    --bg-primary-light: #f8fafc;
-    --bg-secondary-light: #f1f5f9;
+    /* メインカラー（フレッシュミントグリーン） */
+    --color-primary: #6FDAA3;             /* フレッシュミントグリーン - 明るく爽やか・成長 */
+    --color-primary-light: #9FE8C3;       /* より淡いミントグリーン */
+    --color-primary-dark: #4FC089;        /* より濃いミントグリーン */
+    --color-primary-pale: #D0F5E5;        /* 極淡いミントグリーン */
+    
+    /* サブカラー（明るいスカイブルー） */
+    --color-secondary: #5EC4E8;           /* 明るいスカイブルー - 知性・信頼・爽やか */
+    --color-secondary-light: #8ED9F0;     /* より淡いスカイブルー */
+    --color-secondary-dark: #3AAFD8;      /* より濃いスカイブルー */
+    --color-secondary-pale: #D5F0F9;      /* 極淡いスカイブルー */
+    
+    /* アクセントカラー1（コーラルオレンジ） */
+    --color-accent: #F4A261;              /* コーラルオレンジ - エネルギー・行動 */
+    --color-accent-light: #F9C08A;        /* より淡いコーラル */
+    --color-accent-dark: #E68840;         /* より濃いコーラル */
+    --color-accent-pale: #FCE5D3;         /* 極淡いコーラル */
+    
+    /* アクセントカラー2（モーブパープル） */
+    --color-accent-secondary: #C4A1D3;    /* モーブパープル - 創造性・感性 */
+    --color-accent-secondary-light: #D9BBE3; /* より淡いモーブ */
+    --color-accent-secondary-dark: #A981B3; /* より濃いモーブ */
+    --color-accent-secondary-pale: #EDE5F3; /* 極淡いモーブ */
     
     /* テキストカラー */
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-muted: #94a3b8;
+    --color-text-primary: #3E4C59;        /* ダークグレイッシュブルー */
+    --color-text-secondary: #5D6D7E;      /* ミディアムグレイッシュブルー */
+    --color-text-light: #8B95A0;          /* ライトグレイッシュブルー */
+    --color-text-lighter: #B0B7BE;        /* より淡いグレー */
+    
+    /* セッションカラー（各Sessionの識別色） */
+    --color-session-intro: #FFB6C1;       /* ライトピンク - イントロ */
+    --color-session-news: #FFD4A3;        /* ピーチ - ニュース */
+    --color-session-work: #A8E6A3;        /* ライムグリーン - ワーク */
+    --color-session-dialogue: #A8D5F5;    /* スカイブルー - 対話 */
+    --color-session-summary: #D4B5F2;     /* ラベンダー - サマリー */
+    
+    /* ステータスカラー */
+    --color-success: #95C9B4;             /* プライマリグリーンを使用 */
+    --color-warning: #F4A261;             /* アクセントオレンジを使用 */
+    --color-error: #E07A5F;               /* テラコッタ系 */
+    --color-info: #88B4D9;                /* セカンダリブルーを使用 */
+    
+    /* ブランドカラー（互換性のため） */
+    --brand-primary: #6FDAA3;
+    --brand-secondary: #5EC4E8;
+    --brand-accent: #F4A261;
+    --brand-success: #95C9B4;
+    --brand-warning: #F4A261;
+    --brand-danger: #E07A5F;
+    
+    /* グラデーション */
+    --gradient-primary: linear-gradient(135deg, #6FDAA3 0%, #5EC4E8 100%);
+    --gradient-secondary: linear-gradient(135deg, #D0F5E5 0%, #D5F0F9 100%);
+    --gradient-accent: linear-gradient(135deg, #F4A261 0%, #E68840 100%);
+    --gradient-success: linear-gradient(135deg, #95C9B4 0%, #6FDAA3 100%);
+    
+    /* 背景色 */
+    --bg-primary-light: #FFF8F0;
+    --bg-secondary-light: #FDFBF7;
+    
+    /* テキストカラー */
+    --text-primary: #3E4C59;
+    --text-secondary: #5D6D7E;
+    --text-muted: #8B95A0;
     
     /* ボーダーカラー */
-    --border-primary: #e2e8f0;
-    --border-secondary: #cbd5e1;
+    --border-primary: #E8DED0;
+    --border-secondary: #D0F5E5;
     
     /* シャドウ */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.15);
+    
+    /* ===== フォント ===== */
+    --font-family-primary: 'M PLUS Rounded 1c', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-heading: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    
+    /* フォントサイズ */
+    --font-size-xs: 0.75rem;      /* 12px */
+    --font-size-sm: 0.875rem;     /* 14px */
+    --font-size-base: 1rem;       /* 16px */
+    --font-size-lg: 1.125rem;     /* 18px */
+    --font-size-xl: 1.25rem;      /* 20px */
+    --font-size-2xl: 1.5rem;      /* 24px */
+    --font-size-3xl: 1.875rem;    /* 30px */
+    --font-size-4xl: 2.25rem;     /* 36px */
+    --font-size-5xl: 3rem;        /* 48px */
+    
+    /* フォントウェイト */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    
+    /* ===== スペーシング ===== */
+    --spacing-xs: 0.25rem;        /* 4px */
+    --spacing-sm: 0.5rem;         /* 8px */
+    --spacing-md: 1rem;           /* 16px */
+    --spacing-lg: 1.5rem;         /* 24px */
+    --spacing-xl: 2rem;           /* 32px */
+    --spacing-2xl: 3rem;          /* 48px */
+    --spacing-3xl: 4rem;          /* 64px */
+    --spacing-4xl: 6rem;          /* 96px */
+    
+    /* ===== ボーダーラジウス（角丸） ===== */
+    --radius-sm: 0.5rem;          /* 8px */
+    --radius-md: 1rem;            /* 16px */
+    --radius-lg: 1.5rem;          /* 24px */
+    --radius-xl: 2rem;            /* 32px */
+    --radius-full: 9999px;        /* 完全な円形 */
+    
+    /* ===== トランジション ===== */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-base: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+    
+    /* ===== コンテナ幅 ===== */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+    
+    /* ===== Z-index レイヤー ===== */
+    --z-base: 1;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
   }
 
   * {
@@ -65,7 +175,11 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-family-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   html {
@@ -97,6 +211,167 @@
   
   .container-max {
     @apply max-w-7xl mx-auto;
+  }
+  
+  /* ===== タイポグラフィ ===== */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  h6 {
+    font-size: var(--font-size-base);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-secondary);
+  }
+
+  a {
+    color: var(--color-secondary-dark);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  /* ===== コンテナ ===== */
+  .container {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+
+  /* ===== ボタン ===== */
+  .btn {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-text-primary);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: var(--color-text-primary);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-secondary) 100%);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-text-primary);
+    box-shadow: none;
+  }
+
+  .btn-outline:hover {
+    background-color: var(--color-primary-light);
+  }
+
+  /* ===== カード ===== */
+  .card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ===== バッジ ===== */
+  .badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    color: var(--color-text-primary);
+  }
+
+  .badge-success {
+    background-color: var(--color-success);
+    color: var(--color-white);
+  }
+
+  .badge-info {
+    background-color: var(--color-info);
+    color: var(--color-white);
+  }
+
+  .badge-warning {
+    background-color: var(--color-warning);
+    color: var(--color-text-primary);
+  }
+
+  /* ===== セクション共通スタイル ===== */
+  .section {
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-3xl);
   }
 }
 

@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import { AuthProvider } from '@/contexts/AuthContext';
 
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter',
-  display: 'swap',
-  preload: true,
-});
-
 export const metadata: Metadata = {
-  title: "PIC School - 公益資本主義オンラインスクール",
-  description: "公益資本主義を学ぶオンラインスクールプラットフォーム",
+  title: "公益資本主義アカデミー | Public Interest Capitalism Academy",
+  description: "公益資本主義の概念を学び、経済の仕組みを理解し、日本の未来をアップデートするオンライン学習プラットフォーム",
 };
 
 export default function RootLayout({
@@ -23,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+      </head>
+      <body style={{ fontFamily: 'var(--font-family-primary)' }}>
         <AuthProvider>
           {children}
         </AuthProvider>

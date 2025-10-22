@@ -1,0 +1,129 @@
+/* ================================================
+   CSS Variables - Public Interest Capitalism Academy
+   カラーパレット、フォント、スペーシングなどの定数定義
+   ================================================ */
+
+:root {
+  /* ===== カラーパレット - Fresh & Bright ===== */
+  
+  /* ベースカラー（背景） */
+  --color-background: #FFF8F0;          /* クリーム系の温かみのある背景 */
+  --color-background-secondary: #FDFBF7; /* より淡いクリーム */
+  --color-white: #FFFFFF;
+  --color-border: #E8DED0;              /* 柔らかいベージュ系ボーダー */
+  
+  /* メインカラー（フレッシュミントグリーン） */
+  --color-primary: #6FDAA3;             /* フレッシュミントグリーン - 明るく爽やか・成長 */
+  --color-primary-light: #9FE8C3;       /* より淡いミントグリーン */
+  --color-primary-dark: #4FC089;        /* より濃いミントグリーン */
+  --color-primary-pale: #D0F5E5;        /* 極淡いミントグリーン */
+  
+  /* サブカラー（明るいスカイブルー） */
+  --color-secondary: #5EC4E8;           /* 明るいスカイブルー - 知性・信頼・爽やか */
+  --color-secondary-light: #8ED9F0;     /* より淡いスカイブルー */
+  --color-secondary-dark: #3AAFD8;      /* より濃いスカイブルー */
+  --color-secondary-pale: #D5F0F9;      /* 極淡いスカイブルー */
+  
+  /* アクセントカラー1（コーラルオレンジ） */
+  --color-accent: #F4A261;              /* コーラルオレンジ - エネルギー・行動 */
+  --color-accent-light: #F9C08A;        /* より淡いコーラル */
+  --color-accent-dark: #E68840;         /* より濃いコーラル */
+  --color-accent-pale: #FCE5D3;         /* 極淡いコーラル */
+  
+  /* アクセントカラー2（モーブパープル） */
+  --color-accent-secondary: #C4A1D3;    /* モーブパープル - 創造性・感性 */
+  --color-accent-secondary-light: #D9BBE3; /* より淡いモーブ */
+  --color-accent-secondary-dark: #A981B3; /* より濃いモーブ */
+  --color-accent-secondary-pale: #EDE5F3; /* 極淡いモーブ */
+  
+  /* テキストカラー */
+  --color-text-primary: #3E4C59;        /* ダークグレイッシュブルー */
+  --color-text-secondary: #5D6D7E;      /* ミディアムグレイッシュブルー */
+  --color-text-light: #8B95A0;          /* ライトグレイッシュブルー */
+  --color-text-lighter: #B0B7BE;        /* より淡いグレー */
+  
+  /* セッションカラー（各Sessionの識別色） */
+  --color-session-intro: #FFB6C1;       /* ライトピンク - イントロ */
+  --color-session-news: #FFD4A3;        /* ピーチ - ニュース */
+  --color-session-work: #A8E6A3;        /* ライムグリーン - ワーク */
+  --color-session-dialogue: #A8D5F5;    /* スカイブルー - 対話 */
+  --color-session-summary: #D4B5F2;     /* ラベンダー - サマリー */
+  
+  /* ステータスカラー */
+  --color-success: #95C9B4;             /* プライマリグリーンを使用 */
+  --color-warning: #F4A261;             /* アクセントオレンジを使用 */
+  --color-error: #E07A5F;               /* テラコッタ系 */
+  --color-info: #88B4D9;                /* セカンダリブルーを使用 */
+  
+  /* ===== フォント ===== */
+  --font-family-primary: 'M PLUS Rounded 1c', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-heading: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+  
+  /* フォントサイズ */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;     /* 36px */
+  --font-size-5xl: 3rem;        /* 48px */
+  
+  /* フォントウェイト */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* ===== スペーシング ===== */
+  --spacing-xs: 0.25rem;        /* 4px */
+  --spacing-sm: 0.5rem;         /* 8px */
+  --spacing-md: 1rem;           /* 16px */
+  --spacing-lg: 1.5rem;         /* 24px */
+  --spacing-xl: 2rem;           /* 32px */
+  --spacing-2xl: 3rem;          /* 48px */
+  --spacing-3xl: 4rem;          /* 64px */
+  --spacing-4xl: 6rem;          /* 96px */
+  
+  /* ===== ボーダーラジウス（角丸） ===== */
+  --radius-sm: 0.5rem;          /* 8px */
+  --radius-md: 1rem;            /* 16px */
+  --radius-lg: 1.5rem;          /* 24px */
+  --radius-xl: 2rem;            /* 32px */
+  --radius-full: 9999px;        /* 完全な円形 */
+  
+  /* ===== シャドウ ===== */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.15);
+  
+  /* ===== トランジション ===== */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  
+  /* ===== コンテナ幅 ===== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  
+  /* ===== Z-index レイヤー ===== */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+}
+
+/* ===== ダークモード対応（将来の拡張用） ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ダークモード時のカラー調整（必要に応じて実装） */
+  }
+}
