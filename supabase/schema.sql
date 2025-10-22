@@ -278,7 +278,7 @@ BEGIN
   
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- トリガー: 新規ユーザー登録時にプロフィールを作成
 CREATE TRIGGER on_auth_user_created
@@ -351,7 +351,7 @@ BEGIN
   last_accessed_at = NOW()
   WHERE user_id = p_user_id AND program_id = v_program_id;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- 初期データの挿入
 INSERT INTO programs (title, description, instructor_name, instructor_bio, price, duration_hours, difficulty_level, category, status) VALUES
@@ -539,7 +539,7 @@ BEGIN
   END IF;
   RETURN NULL;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- トリガー: いいね追加/削除時にlikes_countを更新
 CREATE TRIGGER on_like_changed
