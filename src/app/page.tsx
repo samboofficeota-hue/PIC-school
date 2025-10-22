@@ -17,10 +17,10 @@ import {
   LogIn,
   LogOut,
   Newspaper,
-  PencilAlt,
-  Robot,
+  PenTool,
+  Bot,
   GraduationCap,
-  InfoCircle,
+  Info,
   Rocket
 } from 'lucide-react';
 import Link from 'next/link';
@@ -55,13 +55,13 @@ export default function Home() {
       color: 'var(--color-secondary)'
     },
     {
-      icon: PencilAlt,
+      icon: PenTool,
       title: '実践的ワーク',
       description: '自分の手を動かして計算・分析することで、理論を体感的に学べます。',
       color: 'var(--color-accent)'
     },
     {
-      icon: Robot,
+      icon: Bot,
       title: 'AI対話で思考深化',
       description: 'AIキャラクターとの対話を通じて、自分の考えをさらに深めていけます。',
       color: 'var(--color-accent-secondary)'
@@ -294,7 +294,7 @@ export default function Home() {
                     color: 'var(--color-text-primary)'
                   }}
                 >
-                  <InfoCircle className="w-5 h-5 mr-2" />
+                  <Info className="w-5 h-5 mr-2" />
                   詳しく知る
                 </Button>
               </Link>
