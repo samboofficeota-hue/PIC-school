@@ -35,7 +35,7 @@ export default function Home() {
   // ハイドレーションエラーを防ぐため、ローディング中は何も表示しない
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--color-background)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FFF8F0' }}>
         <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: 'var(--color-primary)' }}></div>
       </div>
     );
@@ -138,7 +138,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FFF8F0' }}>
       {/* ヘッダー */}
       <header 
         className="sticky top-0 z-50"
@@ -166,14 +166,30 @@ export default function Home() {
               </div>
             </Link>
             
-            <nav className="flex items-center space-x-4">
-              <Link href="/" className="nav-link active">
+            <nav className="flex items-center space-x-6">
+              <Link 
+                href="/" 
+                className="text-base font-medium px-4 py-2 rounded-full transition-all duration-300"
+                style={{ 
+                  backgroundColor: 'var(--color-white)',
+                  color: 'var(--color-primary-dark)',
+                  boxShadow: 'var(--shadow-sm)'
+                }}
+              >
                 ホーム
               </Link>
-              <Link href="/lessons" className="nav-link">
+              <Link 
+                href="/lessons" 
+                className="text-base font-medium px-4 py-2 rounded-full transition-all duration-300 hover:bg-white hover:shadow-sm"
+                style={{ color: 'var(--color-text-primary)' }}
+              >
                 カリキュラム
               </Link>
-              <Link href="#about" className="nav-link">
+              <Link 
+                href="#about" 
+                className="text-base font-medium px-4 py-2 rounded-full transition-all duration-300 hover:bg-white hover:shadow-sm"
+                style={{ color: 'var(--color-text-primary)' }}
+              >
                 概要
               </Link>
             </nav>
@@ -537,26 +553,6 @@ export default function Home() {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           33% { transform: translate(30px, -30px) rotate(120deg); }
           66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-        
-        .nav-link {
-          font-size: var(--font-size-base);
-          font-weight: var(--font-weight-medium);
-          color: var(--color-text-primary);
-          padding: var(--spacing-sm) var(--spacing-md);
-          border-radius: var(--radius-full);
-          transition: all var(--transition-base);
-        }
-        
-        .nav-link:hover {
-          background-color: var(--color-white);
-          color: var(--color-primary-dark);
-          box-shadow: var(--shadow-sm);
-        }
-        
-        .nav-link.active {
-          background-color: var(--color-white);
-          color: var(--color-primary-dark);
         }
       `}</style>
     </div>
